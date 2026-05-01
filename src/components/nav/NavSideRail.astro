@@ -1,0 +1,314 @@
+---
+/* VARIANT B: NavSideRail — Left vertical fixed rail with letter abbreviations */
+interface Props {
+  activeLink?: string;
+}
+
+const { activeLink = '' } = Astro.props;
+
+const links = [
+  { label: 'Experience', letter: 'E', href: '#experience' },
+  { label: 'About', letter: 'A', href: '#about' },
+  { label: 'Skills', letter: 'S', href: '#skills' },
+  { label: 'Projects', letter: 'P', href: '#projects' },
+  { label: 'Contact', letter: 'C', href: '#contact' },
+];
+---
+
+{/* Desktop: side rail */}
+<nav class="siderail" aria-label="Main navigation (side rail variant)">
+  <span class="siderail__logo">she3bo</span>
+
+  <ul class="siderail__links" role="list">
+    {links.map(link => (
+      <li class="siderail__item">
+        <a
+          href={link.href}
+          class:list={[
+            'siderail__link',
+            { 'siderail__link--active': activeLink === link.href }
+          ]}
+          aria-label={link.label}
+        >
+          <span class="siderail__letter">{link.letter}</span>
+          <span class="siderail__full">{link.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+{/* Mobile: top bar with hamburger */}
+<nav class="siderail-mobile" aria-label="Main navigation (side rail mobile)">
+  <div class="siderail-mobile__inner">
+    <a href="/" class="siderail-mobile__logo">she3bo</a>
+
+    <input type="checkbox" id="siderail-toggle" class="siderail-mobile__checkbox" aria-label="Toggle navigation menu" />
+    <label for="siderail-toggle" class="siderail-mobile__hamburger" aria-hidden="true">
+      <span class="siderail-mobile__bar"></span>
+      <span class="siderail-mobile__bar"></span>
+      <span class="siderail-mobile__bar"></span>
+    </label>
+
+    <div class="siderail-mobile__dropdown">
+      <ul role="list">
+        {links.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'siderail-mobile__link',
+                { 'siderail-mobile__link--active': activeLink === link.href }
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* ─── Desktop: Side Rail ─────────────────────────────────── */
+  .siderail {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 100vh;
+    background-color: var(--color-paper-grain);
+    border-right: var(--ink-bold) solid var(--color-ink);
+    z-index: 50;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+  }
+
+  @media (min-width: 768px) {
+    .siderail {
+      display: flex;
+    }
+  }
+
+  .siderail__logo {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink);
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .siderail__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .siderail__item {
+    position: relative;
+  }
+
+  .siderail__link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    color: var(--color-ink);
+    position: relative;
+  }
+
+  .siderail__letter {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    width: 40px;
+    text-align: center;
+    transition: color 200ms var(--ease-ink);
+  }
+
+  .siderail__full {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    background-color: var(--color-paper);
+    border: var(--ink-medium) solid var(--color-ink);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    box-shadow: 3px 3px 0 0 var(--color-shatta);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms var(--ease-ink), transform 200ms var(--ease-ink);
+    margin-left: var(--spacing-xs);
+    transform: translateY(-50%) translateX(-4px);
+  }
+
+  .siderail__link:hover .siderail__full {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .siderail__link:hover .siderail__letter {
+    color: var(--color-shatta);
+  }
+
+  /* Active state: red dot */
+  .siderail__link--active .siderail__letter {
+    color: var(--color-shatta);
+  }
+
+  .siderail__link--active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-shatta);
+  }
+
+  /* ─── Mobile: Top bar fallback ──────────────────────────── */
+  .siderail-mobile {
+    display: block;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--color-paper);
+    border-bottom: var(--ink-thick) solid var(--color-ink);
+    z-index: 50;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .siderail-mobile {
+      display: none;
+    }
+  }
+
+  .siderail-mobile__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .siderail-mobile__logo {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+  }
+
+  .siderail-mobile__checkbox {
+    display: none;
+  }
+
+  .siderail-mobile__hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 52;
+  }
+
+  .siderail-mobile__bar {
+    display: block;
+    width: 24px;
+    height: var(--ink-thick);
+    background-color: var(--color-ink);
+    transition: transform 200ms var(--ease-snap), opacity 200ms var(--ease-ink);
+  }
+
+  .siderail-mobile__checkbox:checked ~ .siderail-mobile__hamburger .siderail-mobile__bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .siderail-mobile__checkbox:checked ~ .siderail-mobile__hamburger .siderail-mobile__bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .siderail-mobile__checkbox:checked ~ .siderail-mobile__hamburger .siderail-mobile__bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .siderail-mobile__dropdown {
+    position: absolute;
+    top: 100%;
+    left: calc(-1 * var(--spacing-md));
+    right: calc(-1 * var(--spacing-md));
+    background-color: var(--color-paper);
+    border-bottom: var(--ink-thick) solid var(--color-ink);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms var(--ease-ink), padding 300ms var(--ease-ink);
+    padding: 0 var(--spacing-md);
+    z-index: 51;
+  }
+
+  .siderail-mobile__dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .siderail-mobile__checkbox:checked ~ .siderail-mobile__dropdown {
+    max-height: 400px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .siderail-mobile__link {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    text-decoration: none;
+    display: block;
+    padding: var(--spacing-xs) 0;
+    border-bottom: var(--ink-thin) solid var(--color-paper-shadow);
+  }
+
+  .siderail-mobile__link:hover {
+    color: var(--color-shatta);
+  }
+
+  .siderail-mobile__link--active {
+    color: var(--color-shatta);
+    border-bottom-color: var(--color-shatta);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .siderail__full,
+    .siderail-mobile__bar,
+    .siderail-mobile__dropdown,
+    .siderail__letter {
+      transition: none;
+    }
+  }
+</style>

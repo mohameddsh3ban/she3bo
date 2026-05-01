@@ -1,0 +1,64 @@
+---
+/**
+ * PaperPanel — A manga-style sketch-bordered container.
+ * Use for any content that needs to feel like a panel on the page.
+ *
+ * Props:
+ *   - tag: HTML tag to render (default: 'section')
+ *   - variant: 'default' | 'shadow' | 'sketch' — visual style
+ *   - id: optional anchor id
+ */
+interface Props {
+  tag?: 'section' | 'article' | 'div' | 'aside';
+  variant?: 'default' | 'shadow' | 'sketch';
+  id?: string;
+  class?: string;
+}
+
+const {
+  tag: Tag = 'section',
+  variant = 'default',
+  id,
+  class: className = '',
+} = Astro.props;
+---
+
+<Tag id={id} class={`paper-panel paper-panel--${variant} ${className}`}>
+  <slot />
+</Tag>
+
+<style>
+  .paper-panel {
+    position: relative;
+    padding: var(--spacing-md);
+  }
+
+  /* Shadow variant — paper card with depth */
+  .paper-panel--shadow {
+    background-color: var(--color-paper);
+    border: var(--ink-thick) solid var(--color-ink);
+    box-shadow:
+      4px 4px 0 0 var(--color-ink),
+      8px 8px 0 0 var(--color-paper-deep);
+  }
+
+  /* Sketch variant — double-line sketch effect */
+  .paper-panel--sketch {
+    border: var(--ink-medium) solid var(--color-ink);
+  }
+
+  .paper-panel--sketch::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border: var(--ink-thin) solid var(--color-ink);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .paper-panel {
+      padding: var(--spacing-lg);
+    }
+  }
+</style>

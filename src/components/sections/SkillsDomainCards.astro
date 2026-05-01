@@ -1,0 +1,232 @@
+---
+/**
+ * SkillsDomainCards — "Cursed Techniques" variant A.
+ * Four manga-bordered domain panels, each with a grid of technique cards.
+ * Proficiency shown as filled/empty dots.
+ */
+
+interface Technique {
+  name: string;
+  level: number;
+}
+
+interface Domain {
+  name: string;
+  techniques: Technique[];
+}
+
+const domains: Domain[] = [
+  {
+    name: 'FRONTEND DOMAIN',
+    techniques: [
+      { name: 'Angular', level: 5 },
+      { name: 'TypeScript', level: 5 },
+      { name: 'RxJS', level: 4 },
+      { name: 'Tailwind', level: 5 },
+      { name: 'React', level: 3 },
+      { name: 'Astro', level: 4 },
+    ],
+  },
+  {
+    name: 'BACKEND DOMAIN',
+    techniques: [
+      { name: 'NestJS', level: 5 },
+      { name: 'Node.js', level: 5 },
+      { name: 'PostgreSQL', level: 5 },
+      { name: 'Firebase', level: 5 },
+      { name: 'REST APIs', level: 5 },
+    ],
+  },
+  {
+    name: 'INFRASTRUCTURE DOMAIN',
+    techniques: [
+      { name: 'Firebase Cloud Functions', level: 4 },
+      { name: 'Docker', level: 4 },
+      { name: 'AWS', level: 3 },
+      { name: 'Cloudflare', level: 4 },
+      { name: 'CI/CD', level: 4 },
+    ],
+  },
+  {
+    name: 'DISCIPLINE DOMAIN',
+    techniques: [
+      { name: 'Code Review', level: 5 },
+      { name: 'System Design', level: 4 },
+      { name: 'Mentoring', level: 4 },
+      { name: 'Documentation', level: 5 },
+      { name: 'Shipping Under Pressure', level: 5 },
+    ],
+  },
+];
+
+const MAX_DOTS = 5;
+---
+
+<section class="skills-dc" id="skills-domain-cards" aria-label="Skills — Cursed Techniques (Domain Cards)">
+  <header class="skills-dc__header">
+    <h2 class="skills-dc__title">CURSED TECHNIQUES</h2>
+    <p class="skills-dc__subtitle">// power moves grouped by domain</p>
+  </header>
+
+  <div class="skills-dc__grid">
+    {domains.map((domain) => (
+      <article class="skills-dc__domain" aria-label={domain.name}>
+        <h3 class="skills-dc__domain-name">{domain.name}</h3>
+        <div class="skills-dc__divider" aria-hidden="true"></div>
+
+        <div class="skills-dc__techniques">
+          {domain.techniques.map((tech) => (
+            <div class="skills-dc__card">
+              <span class="skills-dc__tech-name">{tech.name}</span>
+              <div class="skills-dc__dots" role="img" aria-label={`${tech.name}: ${tech.level} out of ${MAX_DOTS}`}>
+                {Array.from({ length: MAX_DOTS }).map((_, i) => (
+                  <span
+                    class={`skills-dc__dot ${i < tech.level ? 'skills-dc__dot--filled' : 'skills-dc__dot--empty'}`}
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .skills-dc {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .skills-dc__header {
+    max-width: 1400px;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .skills-dc__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: var(--color-ink);
+    margin: 0;
+    display: inline-block;
+    border-bottom: var(--ink-bold) solid var(--color-ink);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .skills-dc__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-faded);
+    margin: var(--spacing-xs) 0 0;
+  }
+
+  /* ─── DOMAIN GRID ──────────────────────────────────────────── */
+  .skills-dc__grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .skills-dc__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ─── DOMAIN PANEL ─────────────────────────────────────────── */
+  .skills-dc__domain {
+    background-color: var(--color-paper);
+    border: var(--ink-bold) solid var(--color-ink);
+    padding: var(--spacing-md);
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
+  }
+
+  .skills-dc__domain:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 var(--color-ink);
+  }
+
+  .skills-dc__domain-name {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .skills-dc__divider {
+    width: 100%;
+    height: var(--ink-medium);
+    background-color: var(--color-ink);
+    opacity: 0.2;
+    margin: var(--spacing-xs) 0 var(--spacing-sm);
+  }
+
+  /* ─── TECHNIQUE CARDS GRID ─────────────────────────────────── */
+  .skills-dc__techniques {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+  }
+
+  @media (min-width: 480px) {
+    .skills-dc__techniques {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .skills-dc__techniques {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  /* ─── TECHNIQUE CARD ───────────────────────────────────────── */
+  .skills-dc__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: var(--spacing-xs);
+    border: var(--ink-thin) solid var(--color-ink);
+    background-color: var(--color-paper-grain);
+  }
+
+  .skills-dc__tech-name {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  /* ─── PROFICIENCY DOTS ─────────────────────────────────────── */
+  .skills-dc__dots {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .skills-dc__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: var(--ink-thin) solid var(--color-ink);
+    flex-shrink: 0;
+  }
+
+  .skills-dc__dot--filled {
+    background-color: var(--color-shatta);
+    border-color: var(--color-shatta);
+  }
+
+  .skills-dc__dot--empty {
+    background-color: transparent;
+  }
+
+  /* ─── MOBILE ───────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .skills-dc {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+  }
+</style>

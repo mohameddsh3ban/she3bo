@@ -1,0 +1,243 @@
+---
+import { projects } from '@/data/projects';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import PaperPanel from '@components/ui/PaperPanel.astro';
+import InkButton from '@components/ui/InkButton.astro';
+import ProjectThumbnail from '@components/projects/ProjectThumbnail.astro';
+
+const featured = projects.find((p) => p.featured)!;
+const archive = projects.filter((p) => !p.featured);
+---
+
+<PaperPanel tag="section" id="projects-featured" class="projects-fa">
+  <SectionHeader title="PROJECTS" subtitle="// six chapters, six different fights" />
+
+  {/* ─── FEATURED PROJECT ─────────────────────────────────────── */}
+  <article class="projects-fa__hero">
+    <div class="projects-fa__hero-thumb">
+      <ProjectThumbnail project={featured} class="projects-fa__hero-thumbnail" />
+    </div>
+    <div class="projects-fa__hero-content">
+      <div class="projects-fa__hero-head">
+        <h3 class="projects-fa__hero-name">{featured.name}</h3>
+        <span class="projects-fa__hero-status">{featured.status}</span>
+      </div>
+      <p class="projects-fa__hero-tagline">{featured.tagline}</p>
+      <p class="projects-fa__hero-desc">{featured.description}</p>
+      <div class="projects-fa__hero-tags">
+        {featured.tech.map((t) => (
+          <span class="projects-fa__tag">{t}</span>
+        ))}
+      </div>
+      <div class="projects-fa__hero-links">
+        {featured.links.live && (
+          <InkButton href={featured.links.live} variant="primary" size="md">Live Site</InkButton>
+        )}
+        {featured.links.repo && (
+          <InkButton href={featured.links.repo} variant="secondary" size="md">Source</InkButton>
+        )}
+        {featured.links.demo && (
+          <InkButton href={featured.links.demo} variant="ghost" size="md">Demo</InkButton>
+        )}
+      </div>
+    </div>
+  </article>
+
+  {/* ─── ARCHIVE ──────────────────────────────────────────────── */}
+  <div class="projects-fa__archive-header">
+    <h3 class="projects-fa__archive-title">THE ARCHIVE</h3>
+  </div>
+
+  <div class="projects-fa__archive-grid">
+    {archive.map((project) => (
+      <article class="projects-fa__archive-card">
+        <ProjectThumbnail project={project} />
+        <div class="projects-fa__archive-info">
+          <div class="projects-fa__archive-tags">
+            {project.tech.slice(0, 4).map((t) => (
+              <span class="projects-fa__tag">{t}</span>
+            ))}
+          </div>
+          <div class="projects-fa__archive-links">
+            {project.links.live && (
+              <InkButton href={project.links.live} variant="primary" size="sm">Live</InkButton>
+            )}
+            {project.links.repo && (
+              <InkButton href={project.links.repo} variant="secondary" size="sm">Repo</InkButton>
+            )}
+            {project.links.demo && (
+              <InkButton href={project.links.demo} variant="ghost" size="sm">Demo</InkButton>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</PaperPanel>
+
+<style>
+  /* ─── FEATURED HERO ─────────────────────────────────────────── */
+  .projects-fa__hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md);
+    border: var(--ink-bold) solid var(--color-ink);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+    background-color: var(--color-paper);
+  }
+
+  @media (min-width: 768px) {
+    .projects-fa__hero {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .projects-fa__hero-thumb {
+    width: 100%;
+  }
+
+  .projects-fa__hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    justify-content: center;
+  }
+
+  .projects-fa__hero-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .projects-fa__hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .projects-fa__hero-status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    line-height: 1;
+  }
+
+  .projects-fa__hero-tagline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--color-ink);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .projects-fa__hero-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 55ch;
+  }
+
+  .projects-fa__hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .projects-fa__hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
+  }
+
+  /* ─── ARCHIVE ───────────────────────────────────────────────── */
+  .projects-fa__archive-header {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .projects-fa__archive-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin: 0;
+    position: relative;
+    display: inline-block;
+  }
+
+  .projects-fa__archive-title::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: var(--ink-thick);
+    background-color: var(--color-ink);
+    margin-top: 0.2rem;
+  }
+
+  .projects-fa__archive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .projects-fa__archive-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .projects-fa__archive-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .projects-fa__archive-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .projects-fa__archive-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .projects-fa__archive-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .projects-fa__archive-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  /* ─── SHARED TAG ────────────────────────────────────────────── */
+  .projects-fa__tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink-faded);
+    border: var(--ink-thin) solid var(--color-ink-faded);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.04em;
+  }
+</style>

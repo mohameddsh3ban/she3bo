@@ -1,0 +1,149 @@
+---
+import type { Project } from '@/data/projects';
+
+interface Props {
+  project: Project;
+  class?: string;
+}
+
+const { project, class: className = '' } = Astro.props;
+
+const chapterWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const chapterLabel = `// chapter ${chapterWords[project.id - 1] || project.number}`;
+
+const statusClass = {
+  'LIVE': 'status--live',
+  'PRIVATE BETA': 'status--private-beta',
+  'SHIPPED': 'status--shipped',
+  'DEMO': 'status--demo',
+  'ARCHIVED': 'status--archived',
+}[project.status];
+---
+
+<div class={`thumb ${className}`}>
+  <div class="thumb__top">
+    <span class="thumb__number">{project.number}</span>
+    <span class={`thumb__status ${statusClass}`}>{project.status}</span>
+  </div>
+  <div class="thumb__center">
+    <h3 class="thumb__name">{project.name}</h3>
+    <span class="thumb__icon">{project.icon}</span>
+  </div>
+  <p class="thumb__chapter">{chapterLabel}</p>
+</div>
+
+<style>
+  .thumb {
+    aspect-ratio: 16 / 10;
+    background-color: var(--color-paper);
+    border: var(--ink-bold) solid var(--color-ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+    position: relative;
+    transition:
+      transform 150ms var(--ease-snap),
+      box-shadow 150ms var(--ease-snap);
+  }
+
+  .thumb:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 0 var(--color-shatta);
+  }
+
+  .thumb__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .thumb__number {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+
+  .thumb__status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    line-height: 1;
+  }
+
+  .status--live {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  .status--private-beta {
+    background-color: transparent;
+    color: var(--color-ink);
+    border: 1px dashed var(--color-ink);
+  }
+
+  .status--demo {
+    background-color: transparent;
+    color: var(--color-ink-faded);
+    border: var(--ink-thin) solid var(--color-ink-faded);
+  }
+
+  .status--shipped {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .status--archived {
+    background-color: transparent;
+    color: var(--color-ink-faded);
+    border: var(--ink-thin) solid var(--color-ink-faded);
+  }
+
+  .thumb__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .thumb__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    text-align: center;
+    margin: 0;
+  }
+
+  .thumb__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .thumb__chapter {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink-faded);
+    line-height: 1.4;
+    margin: 0;
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thumb {
+      transition: none;
+    }
+    .thumb:hover {
+      transform: none;
+    }
+  }
+</style>

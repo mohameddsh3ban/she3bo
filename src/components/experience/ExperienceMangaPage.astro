@@ -1,0 +1,416 @@
+---
+/**
+ * ExperienceMangaPage — Manga comic page layout with asymmetric panels.
+ * Three arcs arranged like a manga page spread.
+ * ASCENSION (top-left, biggest), TRAINING (top-right, narrow tall),
+ * FOUNDATION (bottom, wide horizontal).
+ * No Shatta per DESIGN.md § 13.2.
+ */
+
+const arcs = {
+  ascension: {
+    title: 'ASCENSION ARC',
+    role: 'Senior Full-Stack Developer',
+    company: 'm2a-fm GmbH',
+    period: '2025 – Present',
+    status: 'CURRENT',
+    description: 'Senior full-stack developer at a German facility management company. Architecting and shipping production systems that handle real-world complexity. Currently in the thick of it.',
+    tech: ['React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS'],
+  },
+  training: {
+    title: 'TRAINING ARC',
+    role: 'Mandatory Military Service',
+    company: 'Egyptian Armed Forces',
+    period: '2024 – 2025',
+    status: 'FORGED',
+    description: 'One year off the keyboard. Discipline forged in a different dojo. Returned sharper, more focused, more resilient.',
+    tech: [],
+  },
+  foundation: {
+    title: 'FOUNDATION ARC',
+    role: 'Full-Stack Developer',
+    company: 'OLS Kuwait',
+    period: '2021 – 2024',
+    status: 'ORIGIN',
+    description: 'Started here. Three years of full-stack work in Kuwait. Built production systems from scratch, shipped client-facing dashboards, learned how production systems actually fail at scale.',
+    tech: ['Vue.js', 'Laravel', 'PostgreSQL', 'Docker', 'REST APIs'],
+  },
+};
+---
+
+<section class="exp-manga" aria-label="Career experience — manga page layout">
+  <header class="exp-manga__header">
+    <h2 class="exp-manga__title">EXPERIENCE</h2>
+    <p class="exp-manga__subtitle">Read like a manga page — biggest panel is the current arc</p>
+  </header>
+
+  <div class="exp-manga__grid">
+    {/* ─── ASCENSION: Top-left, biggest ──────────────────────── */}
+    <article class="exp-manga__panel exp-manga__panel--ascension" aria-label={arcs.ascension.title}>
+      <div class="exp-manga__panel-inner">
+        <div class="exp-manga__panel-top">
+          <h3 class="exp-manga__arc-title exp-manga__arc-title--lg">{arcs.ascension.title}</h3>
+          <span class="exp-manga__status exp-manga__status--current">{arcs.ascension.status}</span>
+        </div>
+
+        <p class="exp-manga__role exp-manga__role--lg">{arcs.ascension.role}</p>
+        <p class="exp-manga__company">{arcs.ascension.company}</p>
+        <time class="exp-manga__period">{arcs.ascension.period}</time>
+
+        <div class="exp-manga__divider" aria-hidden="true"></div>
+
+        <p class="exp-manga__desc exp-manga__desc--lg">{arcs.ascension.description}</p>
+
+        <div class="exp-manga__tags">
+          {arcs.ascension.tech.map((t) => (
+            <span class="exp-manga__tag">{t}</span>
+          ))}
+        </div>
+      </div>
+    </article>
+
+    {/* ─── TRAINING: Top-right, narrow tall ──────────────────── */}
+    <article class="exp-manga__panel exp-manga__panel--training" aria-label={arcs.training.title}>
+      <div class="exp-manga__panel-inner">
+        <div class="exp-manga__panel-top">
+          <h3 class="exp-manga__arc-title">{arcs.training.title}</h3>
+          <span class="exp-manga__status exp-manga__status--forged">{arcs.training.status}</span>
+        </div>
+
+        <p class="exp-manga__role">{arcs.training.role}</p>
+        <p class="exp-manga__company">{arcs.training.company}</p>
+        <time class="exp-manga__period">{arcs.training.period}</time>
+
+        <div class="exp-manga__divider" aria-hidden="true"></div>
+
+        <p class="exp-manga__desc">{arcs.training.description}</p>
+
+        <div class="exp-manga__tags-empty">
+          <span class="exp-manga__tag-dash">—</span>
+        </div>
+      </div>
+    </article>
+
+    {/* ─── FOUNDATION: Bottom, wide horizontal ──────────────── */}
+    <article class="exp-manga__panel exp-manga__panel--foundation" aria-label={arcs.foundation.title}>
+      <div class="exp-manga__panel-inner exp-manga__panel-inner--horizontal">
+        <div class="exp-manga__foundation-left">
+          <div class="exp-manga__panel-top">
+            <h3 class="exp-manga__arc-title">{arcs.foundation.title}</h3>
+            <span class="exp-manga__status exp-manga__status--origin">{arcs.foundation.status}</span>
+          </div>
+
+          <p class="exp-manga__role">{arcs.foundation.role}</p>
+          <p class="exp-manga__company">{arcs.foundation.company}</p>
+          <time class="exp-manga__period">{arcs.foundation.period}</time>
+        </div>
+
+        <div class="exp-manga__foundation-divider" aria-hidden="true"></div>
+
+        <div class="exp-manga__foundation-right">
+          <p class="exp-manga__desc">{arcs.foundation.description}</p>
+
+          <div class="exp-manga__tags">
+            {arcs.foundation.tech.map((t) => (
+              <span class="exp-manga__tag">{t}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .exp-manga {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .exp-manga__header {
+    max-width: 1400px;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .exp-manga__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: var(--color-ink);
+    margin: 0;
+    display: inline-block;
+    border-bottom: var(--ink-bold) solid var(--color-ink);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .exp-manga__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-faded);
+    margin: var(--spacing-xs) 0 0;
+  }
+
+  /* ─── MANGA GRID ───────────────────────────────────────────── */
+  .exp-manga__grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: var(--spacing-sm);
+  }
+
+  @media (min-width: 1024px) {
+    .exp-manga__grid {
+      grid-template-columns: 3fr 2fr;
+      grid-template-rows: auto auto;
+      gap: var(--spacing-md);
+    }
+
+    .exp-manga__panel--ascension {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    .exp-manga__panel--training {
+      grid-column: 2 / 3;
+      grid-row: 1 / 2;
+    }
+
+    .exp-manga__panel--foundation {
+      grid-column: 1 / -1;
+      grid-row: 2 / 3;
+    }
+  }
+
+  /* ─── PANELS (base) ────────────────────────────────────────── */
+  .exp-manga__panel {
+    background-color: var(--color-paper);
+    border: var(--ink-thick) solid var(--color-ink);
+    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
+  }
+
+  .exp-manga__panel:hover {
+    transform: translate(-2px, -2px);
+  }
+
+  /* ASCENSION — biggest, heaviest, red shadow */
+  .exp-manga__panel--ascension {
+    border-width: var(--ink-bold);
+    box-shadow: 4px 4px 0 0 var(--color-shatta);
+  }
+  .exp-manga__panel--ascension:hover {
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+  }
+
+  /* TRAINING — black shadow */
+  .exp-manga__panel--training {
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+  }
+  .exp-manga__panel--training:hover {
+    box-shadow: 6px 6px 0 0 var(--color-ink);
+  }
+
+  /* FOUNDATION — black shadow */
+  .exp-manga__panel--foundation {
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+  }
+  .exp-manga__panel--foundation:hover {
+    box-shadow: 6px 6px 0 0 var(--color-ink);
+  }
+
+  /* ─── PANEL INNER ──────────────────────────────────────────── */
+  .exp-manga__panel-inner {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    height: 100%;
+  }
+
+  .exp-manga__panel-inner--horizontal {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  @media (min-width: 1024px) {
+    .exp-manga__panel-inner--horizontal {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+    }
+  }
+
+  /* ─── PANEL TOP (title + status row) ───────────────────────── */
+  .exp-manga__panel-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  /* ─── STATUS BADGES ────────────────────────────────────────── */
+  .exp-manga__status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: var(--ink-thin) solid var(--color-ink);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .exp-manga__status--current {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    border-color: var(--color-shatta);
+  }
+
+  .exp-manga__status--forged {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .exp-manga__status--origin {
+    background-color: var(--color-paper-shadow);
+    color: var(--color-ink);
+  }
+
+  /* ─── TYPOGRAPHY ───────────────────────────────────────────── */
+  .exp-manga__arc-title {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .exp-manga__arc-title--lg {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .exp-manga__role {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .exp-manga__role--lg {
+    font-size: 1.125rem;
+  }
+
+  .exp-manga__company {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-faded);
+    margin: 0;
+  }
+
+  .exp-manga__period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-faded);
+    letter-spacing: 0.05em;
+  }
+
+  .exp-manga__divider {
+    width: 100%;
+    height: var(--ink-medium);
+    background-color: var(--color-ink);
+    opacity: 0.2;
+  }
+
+  .exp-manga__desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-ink-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .exp-manga__desc--lg {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* ─── TECH TAGS ────────────────────────────────────────────── */
+  .exp-manga__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: var(--spacing-xs);
+  }
+
+  .exp-manga__tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink);
+    background-color: var(--color-paper-grain);
+    border: var(--ink-thin) solid var(--color-ink);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .exp-manga__tags-empty {
+    margin-top: auto;
+    padding-top: var(--spacing-xs);
+  }
+
+  .exp-manga__tag-dash {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-faded);
+  }
+
+  /* ─── FOUNDATION HORIZONTAL LAYOUT ─────────────────────────── */
+  .exp-manga__foundation-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  @media (min-width: 1024px) {
+    .exp-manga__foundation-left {
+      flex: 0 0 35%;
+    }
+  }
+
+  .exp-manga__foundation-divider {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .exp-manga__foundation-divider {
+      display: block;
+      width: var(--ink-medium);
+      align-self: stretch;
+      background-color: var(--color-ink);
+      opacity: 0.2;
+    }
+  }
+
+  .exp-manga__foundation-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+  }
+
+  /* ─── MOBILE: vertical column ordering ─────────────────────── */
+  @media (max-width: 767px) {
+    .exp-manga {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .exp-manga__panel--ascension {
+      order: 1;
+    }
+
+    .exp-manga__panel--training {
+      order: 2;
+    }
+
+    .exp-manga__panel--foundation {
+      order: 3;
+    }
+  }
+</style>

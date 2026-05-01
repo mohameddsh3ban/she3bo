@@ -1,0 +1,323 @@
+---
+import { projects } from '@/data/projects';
+import SectionHeader from '@components/ui/SectionHeader.astro';
+import PaperPanel from '@components/ui/PaperPanel.astro';
+import InkButton from '@components/ui/InkButton.astro';
+import ProjectThumbnail from '@components/projects/ProjectThumbnail.astro';
+
+const featured = projects.find((p) => p.featured)!;
+const rest = projects.filter((p) => !p.featured);
+---
+
+<PaperPanel tag="section" id="projects" class="projects-final">
+  <SectionHeader title="PROJECTS" subtitle="// six chapters, six different fights" />
+
+  {/* ─── FEATURED: PILOT 100 (splash page treatment) ──────────── */}
+  <article class="pf__hero">
+    <span class="pf__hero-ribbon">FEATURED — VOLUME I</span>
+    <div class="pf__hero-thumb">
+      <ProjectThumbnail project={featured} />
+    </div>
+    <div class="pf__hero-content">
+      <div class="pf__hero-head">
+        <h3 class="pf__hero-name">{featured.name}</h3>
+        <span class="pf__hero-status">{featured.status}</span>
+      </div>
+      <p class="pf__hero-tagline">{featured.tagline}</p>
+      <p class="pf__hero-desc">{featured.description}</p>
+      <div class="pf__hero-tags">
+        {featured.tech.map((t) => (
+          <span class="pf__tag">{t}</span>
+        ))}
+      </div>
+      <div class="pf__hero-links">
+        {featured.links.live && (
+          <InkButton href={featured.links.live} variant="primary" size="md">Live Site ↗</InkButton>
+        )}
+        {featured.links.repo && (
+          <InkButton href={featured.links.repo} variant="secondary" size="md">Source</InkButton>
+        )}
+        {featured.links.demo && (
+          <InkButton href={featured.links.demo} variant="ghost" size="md">Demo</InkButton>
+        )}
+      </div>
+      <a href="#" class="pf__hero-casestudy">→ Read the full case study</a>
+    </div>
+  </article>
+
+  {/* ─── REST: COMIC STRIP (Variant B panels) ─────────────────── */}
+  <div class="pf__strip">
+    {rest.map((project, i) => (
+      <article class={`pf__panel ${i % 2 === 1 ? 'pf__panel--alt' : ''}`}>
+        <div class="pf__panel-thumb">
+          <ProjectThumbnail project={project} />
+        </div>
+        <div class="pf__panel-content">
+          <div class="pf__panel-head">
+            <h3 class="pf__panel-name">{project.name}</h3>
+            <span class={`pf__panel-status pf__panel-status--${project.status.toLowerCase().replace(/[\s-]/g, '')}`}>
+              {project.status}
+            </span>
+          </div>
+          <p class="pf__panel-desc">{project.description}</p>
+          <div class="pf__panel-tags">
+            {project.tech.map((t) => (
+              <span class="pf__tag">{t}</span>
+            ))}
+          </div>
+          <div class="pf__panel-links">
+            {project.links.live && (
+              <InkButton href={project.links.live} variant="primary" size="sm">Live ↗</InkButton>
+            )}
+            {project.links.repo && (
+              <InkButton href={project.links.repo} variant="secondary" size="sm">Repo</InkButton>
+            )}
+            {project.links.demo && (
+              <InkButton href={project.links.demo} variant="ghost" size="sm">Demo</InkButton>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</PaperPanel>
+
+<style>
+  /* ─── FEATURED HERO ─────────────────────────────────────────── */
+  .pf__hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border: var(--ink-heavy) solid var(--color-ink);
+    box-shadow: 8px 8px 0 0 var(--color-shatta);
+    background-color: var(--color-paper);
+    position: relative;
+    overflow: visible;
+  }
+
+  @media (min-width: 768px) {
+    .pf__hero {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .pf__hero-thumb {
+      min-height: 420px;
+    }
+  }
+
+  .pf__hero-ribbon {
+    position: absolute;
+    top: -1px;
+    right: var(--spacing-md);
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem 0.5rem;
+    line-height: 1;
+    z-index: 1;
+  }
+
+  .pf__hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    justify-content: center;
+  }
+
+  .pf__hero-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .pf__hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .pf__hero-status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    line-height: 1;
+  }
+
+  .pf__hero-tagline {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--color-ink);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .pf__hero-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 55ch;
+  }
+
+  .pf__hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .pf__hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
+  }
+
+  /* ─── COMIC STRIP PANELS ────────────────────────────────────── */
+  .pf__strip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .pf__panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border: var(--ink-medium) solid var(--color-ink);
+    background-color: var(--color-paper);
+  }
+
+  .pf__panel--alt {
+    background-color: var(--color-paper-grain);
+  }
+
+  @media (min-width: 768px) {
+    .pf__panel {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+
+  .pf__panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    justify-content: center;
+  }
+
+  .pf__panel-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .pf__panel-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .pf__panel-status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    line-height: 1;
+  }
+
+  .pf__panel-status--live {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  .pf__panel-status--privatebeta {
+    border: 1px dashed var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .pf__panel-status--demo {
+    border: var(--ink-thin) solid var(--color-ink-faded);
+    color: var(--color-ink-faded);
+  }
+
+  .pf__panel-status--shipped {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .pf__panel-status--archived {
+    border: var(--ink-thin) solid var(--color-ink-faded);
+    color: var(--color-ink-faded);
+  }
+
+  .pf__panel-desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  .pf__panel-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .pf__panel-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
+  }
+
+  /* ─── CASE STUDY LINK ────────────────────────────────────────── */
+  .pf__hero-casestudy {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-shatta);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    margin-top: var(--spacing-xs);
+    transition: color 150ms var(--ease-ink);
+  }
+
+  .pf__hero-casestudy:hover {
+    color: var(--color-shatta-deep);
+    text-decoration: underline;
+  }
+
+  /* ─── SHARED TAG ────────────────────────────────────────────── */
+  .pf__tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink-faded);
+    border: var(--ink-thin) solid var(--color-ink-faded);
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.04em;
+  }
+</style>

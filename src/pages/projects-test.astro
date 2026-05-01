@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectsGrid from '@components/sections/ProjectsGrid.astro';
+import ProjectsComicStrip from '@components/sections/ProjectsComicStrip.astro';
+import ProjectsFeaturedArchive from '@components/sections/ProjectsFeaturedArchive.astro';
+import ProjectsFinal from '@components/sections/ProjectsFinal.astro';
+---
+
+<BaseLayout title="Projects Variants — she3bo.com V2 Test">
+  <main class="test-page">
+    <a href="/" class="test-page__back">← Home</a>
+
+    {/* ─── FINAL: C HERO + B STRIP ────────────────────────────── */}
+    <div class="test-page__divider">
+      <h2 class="test-page__label">FINAL: FEATURED HERO + COMIC STRIP</h2>
+    </div>
+    <ProjectsFinal />
+    <p class="test-page__eval">C's featured hero for Pilot 100 + B's comic strip panels for the rest. Best of both.</p>
+
+    <div class="test-page__spacer"></div>
+
+    {/* ─── VARIANT A ──────────────────────────────────────────── */}
+    <div class="test-page__divider">
+      <h2 class="test-page__label">VARIANT A: ISSUES GRID</h2>
+    </div>
+    <ProjectsGrid />
+    <p class="test-page__eval">Best for: equal weight across all projects, quick scan | Concerns: thumbnails compete at same size, no hierarchy</p>
+
+    <div class="test-page__spacer"></div>
+
+    {/* ─── VARIANT B ──────────────────────────────────────────── */}
+    <div class="test-page__divider">
+      <h2 class="test-page__label">VARIANT B: COMIC STRIP</h2>
+    </div>
+    <ProjectsComicStrip />
+    <p class="test-page__eval">Best for: storytelling, reading flow, detailed descriptions | Concerns: long scroll, less visual density</p>
+
+    <div class="test-page__spacer"></div>
+
+    {/* ─── VARIANT C ──────────────────────────────────────────── */}
+    <div class="test-page__divider">
+      <h2 class="test-page__label">VARIANT C: FEATURED + ARCHIVE</h2>
+    </div>
+    <ProjectsFeaturedArchive />
+    <p class="test-page__eval">Best for: hero project emphasis, recruiter-focused hierarchy | Concerns: archive cards may feel cramped at 5-col</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .test-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+  }
+
+  .test-page__back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-xs) 0;
+  }
+
+  .test-page__back:hover {
+    color: var(--color-shatta);
+  }
+
+  .test-page__divider {
+    border-top: var(--ink-heavy) solid var(--color-ink);
+    padding-top: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .test-page__label {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: var(--color-shatta);
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .test-page__eval {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-faded);
+    font-style: italic;
+    margin: var(--spacing-sm) 0 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-left: var(--ink-thick) solid var(--color-ink-faded);
+  }
+
+  .test-page__spacer {
+    height: var(--spacing-2xl);
+  }
+</style>

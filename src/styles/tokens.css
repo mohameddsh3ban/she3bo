@@ -1,0 +1,49 @@
+/* =================================================================
+   DESIGN TOKENS — The Sheb3o V2 design system
+   Locked palette. Locked typography. Locked rhythm.
+   Do not add new colors. Discipline keeps the brand cohesive.
+   ================================================================= */
+
+@theme {
+  /* ─── PAPER PALETTE ─────────────────────────────────────────── */
+  --color-paper: #EDE4CC;
+  --color-paper-shadow: #D4C9A8;
+  --color-paper-grain: #E5DBC0;
+  --color-paper-deep: #C9BD9A;
+
+  /* ─── INK PALETTE ───────────────────────────────────────────── */
+  --color-ink: #1A1A1A;
+  --color-ink-soft: #4A4A4A;
+  --color-ink-muted: #2D2620;
+  --color-ink-faded: #6B5F50;
+
+  /* ─── BRAND HEAT ────────────────────────────────────────────── */
+  --color-shatta: #D62828;
+  --color-shatta-deep: #B71D1D;
+  --color-flame: #F77F00;
+  --color-flame-soft: #FCBF49;
+
+  /* ─── TYPOGRAPHY ────────────────────────────────────────────── */
+  --font-display: 'Bangers', 'Anton', system-ui, sans-serif;
+  --font-body: 'Zen Kaku Gothic New', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ─── SPACING ───────────────────────────────────────────────── */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+  --spacing-2xl: 12rem;
+
+  /* ─── INK WEIGHTS (manga line widths) ───────────────────────── */
+  --ink-thin: 1px;
+  --ink-medium: 2px;
+  --ink-thick: 3px;
+  --ink-bold: 5px;
+  --ink-heavy: 8px;
+
+  /* ─── ANIMATION ─────────────────────────────────────────────── */
+  --ease-ink: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-snap: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

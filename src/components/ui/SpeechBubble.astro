@@ -1,0 +1,109 @@
+---
+/**
+ * SpeechBubble — A hand-drawn manga speech bubble.
+ * Used by Shatta and other characters.
+ *
+ * Props:
+ *   - text: the text inside the bubble
+ *   - tail: 'left' | 'right' | 'down' | 'up' — direction of tail
+ *   - variant: 'normal' | 'shout' — shout adds spikes
+ */
+interface Props {
+  text: string;
+  tail?: 'left' | 'right' | 'down' | 'up';
+  variant?: 'normal' | 'shout';
+  class?: string;
+}
+
+const {
+  text,
+  tail = 'left',
+  variant = 'normal',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`speech-bubble speech-bubble--${variant} speech-bubble--tail-${tail} ${className}`}>
+  <span class="speech-bubble__text">{text}</span>
+</div>
+
+<style>
+  .speech-bubble {
+    position: relative;
+    display: inline-block;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    border: var(--ink-thick) solid var(--color-ink);
+    border-radius: 50% 50% 50% 50% / 60% 60% 60% 60%;
+    transform: rotate(-2deg);
+    white-space: nowrap;
+  }
+
+  .speech-bubble__text {
+    display: inline-block;
+  }
+
+  /* Tail variants — small triangle ink indicator */
+  .speech-bubble--tail-left::before,
+  .speech-bubble--tail-right::before,
+  .speech-bubble--tail-down::before,
+  .speech-bubble--tail-up::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  .speech-bubble--tail-left::before {
+    left: -12px;
+    bottom: 8px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 14px solid var(--color-ink);
+  }
+
+  .speech-bubble--tail-right::before {
+    right: -12px;
+    bottom: 8px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 14px solid var(--color-ink);
+  }
+
+  .speech-bubble--tail-down::before {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 14px solid var(--color-ink);
+  }
+
+  .speech-bubble--tail-up::before {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 14px solid var(--color-ink);
+  }
+
+  /* Shout variant — explosive spikes */
+  .speech-bubble--shout {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    border-radius: 0;
+    clip-path: polygon(
+      0% 20%, 8% 0%, 25% 15%, 40% 0%, 55% 15%, 70% 0%,
+      85% 15%, 100% 0%, 95% 30%, 100% 50%, 95% 70%, 100% 100%,
+      85% 85%, 70% 100%, 55% 85%, 40% 100%, 25% 85%, 8% 100%,
+      0% 80%, 5% 50%
+    );
+    transform: rotate(0deg);
+    padding: 1rem 1.5rem;
+  }
+</style>

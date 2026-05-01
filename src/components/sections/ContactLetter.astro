@@ -1,0 +1,223 @@
+---
+import { channels } from '@data/channels';
+---
+
+<section class="letter" id="contact" aria-label="Contact Mohamed Shaban">
+  <div class="letter__container">
+    <div class="letter__paper">
+      <h2 class="letter__greeting">Dear visitor,</h2>
+
+      <div class="letter__body">
+        <p>
+          Thanks for making it this far. Most people bounce by the second scroll.
+        </p>
+        <p>
+          If anything here resonated — the manga discipline, the German rigor,
+          the spicy-by-default approach — let's talk. The portfolio's done.
+          The conversation isn't.
+        </p>
+        <p>Here's where to find me:</p>
+      </div>
+
+      <address class="letter__address">
+        {channels.map((ch) => (
+          <div class="letter__address-row">
+            <span class="letter__address-label">{ch.label}:</span>
+            <a
+              href={ch.href}
+              target={ch.href.startsWith('mailto:') ? undefined : '_blank'}
+              rel={ch.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+              class="letter__address-link"
+              aria-label={`${ch.label} — ${ch.handle}`}
+            >
+              {ch.handle}
+            </a>
+          </div>
+        ))}
+      </address>
+
+      <div class="letter__divider"></div>
+
+      <div class="letter__footer">
+        <div class="letter__stamp">
+          <img
+            src="/images/sheb3o/sheb3o-wave.png"
+            alt="Sheb3o wave sticker"
+            class="letter__stamp-image"
+            width="80"
+            height="120"
+            loading="lazy"
+          />
+        </div>
+        <p class="letter__signature">— Mohamed Shaban <span class="letter__signature-nick">(she3bo)</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .letter {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .letter__container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .letter__paper {
+    background-color: var(--color-paper);
+    border: var(--ink-medium) solid var(--color-ink);
+    padding: var(--spacing-lg);
+    position: relative;
+    box-shadow:
+      4px 4px 0 0 var(--color-paper-shadow),
+      8px 8px 0 0 var(--color-paper-deep);
+  }
+
+  /* ─── GREETING ─────────────────────────────────────────────── */
+  .letter__greeting {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--color-ink);
+    margin: 0 0 var(--spacing-md);
+    font-style: italic;
+    line-height: 1.1;
+  }
+
+  /* ─── BODY ─────────────────────────────────────────────────── */
+  .letter__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding-left: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .letter__body p {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  /* ─── ADDRESS BLOCK ────────────────────────────────────────── */
+  .letter__address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .letter__address-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+
+  .letter__address-label {
+    color: var(--color-ink-faded);
+    min-width: 6rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .letter__address-link {
+    color: var(--color-ink);
+    text-decoration: none;
+    border-bottom: var(--ink-thin) solid var(--color-ink-faded);
+    transition:
+      color 200ms var(--ease-ink),
+      border-color 200ms var(--ease-ink);
+  }
+
+  .letter__address-link:hover {
+    color: var(--color-shatta);
+    border-color: var(--color-shatta);
+  }
+
+  /* ─── DIVIDER ──────────────────────────────────────────────── */
+  .letter__divider {
+    height: var(--ink-thin);
+    background-color: var(--color-ink);
+    opacity: 0.3;
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* ─── FOOTER ───────────────────────────────────────────────── */
+  .letter__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .letter__stamp {
+    opacity: 0.6;
+  }
+
+  .letter__stamp-image {
+    display: block;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .letter__signature {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-ink);
+    margin: 0;
+    text-align: right;
+    line-height: 1.2;
+  }
+
+  .letter__signature-nick {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-faded);
+  }
+
+  /* ─── MOBILE ─────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .letter {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .letter__paper {
+      padding: var(--spacing-md);
+    }
+
+    .letter__body {
+      padding-left: 0;
+    }
+
+    .letter__address {
+      padding-left: 0;
+    }
+
+    .letter__address-row {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .letter__address-label {
+      text-align: left;
+      min-width: auto;
+    }
+
+    .letter__footer {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+
+    .letter__signature {
+      text-align: left;
+    }
+  }
+</style>

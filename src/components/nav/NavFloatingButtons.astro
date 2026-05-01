@@ -1,0 +1,229 @@
+---
+/* VARIANT C: NavFloatingButtons — Floating ink-button pill group, top-right */
+interface Props {
+  activeLink?: string;
+}
+
+const { activeLink = '' } = Astro.props;
+
+const links = [
+  { label: 'Experience', href: '#experience' },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
+];
+---
+
+{/* Desktop: floating pill group */}
+<nav class="floatnav" aria-label="Main navigation (floating buttons variant)">
+  <span class="floatnav__logo">she3bo</span>
+  {links.map(link => (
+    <a
+      href={link.href}
+      class:list={[
+        'floatnav__pill',
+        { 'floatnav__pill--active': activeLink === link.href }
+      ]}
+    >
+      {link.label}
+    </a>
+  ))}
+</nav>
+
+{/* Mobile: circular toggle + expandable list */}
+<div class="floatnav-mobile">
+  <input type="checkbox" id="floatnav-toggle" class="floatnav-mobile__checkbox" aria-label="Toggle navigation menu" />
+  <label for="floatnav-toggle" class="floatnav-mobile__trigger" aria-hidden="true">
+    <span class="floatnav-mobile__chili">🌶️</span>
+  </label>
+
+  <nav class="floatnav-mobile__panel" aria-label="Main navigation (floating mobile)">
+    {links.map(link => (
+      <a
+        href={link.href}
+        class:list={[
+          'floatnav-mobile__link',
+          { 'floatnav-mobile__link--active': activeLink === link.href }
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<style>
+  /* ─── Desktop: Floating Pill Group ──────────────────────── */
+  .floatnav {
+    display: none;
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 50;
+    align-items: center;
+    gap: 0;
+    background-color: var(--color-paper);
+    border: var(--ink-medium) solid var(--color-ink);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .floatnav {
+      display: flex;
+    }
+  }
+
+  .floatnav__logo {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-ink-faded);
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-right: var(--ink-thin) solid var(--color-paper-shadow);
+    user-select: none;
+  }
+
+  .floatnav__pill {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-right: var(--ink-thin) solid var(--color-paper-shadow);
+    transition:
+      background-color 150ms var(--ease-ink),
+      color 150ms var(--ease-ink),
+      transform 150ms var(--ease-snap),
+      box-shadow 150ms var(--ease-snap);
+    position: relative;
+  }
+
+  .floatnav__pill:last-child {
+    border-right: none;
+  }
+
+  .floatnav__pill:hover {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 0 var(--color-ink);
+    z-index: 1;
+  }
+
+  .floatnav__pill--active {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  /* ─── Mobile: Circular trigger + panel ──────────────────── */
+  .floatnav-mobile {
+    display: block;
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: 50;
+  }
+
+  @media (min-width: 768px) {
+    .floatnav-mobile {
+      display: none;
+    }
+  }
+
+  .floatnav-mobile__checkbox {
+    display: none;
+  }
+
+  .floatnav-mobile__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-paper);
+    border: var(--ink-thick) solid var(--color-ink);
+    box-shadow: 3px 3px 0 0 var(--color-shatta);
+    cursor: pointer;
+    position: relative;
+    z-index: 52;
+    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
+  }
+
+  .floatnav-mobile__trigger:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 var(--color-shatta);
+  }
+
+  .floatnav-mobile__chili {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .floatnav-mobile__panel {
+    position: absolute;
+    top: calc(100% + var(--spacing-xs));
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    background-color: var(--color-paper);
+    border: var(--ink-medium) solid var(--color-ink);
+    border-radius: 2px;
+    padding: var(--spacing-xs);
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 200ms var(--ease-ink), transform 200ms var(--ease-snap);
+    z-index: 51;
+    min-width: 160px;
+  }
+
+  .floatnav-mobile__checkbox:checked ~ .floatnav-mobile__panel {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .floatnav-mobile__checkbox:checked ~ .floatnav-mobile__trigger {
+    background-color: var(--color-shatta);
+    border-color: var(--color-ink);
+  }
+
+  .floatnav-mobile__link {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: var(--ink-thin) solid transparent;
+    transition: background-color 150ms var(--ease-ink), color 150ms var(--ease-ink);
+  }
+
+  .floatnav-mobile__link:hover {
+    background-color: var(--color-paper-shadow);
+    color: var(--color-shatta);
+  }
+
+  .floatnav-mobile__link--active {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floatnav__pill,
+    .floatnav-mobile__trigger,
+    .floatnav-mobile__panel,
+    .floatnav-mobile__link {
+      transition: none;
+    }
+  }
+</style>

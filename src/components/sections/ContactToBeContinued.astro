@@ -1,0 +1,369 @@
+---
+import SpeechBubble from '@components/ui/SpeechBubble.astro';
+import { channels } from '@data/channels';
+
+const emailChannel = channels.find(c => c.primary)!;
+const otherChannels = channels.filter(c => !c.primary);
+---
+
+<section class="tbc" id="contact" aria-label="Contact Mohamed Shaban">
+  <div class="tbc__divider"></div>
+
+  <div class="tbc__container">
+    <div class="tbc__content">
+      <header class="tbc__header">
+        <h2 class="tbc__title">TO BE CONTINUED...</h2>
+        <div class="tbc__rule"></div>
+        <p class="tbc__subtitle">// the protagonist's signoff</p>
+      </header>
+
+      <div class="tbc__body">
+        <p>The portfolio ends here.</p>
+        <p>The conversation starts wherever you want.</p>
+      </div>
+
+      <div class="tbc__channels">
+        <a
+          href={emailChannel.href}
+          class="tbc__btn tbc__btn--primary"
+          aria-label={`${emailChannel.label} — ${emailChannel.handle}`}
+        >
+          <span class="tbc__btn-top">
+            <span class="tbc__btn-icon">{emailChannel.icon}</span>
+            <span class="tbc__btn-label">{emailChannel.label}</span>
+          </span>
+          <span class="tbc__btn-handle">{emailChannel.handle}</span>
+        </a>
+
+        {otherChannels.map((ch) => (
+          <a
+            href={ch.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tbc__btn tbc__btn--secondary"
+            aria-label={`${ch.label} — ${ch.handle}`}
+          >
+            <span class="tbc__btn-top">
+              <span class="tbc__btn-icon">{ch.icon}</span>
+              <span class="tbc__btn-label">{ch.label}</span>
+            </span>
+            <span class="tbc__btn-handle">{ch.handle}</span>
+          </a>
+        ))}
+      </div>
+
+      <p class="tbc__copy-hint" data-email={emailChannel.handle}>
+        <kbd>CTRL</kbd> + <kbd>K</kbd> to copy email
+      </p>
+
+      <p class="tbc__signature">— Mohamed Shaban <span class="tbc__signature-nick">(she3bo)</span></p>
+    </div>
+
+    <div class="tbc__figure">
+      <div class="tbc__panel">
+        <img
+          src="/images/sheb3o/sheb3o-wave.png"
+          alt="Sheb3o — Mohamed Shaban waving goodbye"
+          class="tbc__image"
+          width="400"
+          height="600"
+          loading="lazy"
+        />
+        <div class="tbc__bubble">
+          <SpeechBubble text="TILL NEXT TIME." tail="down" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tbc {
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+  }
+
+  /* ─── TOP DIVIDER (no label) ───────────────────────────────── */
+  .tbc__divider {
+    max-width: 1400px;
+    margin: 0 auto var(--spacing-lg);
+    border-top: var(--ink-medium, 2px) solid var(--color-ink);
+  }
+
+  .tbc__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .tbc__container {
+      grid-template-columns: 13fr 7fr;
+      gap: var(--spacing-xl);
+    }
+  }
+
+  /* ─── LEFT: CONTENT ──────────────────────────────────────────── */
+  .tbc__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .tbc__header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tbc__title {
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--color-ink);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .tbc__rule {
+    width: 5rem;
+    height: var(--ink-bold);
+    background-color: var(--color-shatta);
+    margin-top: 0.5rem;
+  }
+
+  .tbc__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-faded);
+    margin: var(--spacing-xs) 0 0;
+    letter-spacing: 0.05em;
+  }
+
+  .tbc__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tbc__body p {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 50ch;
+  }
+
+  /* ─── CHANNEL GRID ───────────────────────────────────────────── */
+  .tbc__channels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    max-width: 32rem;
+  }
+
+  .tbc__btn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.875rem 1rem;
+    text-decoration: none;
+    border: var(--ink-thick) solid var(--color-ink);
+    cursor: pointer;
+    transition:
+      transform 150ms var(--ease-snap),
+      box-shadow 150ms var(--ease-snap);
+  }
+
+  .tbc__btn-top {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tbc__btn-icon {
+    font-size: 1rem;
+  }
+
+  .tbc__btn-label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tbc__btn-handle {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Primary (email) */
+  .tbc__btn--primary {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    box-shadow: 4px 4px 0 0 var(--color-shatta);
+    padding: 1rem 1.25rem;
+  }
+
+  .tbc__btn--primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  .tbc__btn--primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--color-shatta);
+  }
+
+  .tbc__btn--primary .tbc__btn-handle {
+    color: var(--color-paper-shadow);
+  }
+
+  .tbc__btn--primary .tbc__btn-label {
+    font-size: 1.1rem;
+  }
+
+  /* Secondary (others) */
+  .tbc__btn--secondary {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    box-shadow: 3px 3px 0 0 var(--color-ink);
+  }
+
+  .tbc__btn--secondary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 var(--color-ink);
+  }
+
+  .tbc__btn--secondary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 var(--color-ink);
+  }
+
+  /* ─── COPY HINT ──────────────────────────────────────────────── */
+  .tbc__copy-hint {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-ink-faded);
+    margin: -0.25rem 0 0;
+    letter-spacing: 0.03em;
+    transition: color 200ms ease;
+  }
+
+  .tbc__copy-hint kbd {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--color-ink-faded);
+    border-radius: 3px;
+    background-color: var(--color-paper-grain);
+  }
+
+  .tbc__copy-hint--copied {
+    color: var(--color-shatta);
+  }
+
+  .tbc__signature {
+    font-family: var(--font-mono);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--color-ink-faded);
+    margin: 0;
+  }
+
+  .tbc__signature-nick {
+    font-style: normal;
+    color: var(--color-ink-faded);
+    opacity: 0.7;
+  }
+
+  /* ─── RIGHT: FIGURE ──────────────────────────────────────────── */
+  .tbc__figure {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .tbc__panel {
+    position: relative;
+    border: var(--ink-bold) solid var(--color-ink);
+    background-color: var(--color-paper);
+    overflow: visible;
+    max-width: 300px;
+  }
+
+  .tbc__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .tbc__bubble {
+    position: absolute;
+    top: 5%;
+    left: -2.5rem;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .tbc__bubble {
+      top: 3%;
+      left: -3rem;
+    }
+  }
+
+  /* ─── MOBILE ─────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .tbc {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .tbc__channels {
+      grid-template-columns: 1fr;
+    }
+
+    .tbc__figure {
+      order: -1;
+      justify-content: center;
+    }
+
+    .tbc__panel {
+      max-width: 60%;
+    }
+
+    .tbc__bubble {
+      left: -1.5rem;
+      top: 3%;
+    }
+  }
+</style>
+
+<script>
+  const hint = document.querySelector('.tbc__copy-hint');
+  if (hint) {
+    const email = hint.getAttribute('data-email');
+    const original = hint.innerHTML;
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (email) {
+          navigator.clipboard.writeText(email).then(() => {
+            hint.textContent = 'copied!';
+            hint.classList.add('tbc__copy-hint--copied');
+            setTimeout(() => {
+              hint.innerHTML = original;
+              hint.classList.remove('tbc__copy-hint--copied');
+            }, 1500);
+          });
+        }
+      }
+    });
+  }
+</script>

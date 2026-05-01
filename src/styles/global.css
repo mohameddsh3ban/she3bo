@@ -1,0 +1,222 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* =================================================================
+   GLOBAL — Sheb3o V2 base styles
+   Sets the cream paper canvas globally. Every page inherits this.
+   ================================================================= */
+
+/* ─── RESET LAYER ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── BODY: THE PAPER CANVAS ───────────────────────────────────── */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-paper);
+  color: var(--color-ink-muted);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+
+  /* Layered paper texture using pure CSS — no image needed for v0.
+     We'll swap in a real paper-grain.png later for premium feel. */
+  background-image:
+    /* Top vignette warm */
+    radial-gradient(
+      ellipse at top,
+      rgba(212, 201, 168, 0) 0%,
+      rgba(212, 201, 168, 0.18) 100%
+    ),
+    /* Subtle paper fiber dots */
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(45, 38, 32, 0.025) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      rgba(45, 38, 32, 0.03) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 40% 80%,
+      rgba(45, 38, 32, 0.02) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(45, 38, 32, 0.025) 1px,
+      transparent 2px
+    );
+  background-size: 100% 100%, 50px 50px, 70px 70px, 90px 90px, 60px 60px;
+  background-attachment: fixed;
+}
+
+/* ─── PAPER GRAIN OVERLAY ──────────────────────────────────────── */
+/* When you drop a real paper-grain.png in /public/images/textures/,
+   this picks it up automatically and layers it over the body. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/images/textures/paper-grain.png');
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+
+  /* If image missing, this fallback adds noise via CSS gradient.
+     Remove this fallback once you drop the real grain texture. */
+  background-color: transparent;
+}
+
+/* Ensure all content sits above paper layers */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── TYPOGRAPHY DEFAULTS ──────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+h1 { font-size: clamp(2.5rem, 8vw, 6rem); }
+h2 { font-size: clamp(2rem, 5vw, 4rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2.5rem); }
+
+p {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-ink-muted);
+  max-width: 70ch;
+}
+
+a {
+  color: var(--color-ink);
+  text-decoration: none;
+  position: relative;
+  transition: color 200ms var(--ease-ink);
+}
+
+a:hover {
+  color: var(--color-shatta);
+}
+
+/* ─── INK UNDERLINE EFFECT (manga style) ───────────────────────── */
+.ink-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.ink-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: var(--ink-thick);
+  background-color: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms var(--ease-snap);
+}
+
+.ink-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* ─── SELECTION ────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-shatta);
+  color: var(--color-paper);
+}
+
+/* ─── SCROLLBAR (manga-themed) ─────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-paper-grain);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+  border: 3px solid var(--color-paper-grain);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-shatta);
+}
+
+/* ─── UTILITY CLASSES ──────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }
+
+.ink-border {
+  border: var(--ink-thick) solid var(--color-ink);
+}
+
+.ink-border-bold {
+  border: var(--ink-bold) solid var(--color-ink);
+}
+
+/* ─── HALFTONE PATTERN (manga shading) ─────────────────────────── */
+.halftone {
+  background-image: radial-gradient(
+    circle at center,
+    var(--color-ink) 1.5px,
+    transparent 2px
+  );
+  background-size: 8px 8px;
+}
+
+/* ─── SKETCH BORDER (rough hand-drawn feel) ────────────────────── */
+.sketch-border {
+  border: var(--ink-medium) solid var(--color-ink);
+  border-radius: 2px;
+  position: relative;
+}
+
+.sketch-border::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: var(--ink-thin) solid var(--color-ink);
+  border-radius: 2px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ─── ACCESSIBILITY ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── FOCUS VISIBLE ────────────────────────────────────────────── */
+:focus-visible {
+  outline: var(--ink-thick) solid var(--color-shatta);
+  outline-offset: 4px;
+}

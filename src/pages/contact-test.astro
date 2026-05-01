@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactToBeContinued from '@components/sections/ContactToBeContinued.astro';
+import ContactLetter from '@components/sections/ContactLetter.astro';
+import ContactSpeechBubbles from '@components/sections/ContactSpeechBubbles.astro';
+---
+
+<BaseLayout
+  title="Contact Variants — Mohamed Shaban | she3bo"
+  description="Contact section variant comparison."
+>
+  <main class="test-page">
+    <a href="/" class="test-page__back">← Home</a>
+
+    <div class="test-page__label">
+      <h2>VARIANT A: TO BE CONTINUED</h2>
+      <p>Best for: classic manga signoff, strong visual anchor with framed Sheb3o | Concerns: image sizing on mid-width screens</p>
+    </div>
+    <ContactToBeContinued />
+
+    <div class="test-page__spacer"></div>
+
+    <div class="test-page__label">
+      <h2>VARIANT B: LETTER</h2>
+      <p>Best for: personal tone, recruiter-friendly, clean single-column | Concerns: less visual punch than other variants</p>
+    </div>
+    <ContactLetter />
+
+    <div class="test-page__spacer"></div>
+
+    <div class="test-page__label">
+      <h2>VARIANT C: SPEECH BUBBLES</h2>
+      <p>Best for: playful manga energy, character-centric layout | Concerns: absolute positioning fragility on unusual screen sizes</p>
+    </div>
+    <ContactSpeechBubbles />
+  </main>
+</BaseLayout>
+
+<style>
+  .test-page {
+    padding: var(--spacing-md);
+  }
+
+  .test-page__back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    margin-bottom: var(--spacing-md);
+    border-bottom: var(--ink-thin) solid var(--color-ink);
+  }
+
+  .test-page__back:hover {
+    color: var(--color-shatta);
+    border-color: var(--color-shatta);
+  }
+
+  .test-page__label {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) 0;
+    border-top: var(--ink-bold) solid var(--color-ink);
+  }
+
+  .test-page__label h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-ink);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .test-page__label p {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-faded);
+    margin: var(--spacing-xs) 0 0;
+    max-width: 80ch;
+  }
+
+  .test-page__spacer {
+    height: var(--spacing-2xl);
+  }
+</style>

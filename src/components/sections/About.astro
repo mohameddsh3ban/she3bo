@@ -1,0 +1,144 @@
+---
+/**
+ * About — Two-column manga-page layout.
+ * Left: Sheb3o coding pose (cross-legged with laptop, Shatta margin doodle included in asset).
+ * Right: Protagonist monologue copy.
+ * Shatta appears only as part of the coding asset — knee-height margin doodle, on-brand per §13.
+ */
+---
+
+<section class="about" id="about" aria-label="About Mohamed Shaban">
+  <div class="about__container">
+    <div class="about__portrait">
+      <img
+        src="/images/sheb3o/sheb3o-coding.png"
+        alt="Sheb3o — Mohamed Shaban sitting cross-legged with laptop, Shatta chili mascot as a small margin doodle with TPE speech bubble"
+        class="about__image"
+        width="600"
+        height="900"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="about__text">
+      <header class="about__header">
+        <h2 class="about__title">ABOUT</h2>
+        <p class="about__subtitle">// the protagonist's monologue</p>
+      </header>
+
+      <div class="about__body">
+        <p>
+          Mohamed Shaban. Senior full-stack developer based in Egypt,
+          currently shipping at m2a-fm GmbH in Germany.
+        </p>
+        <p>
+          I treat code the way I treat training: discipline first, ego last,
+          results compound. The flashy stuff impresses people once. The boring
+          discipline ships products for years.
+        </p>
+        <p>
+          Built across the full stack — TypeScript, React, Node, PostgreSQL,
+          Docker, AWS — but the language is just the dialect. The real skill
+          is reading the problem before writing the solution.
+        </p>
+        <p>
+          Off the keyboard: lifting, running, eating spicy food, and beating
+          Shatta in arguments he doesn't know we're having.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .about__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  @media (min-width: 768px) {
+    .about__container {
+      grid-template-columns: 2fr 3fr;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+  }
+
+  /* ─── PORTRAIT ──────────────────────────────────────────────── */
+  .about__portrait {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .about__image {
+    display: block;
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ─── TEXT COLUMN ──────────────────────────────────────────── */
+  .about__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .about__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .about__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: var(--color-ink);
+    margin: 0;
+    display: inline-block;
+    border-bottom: var(--ink-bold) solid var(--color-ink);
+    padding-bottom: var(--spacing-xs);
+    align-self: flex-start;
+  }
+
+  .about__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-faded);
+    margin: 0;
+  }
+
+  .about__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .about__body p {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  /* ─── MOBILE ───────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .about {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .about__image {
+      max-width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,250 @@
+---
+import SpeechBubble from '@components/ui/SpeechBubble.astro';
+import InkButton from '@components/ui/InkButton.astro';
+
+const channels = [
+  { name: 'Email', href: 'mailto:info@she3bo.com', primary: true, ariaLabel: 'Send email to Mohamed Shaban' },
+  { name: 'GitHub', href: 'https://github.com/she3bo', primary: false, ariaLabel: 'Visit GitHub profile' },
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/she3bo', primary: false, ariaLabel: 'Visit LinkedIn profile' },
+  { name: 'X / Twitter', href: 'https://x.com/she3bo', primary: false, ariaLabel: 'Visit X profile' },
+  { name: 'Discord', href: 'https://discord.com', primary: false, ariaLabel: 'Join Discord server' },
+  { name: 'Telegram', href: 'https://t.me/she3bo', primary: false, ariaLabel: 'Message on Telegram' },
+];
+---
+
+<section class="contact" id="contact" aria-label="Contact Mohamed Shaban">
+  <div class="contact__divider">
+    <span class="contact__divider-label">// end</span>
+  </div>
+
+  <div class="contact__container">
+    <div class="contact__content">
+      <header class="contact__header">
+        <h2 class="contact__title">TO BE CONTINUED...</h2>
+        <p class="contact__subtitle">// the protagonist's signoff</p>
+      </header>
+
+      <div class="contact__body">
+        <p>The portfolio ends here.</p>
+        <p>The conversation starts wherever you want.</p>
+      </div>
+
+      <div class="contact__channels">
+        {channels.map((ch) => (
+          <InkButton
+            href={ch.href}
+            variant={ch.primary ? 'primary' : 'secondary'}
+            size="md"
+            ariaLabel={ch.ariaLabel}
+          >
+            {ch.name}
+          </InkButton>
+        ))}
+      </div>
+
+      <p class="contact__signature">— Mohamed Shaban</p>
+    </div>
+
+    <div class="contact__figure">
+      <div class="contact__bubble">
+        <SpeechBubble text="TILL NEXT TIME!" tail="down" />
+      </div>
+      <img
+        src="/images/sheb3o/sheb3o-wave.png"
+        alt="Sheb3o — Mohamed Shaban waving goodbye"
+        class="contact__image"
+        width="400"
+        height="600"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    padding: var(--spacing-lg) var(--spacing-md) 0;
+    overflow: hidden;
+  }
+
+  /* ─── TOP DIVIDER ──────────────────────────────────────────── */
+  .contact__divider {
+    max-width: 1400px;
+    margin: 0 auto var(--spacing-lg);
+    border-top: var(--ink-medium) solid var(--color-ink);
+    position: relative;
+  }
+
+  .contact__divider-label {
+    position: absolute;
+    top: -0.6em;
+    right: 0;
+    background-color: var(--color-paper);
+    padding: 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-faded);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── GRID ─────────────────────────────────────────────────── */
+  .contact__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    align-items: end;
+  }
+
+  @media (min-width: 768px) {
+    .contact__container {
+      grid-template-columns: 3fr 2fr;
+      gap: 0;
+    }
+  }
+
+  /* ─── LEFT: CONTENT ──────────────────────────────────────────── */
+  .contact__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
+  }
+
+  .contact__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .contact__title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--color-ink);
+    margin: 0;
+    display: inline-block;
+    align-self: flex-start;
+    line-height: 1;
+    position: relative;
+  }
+
+  .contact__title::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: var(--ink-bold);
+    background-color: var(--color-shatta);
+    margin-top: 0.3rem;
+  }
+
+  .contact__subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-faded);
+    margin: 0;
+    margin-top: var(--spacing-xs);
+  }
+
+  .contact__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact__body p {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 50ch;
+  }
+
+  /* ─── CHANNEL GRID ───────────────────────────────────────────── */
+  .contact__channels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    max-width: 32rem;
+  }
+
+  @media (min-width: 480px) {
+    .contact__channels {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .contact__signature {
+    font-family: var(--font-mono);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--color-ink-faded);
+    margin: 0;
+  }
+
+  /* ─── RIGHT: FIGURE ──────────────────────────────────────────── */
+  .contact__figure {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .contact__image {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+
+  .contact__bubble {
+    position: absolute;
+    top: 0;
+    right: 5%;
+    z-index: 1;
+  }
+
+  /* ─── DESKTOP ────────────────────────────────────────────────── */
+  @media (min-width: 768px) {
+    .contact__figure {
+      align-self: end;
+    }
+
+    .contact__image {
+      max-width: 420px;
+    }
+
+    .contact__bubble {
+      top: -1rem;
+      right: -1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .contact__image {
+      max-width: 460px;
+    }
+  }
+
+  /* ─── MOBILE ─────────────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .contact {
+      padding: var(--spacing-lg) var(--spacing-sm) 0;
+    }
+
+    .contact__figure {
+      order: -1;
+    }
+
+    .contact__image {
+      max-width: 260px;
+    }
+
+    .contact__content {
+      padding-bottom: var(--spacing-md);
+    }
+  }
+</style>
