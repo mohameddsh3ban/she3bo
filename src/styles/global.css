@@ -13,6 +13,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* full-bleed sections use 100vw (incl. scrollbar) + off-screen sr-only links
+     can overshoot the viewport; clip horizontal overflow at the root so it never
+     produces a horizontal scrollbar. `clip` (not hidden) keeps vertical window
+     scrolling intact, so GSAP ScrollTrigger pinning is unaffected. */
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -63,24 +68,10 @@ body {
 }
 
 /* ─── PAPER GRAIN OVERLAY ──────────────────────────────────────── */
-/* When you drop a real paper-grain.png in /public/images/textures/,
-   this picks it up automatically and layers it over the body. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url('/images/textures/paper-grain.png');
-  background-repeat: repeat;
-  background-size: 400px 400px;
-  opacity: 0.35;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  z-index: 0;
-
-  /* If image missing, this fallback adds noise via CSS gradient.
-     Remove this fallback once you drop the real grain texture. */
-  background-color: transparent;
-}
+/* The cream paper + pure-CSS fiber texture on `body` (above) is the canvas
+   and ships at zero network cost. A real grain PNG can be layered later via
+   a body::before overlay (drop it in /public/textures/ and re-add the rule).
+   We intentionally do NOT reference a missing image — no broken requests. */
 
 /* Ensure all content sits above paper layers */
 body > * {

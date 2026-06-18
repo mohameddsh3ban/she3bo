@@ -1,0 +1,108 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ChapterCover from '@components/ui/ChapterCover.astro';
+import SpeechBubble from '@components/ui/SpeechBubble.astro';
+---
+
+<BaseLayout
+  title="404 — Lost Chapter | she3bo"
+  description="This page wandered off the map. Head back to the start of the story and pick up the trail again."
+>
+  <main class="inner-page">
+    <ChapterCover
+      chapter="CH ??"
+      arc="LOST CHAPTER"
+      title="404"
+      subtitle="// this page wandered off the map"
+      asset="/she3bo/sheb3o-powerup2.png"
+      assetAlt="Sheb3o powering up"
+    />
+
+    <section class="lost" aria-labelledby="lost-heading">
+      <h2 id="lost-heading" class="lost__heading">This panel was never drawn.</h2>
+      <p class="lost__copy">
+        The chapter you were looking for slipped out of the binding — maybe a stale
+        link, maybe a typo in the URL. No saved version of this page exists. Flip back
+        to the cover and the story picks up right where it should.
+      </p>
+
+      <a class="lost__home" href="/">GO BACK HOME</a>
+
+      <div class="lost__shatta">
+        <SpeechBubble text="AKL NAR!" variant="shout" />
+        <img
+          class="lost__shatta-img"
+          src="/shata/shatta-lost.png"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .inner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  }
+
+  .lost {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding-block: var(--spacing-lg);
+    max-width: 60ch;
+  }
+
+  .lost__heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    color: var(--color-ink);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  .lost__copy {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+    margin: 0;
+  }
+
+  .lost__home {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-bottom: var(--ink-medium) solid var(--color-shatta);
+    padding-bottom: 0.4rem;
+    display: inline-block;
+    transition: color 0.2s var(--ease-ink);
+  }
+
+  .lost__home:hover,
+  .lost__home:focus-visible {
+    color: var(--color-shatta);
+  }
+
+  .lost__shatta {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+  }
+
+  .lost__shatta-img {
+    max-height: 120px;
+    width: auto;
+    display: block;
+  }
+</style>

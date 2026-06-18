@@ -1,0 +1,93 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumb from '@components/ui/Breadcrumb.astro';
+import ChapterCover from '@components/ui/ChapterCover.astro';
+import SkillsDomainCards from '@components/sections/SkillsDomainCards.astro';
+---
+<BaseLayout
+  title="SKILLS — Mohamed Shaban | she3bo"
+  description="The techniques, earned not bought — the frontend, backend, infrastructure, and discipline a senior full-stack developer leans on every day."
+>
+  <main class="inner-page">
+    <Breadcrumb crumbs={[{ label: 'CH 04', href: '/' }, { label: 'SKILLS' }]} />
+
+    <div class="cover-stack">
+      <ChapterCover
+        chapter="CH 04"
+        arc="CURSED TECHNIQUES"
+        title="SKILLS"
+        subtitle="// the techniques, earned not bought"
+        asset="/she3bo/sheb3o-technique.webp"
+        assetAlt="Sheb3o in a technique stance"
+      />
+      <img
+        class="cover-stack__sidekick"
+        src="/shata/shatta-study.png"
+        alt="Shatta studying"
+        aria-hidden="true"
+        loading="lazy"
+        width="90"
+        height="90"
+      />
+    </div>
+
+    <SkillsDomainCards />
+
+    <section class="page-cta">
+      <a class="page-cta__link" href="/projects">&rarr; See it all in production</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .inner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  }
+
+  /* Cover + knee-height Shatta doodle (decorative, near the cover only — §13.2) */
+  .cover-stack {
+    position: relative;
+  }
+
+  .cover-stack__sidekick {
+    position: absolute;
+    right: var(--spacing-sm);
+    bottom: 0;
+    max-height: 90px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  /* On narrow viewports the cover asset reorders above the text; keep the
+     doodle from overlapping the title by tucking it to the corner small. */
+  @media (max-width: 480px) {
+    .cover-stack__sidekick {
+      max-height: 64px;
+      right: 0;
+    }
+  }
+
+  .page-cta {
+    padding-block: var(--spacing-lg);
+  }
+
+  .page-cta__link {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-shatta);
+    padding-bottom: 0.4rem;
+    display: inline-block;
+    transition: color 0.2s var(--ease-ink);
+  }
+
+  .page-cta__link:hover {
+    color: var(--color-shatta);
+  }
+</style>

@@ -1,30 +1,38 @@
 ---
-/* VARIANT C: NavFloatingButtons — Floating ink-button pill group, top-right */
+/* VARIANT C: NavFloatingButtons — Floating ink-button pill group, top-right.
+   Locked site-wide nav (DESIGN.md §18.4). Rendered once in BaseLayout with
+   transition:persist so it never flashes across navigations. */
+import { navLinks, type NavLink } from '@data/nav';
+
 interface Props {
   activeLink?: string;
+  links?: NavLink[];
 }
 
-const { activeLink = '' } = Astro.props;
+const {
+  activeLink = '',
+  links = navLinks,
+} = Astro.props;
 
-const links = [
-  { label: 'Experience', href: '#experience' },
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
-];
+function isActive(href: string): boolean {
+  if (href === '/') return activeLink === '/';
+  return activeLink === href || activeLink.startsWith(href + '/');
+}
 ---
 
 {/* Desktop: floating pill group */}
-<nav class="floatnav" aria-label="Main navigation (floating buttons variant)">
-  <span class="floatnav__logo">she3bo</span>
+<nav class="floatnav" aria-label="Main navigation">
+  <a href="/" class="floatnav__logo" aria-label="she3bo — home">
+    <img src="/she3bo-wordmark.svg" alt="she3bo" width="82" height="20" />
+  </a>
   {links.map(link => (
     <a
       href={link.href}
       class:list={[
         'floatnav__pill',
-        { 'floatnav__pill--active': activeLink === link.href }
+        { 'floatnav__pill--active': isActive(link.href) }
       ]}
+      aria-current={isActive(link.href) ? 'page' : undefined}
     >
       {link.label}
     </a>
@@ -35,17 +43,18 @@ const links = [
 <div class="floatnav-mobile">
   <input type="checkbox" id="floatnav-toggle" class="floatnav-mobile__checkbox" aria-label="Toggle navigation menu" />
   <label for="floatnav-toggle" class="floatnav-mobile__trigger" aria-hidden="true">
-    <span class="floatnav-mobile__chili">🌶️</span>
+    <img class="floatnav-mobile__icon" src="/she3bo-mark.svg" alt="" width="16" height="30" />
   </label>
 
-  <nav class="floatnav-mobile__panel" aria-label="Main navigation (floating mobile)">
+  <nav class="floatnav-mobile__panel" aria-label="Main navigation">
     {links.map(link => (
       <a
         href={link.href}
         class:list={[
           'floatnav-mobile__link',
-          { 'floatnav-mobile__link--active': activeLink === link.href }
+          { 'floatnav-mobile__link--active': isActive(link.href) }
         ]}
+        aria-current={isActive(link.href) ? 'page' : undefined}
       >
         {link.label}
       </a>
@@ -67,6 +76,7 @@ const links = [
     border: var(--ink-medium) solid var(--color-ink);
     border-radius: 2px;
     overflow: hidden;
+    box-shadow: 3px 3px 0 0 var(--color-ink);
   }
 
   @media (min-width: 768px) {
@@ -76,14 +86,16 @@ const links = [
   }
 
   .floatnav__logo {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-ink-faded);
-    text-transform: lowercase;
-    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-right: var(--ink-thin) solid var(--color-paper-shadow);
     user-select: none;
+  }
+  .floatnav__logo img {
+    display: block;
+    height: 20px;
+    width: auto;
   }
 
   .floatnav__pill {
@@ -160,9 +172,10 @@ const links = [
     box-shadow: 5px 5px 0 0 var(--color-shatta);
   }
 
-  .floatnav-mobile__chili {
-    font-size: 1.25rem;
-    line-height: 1;
+  .floatnav-mobile__icon {
+    display: block;
+    height: 30px;
+    width: auto;
   }
 
   .floatnav-mobile__panel {
@@ -227,3 +240,28 @@ const links = [
     }
   }
 </style>
+
+<script>
+  // The nav is transition:persist (DOM reused across client-side View Transitions),
+  // so re-sync the active pill + close the mobile panel after each navigation.
+  // No-JS users get correct active state from the full server render every load.
+  function syncActiveNav() {
+    const path = window.location.pathname;
+    const isActive = (href: string) =>
+      href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+
+    document.querySelectorAll<HTMLAnchorElement>('.floatnav__pill').forEach((el) => {
+      const a = isActive(el.getAttribute('href') || '');
+      el.classList.toggle('floatnav__pill--active', a);
+      if (a) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+    });
+    document.querySelectorAll<HTMLAnchorElement>('.floatnav-mobile__link').forEach((el) => {
+      const a = isActive(el.getAttribute('href') || '');
+      el.classList.toggle('floatnav-mobile__link--active', a);
+      if (a) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+    });
+    const cb = document.getElementById('floatnav-toggle') as HTMLInputElement | null;
+    if (cb) cb.checked = false;
+  }
+  document.addEventListener('astro:after-swap', syncActiveNav);
+</script>

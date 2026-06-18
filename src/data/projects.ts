@@ -1,6 +1,7 @@
 export interface Project {
   id: number;
   number: string;
+  slug: string;
   name: string;
   status: "LIVE" | "PRIVATE BETA" | "SHIPPED" | "DEMO" | "ARCHIVED";
   tagline: string;
@@ -15,6 +16,7 @@ export const projects: Project[] = [
   {
     id: 1,
     number: "01",
+    slug: "pilot-100",
     name: "PILOT 100",
     status: "LIVE",
     tagline:
@@ -29,6 +31,7 @@ export const projects: Project[] = [
   {
     id: 2,
     number: "02",
+    slug: "job-jarvis",
     name: "JOB JARVIS",
     status: "PRIVATE BETA",
     tagline:
@@ -43,6 +46,7 @@ export const projects: Project[] = [
   {
     id: 3,
     number: "03",
+    slug: "xiii-store",
     name: "XIII STORE",
     status: "LIVE",
     tagline:
@@ -57,6 +61,7 @@ export const projects: Project[] = [
   {
     id: 4,
     number: "04",
+    slug: "spotify",
     name: "SPOTIFY REIMAGINED",
     status: "LIVE",
     tagline:
@@ -71,6 +76,7 @@ export const projects: Project[] = [
   {
     id: 5,
     number: "05",
+    slug: "curify",
     name: "CURIFY",
     status: "DEMO",
     tagline:
@@ -85,6 +91,7 @@ export const projects: Project[] = [
   {
     id: 6,
     number: "06",
+    slug: "ols-erp",
     name: "OLS ERP",
     status: "SHIPPED",
     tagline:
@@ -97,3 +104,21 @@ export const projects: Project[] = [
     featured: false,
   },
 ];
+
+/**
+ * Locked case-study ordering for prev/next wayfinding (DESIGN.md §18.5):
+ * Pilot 100 → Job Jarvis → XIII Store → Spotify → Curify → OLS ERP.
+ * Pilot 100 has no prev; OLS ERP has no next (page wraps it back to /projects).
+ */
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug);
+}
+
+export function getAdjacentProjects(slug: string): { prev: Project | null; next: Project | null } {
+  const i = projects.findIndex((p) => p.slug === slug);
+  if (i === -1) return { prev: null, next: null };
+  return {
+    prev: i > 0 ? projects[i - 1] : null,
+    next: i < projects.length - 1 ? projects[i + 1] : null,
+  };
+}

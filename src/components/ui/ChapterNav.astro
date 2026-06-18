@@ -1,0 +1,107 @@
+---
+/**
+ * ChapterNav — the locked bottom prev/next case-study nav (DESIGN.md §18.5, Variant C).
+ * Distilled from test/breadcrumb-c.astro, including the locked snap-shadow
+ * (6px 6px 0 0 shatta) mirrored for the next card. Missing prev/next renders an
+ * empty cell to preserve the 2-column grid.
+ */
+interface NavItem {
+  title: string;
+  subtitle?: string;
+  href: string;
+  direction?: string; // override label, e.g. "← Back to Projects"
+}
+interface Props {
+  prev?: NavItem | null;
+  next?: NavItem | null;
+}
+const { prev = null, next = null } = Astro.props;
+---
+
+<nav class="chapter-nav" aria-label="Project navigation">
+  {prev ? (
+    <a href={prev.href} class="chapter-link prev">
+      <span class="link-direction">{prev.direction ?? '← Previous Chapter'}</span>
+      <span class="link-title">{prev.title}</span>
+      {prev.subtitle && <span class="link-subtitle">{prev.subtitle}</span>}
+    </a>
+  ) : <div aria-hidden="true"></div>}
+
+  {next ? (
+    <a href={next.href} class="chapter-link next">
+      <span class="link-direction">{next.direction ?? 'Next Chapter →'}</span>
+      <span class="link-title">{next.title}</span>
+      {next.subtitle && <span class="link-subtitle">{next.subtitle}</span>}
+    </a>
+  ) : <div aria-hidden="true"></div>}
+</nav>
+
+<style>
+  .chapter-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-block: 3rem 1rem;
+    border-top: var(--ink-medium) solid var(--color-ink);
+  }
+
+  .chapter-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: var(--ink-medium) solid var(--color-ink);
+    background: var(--color-paper);
+    text-decoration: none;
+    transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
+  }
+
+  .chapter-link.prev { text-align: left; }
+  .chapter-link.next { text-align: right; }
+
+  .chapter-link:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+  }
+
+  .chapter-link.next:hover {
+    transform: translate(3px, -3px);
+    box-shadow: -6px 6px 0 0 var(--color-shatta);
+  }
+
+  .chapter-link .link-direction {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-shatta);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .chapter-link .link-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+
+  .chapter-link .link-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-ink-muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .chapter-nav {
+      grid-template-columns: 1fr;
+    }
+    .chapter-link.next {
+      text-align: left;
+    }
+    .chapter-link.next:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 0 var(--color-shatta);
+    }
+  }
+</style>

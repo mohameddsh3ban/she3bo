@@ -1,0 +1,212 @@
+---
+/**
+ * MangaPanel.astro
+ * The atomic unit of the /about Origin Manga. Every panel is one of these.
+ * Place in: src/components/manga/MangaPanel.astro
+ *
+ * Sizing is controlled by the PARENT grid (grid-column span on the wrapping
+ * cell), not here — so the same component serves a full-bleed opener and a
+ * 1:1 inline beat. The panel always fills its grid cell (height: 100%), which
+ * is what keeps panels in the same row matched in height.
+ *
+ * Art: drop the composited Sheb3o/Shatta cutout into the default slot when the
+ * Midjourney background + CSS layering is ready. Until then it renders a faint
+ * placeholder so the layout reads.
+ *
+ * TOKEN NOTE: colors/fonts reference DESIGN.md tokens with hard-coded fallbacks
+ * so this compiles today. Once confirmed against DESIGN.md §2/§3, the fallbacks
+ * can be dropped.
+ */
+interface Props {
+  stamp: string;            // "P14"
+  scene: string;            // "THE INJURY — ACL"
+  beat?: string;            // one-line caption
+  meta?: string;            // "16:9 · opener"
+  sfx?: string;             // "POP!"
+  feature?: boolean;        // red Honest-Detail anchor treatment (P15)
+  status?: string;          // "awaiting MJ" — omit once art lands
+  tilt?: number;            // subtle rotation, degrees (desktop only)
+  class?: string;           // extra classes (rarely needed)
+}
+const {
+  stamp,
+  scene,
+  beat,
+  meta,
+  sfx,
+  feature = false,
+  status,
+  tilt = 0,
+  class: cls = "",
+} = Astro.props;
+const hasArt = Astro.slots.has("default");
+---
+
+<figure
+  class:list={["mp", { "mp--feature": feature, "mp--art": hasArt }, cls]}
+  style={tilt ? `--mp-tilt:${tilt}deg` : undefined}
+>
+  <span class="mp__stamp">{stamp}</span>
+  {feature && <span class="mp__tag">HONEST DETAIL</span>}
+
+  <div class="mp__art">
+    {hasArt ? (
+      <slot />
+    ) : (
+      <svg class="mp__ph" width="34" height="34" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="1" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
+    )}
+  </div>
+
+  <div class="mp__cap">
+    <figcaption class="mp__scene">{scene}</figcaption>
+    {beat && <p class="mp__beat">{beat}</p>}
+    <slot name="quote" />
+  </div>
+
+  {sfx && <span class="mp__sfx">{sfx}</span>}
+  {status && <span class="mp__status">{status}</span>}
+  {meta && <span class="mp__meta">{meta}</span>}
+</figure>
+
+<style>
+  .mp {
+    --mp-ink: var(--color-ink, #1a1a1a);
+    --mp-paper: var(--color-paper-shadow, #e4dac0);
+    --mp-shatta: var(--color-shatta, #d62828);
+    --mp-muted: var(--color-ink-muted, #6b6354);
+
+    position: relative;
+    height: 100%;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    padding: 1.25rem 1.15rem;
+    background: var(--mp-paper);
+    border: 2px solid var(--mp-ink);
+    border-radius: 0;
+    transform: rotate(var(--mp-tilt, 0deg));
+    overflow: hidden;
+  }
+  .mp--feature {
+    border: 3px solid var(--mp-shatta);
+  }
+
+  .mp__scene {
+    margin: 0;
+    font-family: "Bangers", cursive;
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--mp-ink);
+  }
+  .mp__beat {
+    margin: 0;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--mp-muted);
+    max-width: 34ch;
+  }
+
+  .mp__art { display: flex; }
+  .mp__ph { opacity: 0.15; color: var(--mp-ink); }
+  .mp__cap { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 100%; }
+
+  /* ─── ART-PRESENT MODE: full image shown, opaque manga caption strip ─── */
+  .mp--art {
+    padding: 0;
+    height: auto;            /* figure height = image height (no stretch-crop) */
+    display: block;
+  }
+  .mp--art .mp__art { position: static; display: block; }
+  .mp--art .mp__art :global(img) {
+    width: 100%;
+    height: auto;            /* natural aspect — nothing cropped out of frame */
+    display: block;
+  }
+  /* manga narration strip: opaque ink so lettering reads over any art */
+  .mp--art .mp__cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    align-items: flex-start;
+    gap: 0.12rem;
+    background: var(--mp-ink);
+    border-top: 3px solid var(--mp-shatta);
+    padding: 0.5rem 0.85rem 0.6rem;
+    text-align: left;
+  }
+  .mp--art .mp__scene { color: var(--color-paper, #ede4cc); width: 100%; }
+  .mp--art .mp__beat {
+    color: var(--color-paper-shadow, #d4c9a8);
+    width: 100%;
+    max-width: none;
+  }
+  .mp--art .mp__stamp,
+  .mp--art .mp__meta {
+    z-index: 2;
+    color: var(--color-paper, #ede4cc);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+  .mp--art .mp__tag { z-index: 2; }
+  .mp--art .mp__sfx { bottom: auto; top: 0.5rem; right: 0.8rem; }
+  .mp--art .mp__status { display: none; }
+
+  .mp__sfx {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.2rem;
+    font-family: "Bangers", cursive;
+    color: var(--mp-shatta);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 0.85;
+    transform: rotate(-8deg);
+    pointer-events: none;
+  }
+  .mp__tag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--mp-shatta);
+    border: 1px solid var(--mp-shatta);
+    padding: 2px 6px;
+  }
+  .mp__stamp,
+  .mp__status,
+  .mp__meta {
+    position: absolute;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--mp-muted);
+  }
+  .mp__stamp { top: 0.5rem; left: 0.6rem; }
+  .mp__status { bottom: 0.5rem; left: 0.6rem; text-transform: uppercase; }
+  .mp__meta { bottom: 0.5rem; right: 0.6rem; }
+
+  /* Mobile: kill tilt + bleed, every panel reads upright and calm */
+  @media (max-width: 760px) {
+    .mp {
+      transform: none;
+      min-height: 168px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mp { transform: none; }
+  }
+</style>

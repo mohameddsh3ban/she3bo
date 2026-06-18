@@ -1,0 +1,129 @@
+---
+/**
+ * about.astro — Chapter 02: The Origin Manga
+ *
+ * The 22-panel story now renders through <MangaReel/>, which is:
+ *   • a readable vertical column with no JS / reduced-motion / mobile (the floor)
+ *   • a GSAP pinned horizontal comic reel on desktop + motion
+ *   • a vertical snap-scroll on touch
+ * Panel/arc content lives in src/data/manga.ts. P22 stays the bespoke finale
+ * splash below. The chapter cover, finale and CTA are unchanged.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MangaReel from "../components/manga/MangaReel.astro";
+---
+
+<BaseLayout
+  title="About — Mohamed Shaban (she3bo)"
+  description="The Origin Manga: how a senior full-stack developer got built like he trains. Cairo to Kuwait to the forge to now."
+>
+  <main class="about">
+    <!-- ============ CHAPTER COVER ============ -->
+    <div class="about__wrap">
+      <header class="cover">
+        <div>
+          <p class="cover__num">CHAPTER 02</p>
+          <h1 class="cover__title">ABOUT — THE ORIGIN MANGA</h1>
+          <p class="cover__sub">// how the protagonist got his spice</p>
+        </div>
+        <span class="cover__vol">VOL. 01</span>
+      </header>
+    </div>
+
+    <!-- ============ THE ORIGIN MANGA (scroll-driven reel) ============ -->
+    <MangaReel />
+
+    <!-- ============ FINALE — P22 SPLASH ============ -->
+    <div class="about__wrap">
+      <div id="after-story"></div>
+      <p class="end">— end of chapter one —</p>
+      <section class="finale" aria-label="P22 — Finale">
+        <span class="finale__stamp">P22 · FINALE</span>
+        <img class="finale__fig" src="/manga/panel-22.webp" width="1600" height="900" alt="Sheb3o and Shatta walking down an open road into the sunrise, the Cairo skyline and pyramids behind them" loading="lazy" />
+        <h2 class="finale__t">WALKING FORWARD</h2>
+        <p class="finale__beat">Sheb3o and Shatta, walking into the sunrise — Cairo behind them, everything ahead. Neither looking back.</p>
+        <span class="finale__tbc">to be continued&hellip;</span>
+      </section>
+
+      <!-- ============ CROSS-PAGE CTA ============ -->
+      <section class="cta" aria-label="Next">
+        <p class="cta__line">EARNED THROUGH REPS, NOT SHORTCUTS.</p>
+        <a class="cta__btn" href="/skills">&rarr; See the techniques I&rsquo;ve earned</a>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-block: clamp(1.25rem, 4vw, 3rem) 4rem;
+    color: var(--color-ink, #1a1a1a);
+    font-family: "Zen Kaku Gothic New", sans-serif;
+  }
+  /* cover + finale stay constrained; the reel spans the full (client) width */
+  .about__wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 3vw, 2rem); }
+
+  /* ---- chapter cover ---- */
+  .cover {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    border-bottom: 2px solid var(--color-ink, #1a1a1a);
+    padding-bottom: 1rem;
+  }
+  .cover__num { margin: 0; font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--color-shatta, #d62828); }
+  .cover__title { margin: 0.3rem 0 0; font-family: "Bangers", cursive; font-weight: 400; font-size: clamp(2rem, 7vw, 3.4rem); letter-spacing: 0.03em; line-height: 0.95; }
+  .cover__sub { margin: 0.4rem 0 0; font-family: "JetBrains Mono", monospace; font-style: italic; font-size: 0.8rem; color: var(--color-ink-muted, #6b6354); }
+  .cover__vol { writing-mode: vertical-rl; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; letter-spacing: 0.22em; color: var(--color-ink-muted, #6b6354); }
+
+  /* ---- finale splash (no border, open cream) ---- */
+  #after-story { scroll-margin-top: 6rem; }
+  .end { text-align: center; margin: 2.5rem 0 0; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: 0.2em; color: var(--color-ink-muted, #6b6354); }
+  .finale {
+    position: relative;
+    margin-top: 0.6rem;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 1.2rem;
+  }
+  .finale__stamp { position: absolute; top: 0.4rem; left: 0.2rem; font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--color-ink-muted, #6b6354); }
+  .finale__fig { display: block; width: min(920px, 100%); height: auto; opacity: 1; margin-bottom: 0.5rem; border: var(--ink-medium) solid var(--color-ink); border-radius: 2px; box-shadow: 5px 5px 0 0 var(--color-ink); }
+  .finale__t { margin: 0; font-family: "Bangers", cursive; font-weight: 400; font-size: clamp(1.8rem, 6vw, 2.6rem); letter-spacing: 0.04em; }
+  .finale__beat { margin: 0.4rem 0 0; font-size: 0.82rem; color: var(--color-ink-muted, #6b6354); max-width: 44ch; }
+  .finale__tbc { margin-top: 0.7rem; font-family: "Bangers", cursive; font-size: 1.4rem; color: var(--color-shatta, #d62828); transform: rotate(-3deg); }
+
+  /* ---- CTA ---- */
+  .cta {
+    margin-top: 2rem;
+    border-top: 2px solid var(--color-ink, #1a1a1a);
+    padding-top: 1.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .cta__line { margin: 0; font-family: "Bangers", cursive; font-size: clamp(1.2rem, 3.5vw, 1.6rem); letter-spacing: 0.02em; }
+  .cta__btn {
+    font-family: "Bangers", cursive;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    background: var(--color-shatta, #d62828);
+    color: var(--color-paper, #ede4cc);
+    border: 2px solid var(--color-ink, #1a1a1a);
+    padding: 0.6rem 1.3rem;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .cta__btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 0 var(--color-ink, #1a1a1a); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .finale__tbc { transform: none; }
+    .cta__btn { transition: none; }
+  }
+</style>

@@ -1,0 +1,250 @@
+---
+/**
+ * MangaReel.astro — the /about Origin Manga as scroll-drawn comic PAGES.
+ *
+ * Behaviour (desktop + motion): each chapter is one organized comic PAGE (a DC-
+ * style multi-panel grid) that fills the fixed, centered frame. The camera is
+ * PINNED — as you scroll, the page's panels INK IN one-by-one (panel 1, then 2
+ * beside it, then 3 …) and STAY, building the page. When the page is full, the
+ * next chapter's page builds, and so on → finale + CTA.
+ *
+ * Three modes from ONE DOM:
+ *   • no-JS / reduced-motion → readable vertical column (the floor)
+ *   • desktop + motion       → pinned per-chapter comic page, panels reveal in order
+ *   • mobile + motion        → simple fade-up reveal, stacked (no pin/crop)
+ *
+ * Reuses MangaPanel. Content lives in src/data/manga.ts.
+ */
+import MangaPanel from "./MangaPanel.astro";
+import { arcs, panelsByArc } from "@data/manga";
+
+const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
+---
+
+<a class="reel-skip" href="#after-story">Skip the story · read it as a list ↓</a>
+
+<div class="reel" data-reel aria-label="Origin manga — scrollable story">
+  {arcs.map((arc) => (
+    <section class="chapter" data-chapter data-arc={arc.index}>
+      <header class="chapter__head">
+        <span class="mini__rn">{arc.roman}</span>
+        <h2 class="mini__t">{arc.title}</h2>
+        <p class="mini__s">{arc.sub}</p>
+        <p class="narr">{arc.narr}</p>
+      </header>
+
+      <div class:list={["chapter__page", arc.index === 3 ? "page--6" : "page--5"]}>
+        {panelsByArc[arc.index].map((p, i) => (
+          <div class:list={["cell", AREA[i]]} data-panel>
+            <MangaPanel stamp={p.stamp} scene={p.scene} beat={p.beat} meta={p.meta} sfx={p.sfx} feature={p.feature} tilt={p.tilt}>
+              <img
+                src={p.img}
+                width={p.w}
+                height={p.h}
+                alt={p.alt}
+                loading={["P1", "P2", "P3", "P4", "P5"].includes(p.stamp) ? "eager" : "lazy"}
+                fetchpriority={p.stamp === "P1" ? "high" : undefined}
+                decoding="async"
+              />
+              {p.quote && <p slot="quote" class="honest-quote">{p.quote}</p>}
+            </MangaPanel>
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <div class="reel__hud" aria-hidden="true">
+    <div class="reel__dots">
+      {arcs.map((arc) => (<span class="reel__dot" data-dot={arc.index}>{arc.roman}</span>))}
+    </div>
+  </div>
+  <div class="reel__bar" aria-hidden="true"><span data-reel-bar></span></div>
+</div>
+
+<style>
+  /* ════════════ BASE = readable vertical column (no-JS floor) ════════════ */
+  .reel { margin: clamp(1.25rem, 3.5vw, 2.25rem) auto 0; position: relative; max-width: 1180px; padding-inline: clamp(1rem, 3vw, 2rem); }
+
+  .chapter__head { border-left: 4px solid var(--color-shatta, #d62828); padding-left: 0.8rem; margin-top: clamp(1.5rem, 4vw, 2.5rem); }
+  .chapter__head .mini__rn { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--color-shatta, #d62828); }
+  .chapter__head .mini__t { margin: 0.1rem 0 0; font-family: "Bangers", cursive; font-weight: 400; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 0.03em; line-height: 1; }
+  .chapter__head .mini__s { margin: 0.2rem 0 0; font-family: "JetBrains Mono", monospace; font-style: italic; font-size: 0.75rem; color: var(--color-ink-muted, #6b6354); }
+  .chapter__head .narr { margin: 0.7rem 0 0; background: var(--color-ink, #1a1a1a); color: var(--color-paper, #ede4cc); font-family: "JetBrains Mono", monospace; font-size: 0.78rem; line-height: 1.55; padding: 0.7rem 0.85rem; }
+
+  .chapter__page { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.9rem; }
+
+  .honest-quote { margin: 0.45rem 0 0; font-style: italic; font-size: 0.84rem; line-height: 1.5; color: var(--color-paper, #ede4cc); max-width: 42ch; border-top: 1px solid var(--color-shatta, #d62828); padding-top: 0.45rem; }
+
+  .reel-skip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; padding: 0; border: 0; }
+  .reel-skip:focus { width: auto; height: auto; overflow: visible; clip: auto; clip-path: none; left: 1rem; top: 0.4rem; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--color-ink, #1a1a1a); background: var(--color-paper, #ede4cc); border: 1px solid var(--color-ink, #1a1a1a); padding: 0.4rem 0.7rem; z-index: 60; }
+
+  .reel__hud, .reel__bar { display: none; }
+
+  /* ════════════ DESKTOP: pinned comic page that fills in (.is-reel) ════════════ */
+  /* full width of the (now full-width) .about — i.e. the client width, which
+     EXCLUDES the scrollbar, so no 100vw horizontal-overflow scrollbar */
+  .reel.is-reel { width: 100%; max-width: none; margin: 0; padding-inline: 0; }
+  .reel.is-reel .chapter {
+    height: 100vh; overflow: hidden;
+    display: grid; grid-template-rows: auto minmax(0, 1fr);
+    padding: clamp(0.5rem, 2vh, 1.5rem) clamp(1rem, 4vw, 3rem);
+    gap: clamp(0.4rem, 1.5vh, 1rem);
+  }
+  .reel.is-reel .chapter__head { border-left: none; padding: 0; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+  .reel.is-reel .chapter__head .mini__rn { font-size: 0.85rem; }
+  .reel.is-reel .chapter__head .mini__t { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+  .reel.is-reel .chapter__head .narr { display: none; }  /* keep the page tall; narration lives in no-JS view */
+
+  .reel.is-reel .chapter__page {
+    display: grid; gap: clamp(6px, 0.9vw, 12px); margin: 0;
+    width: min(1180px, 94vw); height: 100%; min-height: 0; justify-self: center; align-self: stretch;
+  }
+  .reel.is-reel .page--5 { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1.3fr 1fr 1fr; grid-template-areas: "a a a a" "b b c c" "d d e e"; }
+  .reel.is-reel .page--6 { grid-template-columns: repeat(6, 1fr); grid-template-rows: 1.3fr 1fr 1fr; grid-template-areas: "a a a a a a" "b b c c d d" "e e e f f f"; }
+  .ga-a { grid-area: a; } .ga-b { grid-area: b; } .ga-c { grid-area: c; }
+  .ga-d { grid-area: d; } .ga-e { grid-area: e; } .ga-f { grid-area: f; }
+
+  /* panels fill their comic frame (cover crop, like a real comic page) */
+  .reel.is-reel .chapter__page .cell { min-width: 0; min-height: 0; opacity: 0; will-change: transform, opacity; }
+  .reel.is-reel .chapter__page .cell :global(.mp) { height: 100% !important; width: 100% !important; min-height: 0 !important; }
+  .reel.is-reel .chapter__page .cell :global(.mp__art) { height: 100% !important; }
+  .reel.is-reel .chapter__page .cell :global(.mp--art img) { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center 28% !important; max-width: none !important; }
+
+  /* HUD */
+  .reel.is-reel .reel__hud { display: flex; position: fixed; top: calc(var(--spacing-md, 2rem) + 6px); left: 1.25rem; z-index: 40; pointer-events: none; }
+  .reel.is-reel .reel__dots { display: flex; gap: 0.7rem; }
+  .reel__dot { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--color-ink-faded, #6b5f50); transition: color 0.25s var(--ease-ink), transform 0.25s var(--ease-ink); }
+  .reel__dot.is-done { color: var(--color-ink, #1a1a1a); }
+  .reel__dot.is-on { color: var(--color-shatta, #d62828); transform: scale(1.25); }
+  .reel.is-reel .reel__bar { display: block; position: fixed; left: 0; bottom: 0; width: 100%; height: 3px; background: var(--color-paper-shadow, #d4c9a8); z-index: 40; }
+  .reel__bar span { display: block; height: 100%; width: 100%; background: var(--color-shatta, #d62828); transform: scaleX(0); transform-origin: left; }
+
+  /* ════════════ MOBILE: stacked fade-up (no pin / crop) ════════════ */
+  .reel.is-snap .cell { will-change: transform, opacity; }
+
+  @media (prefers-reduced-motion: reduce) { .reel__dot { transition: none; } }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  let mm: ReturnType<typeof gsap.matchMedia> | null = null;
+
+  function buildReel() {
+    const reel = document.querySelector<HTMLElement>("[data-reel]");
+    if (!reel) return;
+    mm = gsap.matchMedia();
+
+    /* ── DESKTOP: each chapter pins; its comic page inks in one-by-one ── */
+    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      reel.classList.add("is-reel");
+      const chapters = gsap.utils.toArray<HTMLElement>("[data-chapter]");
+      const bar = reel.querySelector<HTMLElement>("[data-reel-bar]");
+      const dots = Array.from(reel.querySelectorAll<HTMLElement>(".reel__dot"));
+
+      chapters.forEach((ch) => {
+        const cells = gsap.utils.toArray<HTMLElement>(ch.querySelectorAll("[data-panel]"));
+        const arc = ch.getAttribute("data-arc");
+        gsap.set(cells, { opacity: 0, scale: 0.96, yPercent: 4 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ch, start: "top top", end: "+=" + (cells.length * 60 + 25) + "%",
+            scrub: 0.7, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+            onToggle: (self) => { if (self.isActive) setDots(dots, arc); },
+          },
+        });
+        cells.forEach((c, i) => {
+          tl.to(c, {
+            opacity: 1, scale: 1, yPercent: 0, duration: 0.6, ease: "power2.out",
+            onStart: () => popIfNeeded(c),
+          }, i * 0.85);
+        });
+      });
+
+      ScrollTrigger.create({
+        trigger: reel, start: "top top", end: "bottom bottom",
+        onUpdate: (self) => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
+      });
+
+      ScrollTrigger.refresh();
+      return () => {
+        reel.classList.remove("is-reel");
+        gsap.set(gsap.utils.toArray<HTMLElement>("[data-panel]"), { clearProps: "all" });
+        if (bar) bar.style.transform = "";
+      };
+    });
+
+    /* ── MOBILE: stacked fade-up, no pin ── */
+    mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+      reel.classList.add("is-snap");
+      const cells = gsap.utils.toArray<HTMLElement>("[data-panel]");
+      cells.forEach((c) => gsap.from(c, {
+        opacity: 0, y: 36, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: c, start: "top 85%", once: true },
+      }));
+      return () => { reel.classList.remove("is-snap"); gsap.set(cells, { clearProps: "all" }); };
+    });
+  }
+
+  function setDots(dots: HTMLElement[], arc: string | null) {
+    dots.forEach((d) => {
+      const di = d.getAttribute("data-dot");
+      d.classList.toggle("is-on", di === arc);
+      d.classList.toggle("is-done", !!arc && !!di && Number(di) < Number(arc));
+    });
+  }
+  function popIfNeeded(cell: HTMLElement) {
+    if (!cell.hasAttribute("data-pop") && !cell.querySelector(".mp__sfx")) return;
+    const sfx = cell.querySelector<HTMLElement>(".mp__sfx");
+    if (sfx) gsap.fromTo(sfx, { scale: 0 }, { scale: 1, duration: 0.45, ease: "back.out(2.4)" });
+  }
+
+  function killReel() {
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    mm?.revert();
+    mm = null;
+  }
+  function wireImageRefresh() {
+    const imgs = Array.from(document.querySelectorAll<HTMLImageElement>(".chapter__page img"));
+    let pending = imgs.filter((i) => !i.complete).length;
+    if (!pending) { ScrollTrigger.refresh(); return; }
+    imgs.forEach((img) => {
+      if (img.complete) return;
+      (["load", "error"] as const).forEach((ev) =>
+        img.addEventListener(ev, () => { if (--pending <= 0) ScrollTrigger.refresh(); }, { once: true }));
+    });
+  }
+  function refreshSoon() {
+    // re-measure after the View-Transition + layout/images settle (these late
+    // events fire on a hard reload but NOT on client-side nav, which is why
+    // a fresh load looked fine and navigating in did not)
+    requestAnimationFrame(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
+    setTimeout(() => ScrollTrigger.refresh(), 300);
+  }
+
+  function initReel() {
+    if (!document.querySelector("[data-reel]")) return;
+    killReel();
+    // start at the top so pins initialise from a clean scroll position
+    // (client-side nav can carry the previous page's scrollY)
+    const html = document.documentElement;
+    const sb = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = sb;
+    buildReel();
+    wireImageRefresh();
+    refreshSoon();
+  }
+
+  if (document.readyState !== "loading") initReel();
+  else document.addEventListener("DOMContentLoaded", initReel);
+  // astro:page-load fires on first load AND after every client-side navigation
+  document.addEventListener("astro:page-load", initReel);
+  document.addEventListener("astro:before-swap", killReel);
+  window.addEventListener("load", () => ScrollTrigger.refresh());
+</script>

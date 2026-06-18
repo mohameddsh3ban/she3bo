@@ -1,6 +1,6 @@
 # Mohamed Shaban — Portfolio V2 🌶️📜
 
-> Senior full-stack developer. Built like I train. Spicy by default.
+> Senior full-stack developer. Built like a train. Spicy by default.
 
 The "Spicy Sheb3o" portfolio. Manga sketchbook aesthetic on warm cream paper. Built with Astro 6, Tailwind v4, and design discipline.
 

@@ -1,0 +1,259 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumb from '@components/ui/Breadcrumb.astro';
+import ChapterCover from '@components/ui/ChapterCover.astro';
+import ChapterNav from '@components/ui/ChapterNav.astro';
+import InkButton from '@components/ui/InkButton.astro';
+import { projects, getAdjacentProjects, type Project } from '@data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+/** First sentence of a tagline — keeps prev/next subtitles tight. */
+function shortTagline(tagline: string): string {
+  const firstSentence = tagline.split('. ')[0];
+  return firstSentence.endsWith('.') ? firstSentence : `${firstSentence}.`;
+}
+
+const { prev, next } = getAdjacentProjects(project.slug);
+
+const prevItem = prev
+  ? { title: prev.name, subtitle: shortTagline(prev.tagline), href: `/projects/${prev.slug}` }
+  : null;
+
+const nextItem = next
+  ? { title: next.name, subtitle: shortTagline(next.tagline), href: `/projects/${next.slug}` }
+  : {
+      title: 'ALL PROJECTS',
+      subtitle: '// back to the index',
+      href: '/projects',
+      direction: 'Back to Projects →',
+    };
+
+const statusSlug = project.status.toLowerCase().replace(/[\s-]/g, '');
+
+const links = [
+  project.links.live && { href: project.links.live, label: 'Live Site ↗', variant: 'primary' as const },
+  project.links.repo && { href: project.links.repo, label: 'Source', variant: 'secondary' as const },
+  project.links.demo && { href: project.links.demo, label: 'Demo', variant: 'ghost' as const },
+].filter(Boolean) as { href: string; label: string; variant: 'primary' | 'secondary' | 'ghost' }[];
+---
+
+<BaseLayout
+  title={`${project.name} — Mohamed Shaban | she3bo`}
+  description={shortTagline(project.tagline)}
+>
+  <main class="inner-page">
+    <Breadcrumb
+      crumbs={[
+        { label: 'CH 05', href: '/' },
+        { label: 'PROJECTS', href: '/projects' },
+        { label: project.name },
+      ]}
+    />
+    <ChapterCover
+      chapter={`CH 05.${project.number}`}
+      arc={project.status}
+      title={project.name}
+      subtitle="// the case study"
+    />
+
+    <article class="case">
+      <figure class="case__keyart">
+        <img
+          src={`/projects/${project.slug}.png`}
+          alt={`${project.name} key art`}
+          loading="eager"
+          width="2752"
+          height="1536"
+        />
+      </figure>
+
+      <header class="case__head">
+        <span class="case__icon" aria-hidden="true">{project.icon}</span>
+        <span class={`case__status case__status--${statusSlug}`}>{project.status}</span>
+      </header>
+
+      <p class="case__lead">{project.tagline}</p>
+
+      <section class="case__block" aria-labelledby="cs-brief">
+        <h2 id="cs-brief" class="case__label">// the brief</h2>
+        <p class="case__desc">{project.description}</p>
+      </section>
+
+      <section class="case__block" aria-labelledby="cs-stack">
+        <h2 id="cs-stack" class="case__label">// the stack</h2>
+        <ul class="case__chips">
+          {project.tech.map((t) => (
+            <li class="case__chip">{t}</li>
+          ))}
+        </ul>
+      </section>
+
+      {links.length > 0 && (
+        <section class="case__block" aria-labelledby="cs-links">
+          <h2 id="cs-links" class="case__label">// see it</h2>
+          <div class="case__links">
+            {links.map((l) => (
+              <InkButton href={l.href} variant={l.variant} size="md">{l.label}</InkButton>
+            ))}
+          </div>
+        </section>
+      )}
+    </article>
+
+    <ChapterNav prev={prevItem} next={nextItem} />
+  </main>
+</BaseLayout>
+
+<style>
+  .inner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  }
+
+  .case {
+    max-width: 800px;
+    margin-top: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  /* Key-art hero panel — full-width within the case body, manga-framed. */
+  .case__keyart {
+    margin: 0;
+    border: var(--ink-thick) solid var(--color-ink);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+    background-color: var(--color-paper);
+    line-height: 0;
+  }
+
+  .case__keyart img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .case__head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .case__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .case__status {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    line-height: 1;
+  }
+
+  .case__status--live {
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+  }
+
+  .case__status--privatebeta {
+    border: var(--ink-thin) dashed var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .case__status--shipped {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .case__status--demo,
+  .case__status--archived {
+    border: var(--ink-thin) solid var(--color-ink-faded);
+    color: var(--color-ink-faded);
+  }
+
+  .case__lead {
+    font-family: var(--font-body);
+    font-size: clamp(1.25rem, 1rem + 1.5vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--color-ink);
+    margin: 0;
+    border-left: var(--ink-bold) solid var(--color-shatta);
+    padding-left: var(--spacing-sm);
+  }
+
+  .case__block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .case__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-shatta);
+    margin: 0;
+  }
+
+  .case__desc {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-muted);
+    margin: 0;
+    max-width: 65ch;
+  }
+
+  .case__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .case__chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink);
+    border: var(--ink-thin) solid var(--color-ink);
+    padding: 0.3rem 0.65rem;
+    letter-spacing: 0.04em;
+    background-color: var(--color-paper);
+  }
+
+  .case__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+
+  @media (max-width: 480px) {
+    .case__head {
+      flex-wrap: wrap;
+    }
+  }
+</style>

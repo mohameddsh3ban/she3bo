@@ -1,0 +1,32 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumb from '@components/ui/Breadcrumb.astro';
+import ChapterCover from '@components/ui/ChapterCover.astro';
+import ProjectsFinal from '@components/sections/ProjectsFinal.astro';
+---
+
+<BaseLayout
+  title="Projects — Mohamed Shaban | she3bo"
+  description="Six case files, six different fights. The platforms, apps, and systems Mohamed Shaban has shipped — from aviation training to enterprise ERP."
+>
+  <main class="inner-page">
+    <Breadcrumb crumbs={[{ label: 'CH 05', href: '/' }, { label: 'PROJECTS' }]} />
+    <ChapterCover
+      chapter="CH 05"
+      arc="THE ISSUES"
+      title="PROJECTS"
+      subtitle="// the case files"
+      asset="/she3bo/sheb3o-build.webp"
+      assetAlt="Sheb3o presenting his work"
+    />
+    <ProjectsFinal />
+  </main>
+</BaseLayout>
+
+<style>
+  .inner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  }
+</style>

@@ -25,6 +25,7 @@ const arcs = {
     status: 'FORGED',
     description: 'One year off the keyboard. Discipline forged in a different dojo. Returned sharper, more focused, more resilient.',
     tech: [],
+    skills: ['Discipline', 'Resilience', 'Time Management', 'Leadership', 'Teamwork'],
   },
   foundation: {
     title: 'FOUNDATION ARC',
@@ -32,18 +33,13 @@ const arcs = {
     company: 'OLS Kuwait',
     period: '2021 – 2024',
     status: 'ORIGIN',
-    description: 'Started here. Three years of full-stack work in Kuwait. Built production systems from scratch, shipped client-facing dashboards, learned how production systems actually fail at scale.',
+    description: "Three years building production systems from scratch in Kuwait. Client-facing dashboards, multi-tenant ERP, integrations across the stack — shipped to thousands of users. The arc where 'works on my machine' got beaten out of me forever.",
     tech: ['Vue.js', 'Laravel', 'PostgreSQL', 'Docker', 'REST APIs'],
   },
 };
 ---
 
 <section class="exp-manga" aria-label="Career experience — manga page layout">
-  <header class="exp-manga__header">
-    <h2 class="exp-manga__title">EXPERIENCE</h2>
-    <p class="exp-manga__subtitle">Read like a manga page — biggest panel is the current arc</p>
-  </header>
-
   <div class="exp-manga__grid">
     {/* ─── ASCENSION: Top-left, biggest ──────────────────────── */}
     <article class="exp-manga__panel exp-manga__panel--ascension" aria-label={arcs.ascension.title}>
@@ -85,8 +81,13 @@ const arcs = {
 
         <p class="exp-manga__desc">{arcs.training.description}</p>
 
-        <div class="exp-manga__tags-empty">
-          <span class="exp-manga__tag-dash">—</span>
+        <div class="exp-manga__skills-forged">
+          <span class="exp-manga__skills-label">// skills forged</span>
+          <div class="exp-manga__tags">
+            {arcs.training.skills.map((s) => (
+              <span class="exp-manga__tag">{s}</span>
+            ))}
+          </div>
         </div>
       </div>
     </article>
@@ -123,28 +124,7 @@ const arcs = {
 
 <style>
   .exp-manga {
-    padding: var(--spacing-xl) var(--spacing-md);
-  }
-
-  .exp-manga__header {
-    max-width: 1400px;
-    margin: 0 auto var(--spacing-lg);
-  }
-
-  .exp-manga__title {
-    font-size: clamp(2rem, 5vw, 4rem);
-    color: var(--color-ink);
-    margin: 0;
-    display: inline-block;
-    border-bottom: var(--ink-bold) solid var(--color-ink);
-    padding-bottom: var(--spacing-xs);
-  }
-
-  .exp-manga__subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--color-ink-faded);
-    margin: var(--spacing-xs) 0 0;
+    padding: var(--spacing-section) var(--spacing-md);
   }
 
   /* ─── MANGA GRID ───────────────────────────────────────────── */
@@ -183,7 +163,7 @@ const arcs = {
   /* ─── PANELS (base) ────────────────────────────────────────── */
   .exp-manga__panel {
     background-color: var(--color-paper);
-    border: var(--ink-thick) solid var(--color-ink);
+    border: var(--ink-medium) solid var(--color-ink);
     transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
   }
 
@@ -193,7 +173,6 @@ const arcs = {
 
   /* ASCENSION — biggest, heaviest, red shadow */
   .exp-manga__panel--ascension {
-    border-width: var(--ink-bold);
     box-shadow: 4px 4px 0 0 var(--color-shatta);
   }
   .exp-manga__panel--ascension:hover {
@@ -350,15 +329,19 @@ const arcs = {
     letter-spacing: 0.03em;
   }
 
-  .exp-manga__tags-empty {
+  .exp-manga__skills-forged {
     margin-top: auto;
     padding-top: var(--spacing-xs);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
-  .exp-manga__tag-dash {
+  .exp-manga__skills-label {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--color-ink-faded);
+    font-size: 0.7rem;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.05em;
   }
 
   /* ─── FOUNDATION HORIZONTAL LAYOUT ─────────────────────────── */
@@ -398,7 +381,7 @@ const arcs = {
   /* ─── MOBILE: vertical column ordering ─────────────────────── */
   @media (max-width: 767px) {
     .exp-manga {
-      padding: var(--spacing-lg) var(--spacing-sm);
+      padding: var(--spacing-section) var(--spacing-sm);
     }
 
     .exp-manga__panel--ascension {

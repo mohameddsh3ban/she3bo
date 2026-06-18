@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumb from '@components/ui/Breadcrumb.astro';
+import ChapterCover from '@components/ui/ChapterCover.astro';
+import ExperienceMangaPage from '@components/experience/ExperienceMangaPage.astro';
+---
+<BaseLayout
+  title="Experience — Mohamed Shaban | she3bo"
+  description="Three arcs, one throughline: the career of a senior full-stack developer told as a manga — Kuwait, the forge, and now Germany."
+>
+  <main class="inner-page">
+    <Breadcrumb crumbs={[{ label: 'CH 03', href: '/' }, { label: 'EXPERIENCE' }]} />
+    <ChapterCover
+      chapter="CH 03"
+      arc="THREE ARCS"
+      title="EXPERIENCE"
+      subtitle="// three arcs, one throughline"
+      asset="/she3bo/sheb3o-march.webp"
+      assetAlt="Sheb3o walking forward"
+    />
+    <ExperienceMangaPage />
+
+    <section class="page-cta">
+      <a class="page-cta__link" href="/projects">&rarr; See the projects I&rsquo;ve shipped</a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .inner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-xl);
+  }
+  .page-cta {
+    padding-block: var(--spacing-lg);
+  }
+  .page-cta__link {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-shatta);
+    padding-bottom: 0.4rem;
+    display: inline-block;
+    transition: color 0.2s var(--ease-ink);
+  }
+  .page-cta__link:hover {
+    color: var(--color-shatta);
+  }
+</style>

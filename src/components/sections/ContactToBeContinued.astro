@@ -11,12 +11,6 @@ const otherChannels = channels.filter(c => !c.primary);
 
   <div class="tbc__container">
     <div class="tbc__content">
-      <header class="tbc__header">
-        <h2 class="tbc__title">TO BE CONTINUED...</h2>
-        <div class="tbc__rule"></div>
-        <p class="tbc__subtitle">// the protagonist's signoff</p>
-      </header>
-
       <div class="tbc__body">
         <p>The portfolio ends here.</p>
         <p>The conversation starts wherever you want.</p>
@@ -61,17 +55,17 @@ const otherChannels = channels.filter(c => !c.primary);
 
     <div class="tbc__figure">
       <div class="tbc__panel">
+        <div class="tbc__bubble">
+          <SpeechBubble text="YO!" tail="down" variant="shout" />
+        </div>
         <img
-          src="/images/sheb3o/sheb3o-wave.png"
-          alt="Sheb3o — Mohamed Shaban waving goodbye"
+          src="/shata/shatta-yo.png"
+          alt="Shatta saying yo"
           class="tbc__image"
-          width="400"
-          height="600"
+          width="240"
+          height="240"
           loading="lazy"
         />
-        <div class="tbc__bubble">
-          <SpeechBubble text="TILL NEXT TIME." tail="down" />
-        </div>
       </div>
     </div>
   </div>
@@ -79,29 +73,34 @@ const otherChannels = channels.filter(c => !c.primary);
 
 <style>
   .tbc {
-    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-section) var(--spacing-md);
   }
 
   /* ─── TOP DIVIDER (no label) ───────────────────────────────── */
   .tbc__divider {
-    max-width: 1400px;
+    max-width: 900px;
     margin: 0 auto var(--spacing-lg);
     border-top: var(--ink-medium, 2px) solid var(--color-ink);
   }
 
+  /* Constrain the whole section to a readable, centered column so it
+     no longer sprawls full-bleed with dead whitespace. */
   .tbc__container {
-    max-width: 1400px;
+    max-width: 900px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
-    align-items: center;
+    align-items: start;
   }
 
   @media (min-width: 768px) {
     .tbc__container {
-      grid-template-columns: 13fr 7fr;
+      /* content reads as the spine; Shatta is a slim accent rail,
+         not a co-protagonist half of the page. */
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: var(--spacing-xl);
+      align-items: center;
     }
   }
 
@@ -110,33 +109,6 @@ const otherChannels = channels.filter(c => !c.primary);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
-  }
-
-  .tbc__header {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .tbc__title {
-    font-size: clamp(3rem, 8vw, 5rem);
-    color: var(--color-ink);
-    margin: 0;
-    line-height: 1;
-  }
-
-  .tbc__rule {
-    width: 5rem;
-    height: var(--ink-bold);
-    background-color: var(--color-shatta);
-    margin-top: 0.5rem;
-  }
-
-  .tbc__subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--color-ink-faded);
-    margin: var(--spacing-xs) 0 0;
-    letter-spacing: 0.05em;
   }
 
   .tbc__body {
@@ -154,12 +126,13 @@ const otherChannels = channels.filter(c => !c.primary);
     max-width: 50ch;
   }
 
-  /* ─── CHANNEL GRID ───────────────────────────────────────────── */
+  /* ─── CHANNEL GRID (tidy 2x2, contained — not full-bleed) ────── */
   .tbc__channels {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-sm);
-    max-width: 32rem;
+    width: 100%;
+    max-width: 34rem;
   }
 
   .tbc__btn {
@@ -168,7 +141,7 @@ const otherChannels = channels.filter(c => !c.primary);
     gap: 0.25rem;
     padding: 0.875rem 1rem;
     text-decoration: none;
-    border: var(--ink-thick) solid var(--color-ink);
+    border: var(--ink-medium) solid var(--color-ink);
     cursor: pointer;
     transition:
       transform 150ms var(--ease-snap),
@@ -282,7 +255,7 @@ const otherChannels = channels.filter(c => !c.primary);
     opacity: 0.7;
   }
 
-  /* ─── RIGHT: FIGURE ──────────────────────────────────────────── */
+  /* ─── ACCENT: SHATTA + YO! (knee-height sidekick, not co-lead) ── */
   .tbc__figure {
     display: flex;
     justify-content: center;
@@ -291,10 +264,12 @@ const otherChannels = channels.filter(c => !c.primary);
 
   .tbc__panel {
     position: relative;
-    border: var(--ink-bold) solid var(--color-ink);
-    background-color: var(--color-paper);
+    border: none;
+    background-color: transparent;
     overflow: visible;
-    max-width: 300px;
+    /* knee-height accent: small, not a half-page figure */
+    width: clamp(7rem, 18vw, 10rem);
+    padding-top: 2.75rem; /* room for the shout bubble above his head */
   }
 
   .tbc__image {
@@ -302,44 +277,43 @@ const otherChannels = channels.filter(c => !c.primary);
     width: 100%;
     height: auto;
     object-fit: contain;
+    margin: 0 auto;
   }
 
+  /* YO! shout floats just above Shatta's head, tail pointing down at him */
   .tbc__bubble {
     position: absolute;
-    top: 5%;
-    left: -2.5rem;
-    z-index: 1;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    z-index: 5;
   }
 
-  @media (min-width: 768px) {
-    .tbc__bubble {
-      top: 3%;
-      left: -3rem;
-    }
-  }
-
-  /* ─── MOBILE ─────────────────────────────────────────────────── */
+  /* ─── MOBILE (stacks cleanly at 320px) ───────────────────────── */
   @media (max-width: 767px) {
     .tbc {
-      padding: var(--spacing-lg) var(--spacing-sm);
+      padding: var(--spacing-section) var(--spacing-sm);
     }
 
     .tbc__channels {
       grid-template-columns: 1fr;
+      max-width: none;
     }
 
+    /* Shatta drops below the content as a centered closing beat */
     .tbc__figure {
-      order: -1;
+      order: 1;
       justify-content: center;
     }
 
     .tbc__panel {
-      max-width: 60%;
+      width: clamp(7rem, 38vw, 9rem);
     }
+  }
 
-    .tbc__bubble {
-      left: -1.5rem;
-      top: 3%;
+  @media (prefers-reduced-motion: reduce) {
+    .tbc__btn {
+      transition: none;
     }
   }
 </style>

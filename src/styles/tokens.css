@@ -35,6 +35,7 @@
   --spacing-lg: 4rem;
   --spacing-xl: 8rem;
   --spacing-2xl: 12rem;
+  --spacing-section: clamp(80px, 12vh, 160px);
 
   /* ─── INK WEIGHTS (manga line widths) ───────────────────────── */
   --ink-thin: 1px;

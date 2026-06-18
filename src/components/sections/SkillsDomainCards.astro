@@ -23,7 +23,6 @@ const domains: Domain[] = [
       { name: 'TypeScript', level: 5 },
       { name: 'RxJS', level: 4 },
       { name: 'Tailwind', level: 5 },
-      { name: 'React', level: 3 },
       { name: 'Astro', level: 4 },
     ],
   },
@@ -63,11 +62,6 @@ const MAX_DOTS = 5;
 ---
 
 <section class="skills-dc" id="skills-domain-cards" aria-label="Skills — Cursed Techniques (Domain Cards)">
-  <header class="skills-dc__header">
-    <h2 class="skills-dc__title">CURSED TECHNIQUES</h2>
-    <p class="skills-dc__subtitle">// power moves grouped by domain</p>
-  </header>
-
   <div class="skills-dc__grid">
     {domains.map((domain) => (
       <article class="skills-dc__domain" aria-label={domain.name}>
@@ -96,28 +90,7 @@ const MAX_DOTS = 5;
 
 <style>
   .skills-dc {
-    padding: var(--spacing-xl) var(--spacing-md);
-  }
-
-  .skills-dc__header {
-    max-width: 1400px;
-    margin: 0 auto var(--spacing-lg);
-  }
-
-  .skills-dc__title {
-    font-size: clamp(2rem, 5vw, 4rem);
-    color: var(--color-ink);
-    margin: 0;
-    display: inline-block;
-    border-bottom: var(--ink-bold) solid var(--color-ink);
-    padding-bottom: var(--spacing-xs);
-  }
-
-  .skills-dc__subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--color-ink-faded);
-    margin: var(--spacing-xs) 0 0;
+    padding: var(--spacing-section) var(--spacing-md);
   }
 
   /* ─── DOMAIN GRID ──────────────────────────────────────────── */
@@ -226,7 +199,7 @@ const MAX_DOTS = 5;
   /* ─── MOBILE ───────────────────────────────────────────────── */
   @media (max-width: 767px) {
     .skills-dc {
-      padding: var(--spacing-lg) var(--spacing-sm);
+      padding: var(--spacing-section) var(--spacing-sm);
     }
   }
 </style>

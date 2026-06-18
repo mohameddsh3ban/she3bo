@@ -36,7 +36,7 @@ These five rules override all other considerations. If a request conflicts with 
 
 ### 1.2 Tagline (LOCKED — do not edit)
 
-> **Senior full-stack developer. Built like I train. Spicy by default.**
+> **Senior full-stack developer. Built like a train. Spicy by default.**
 
 This is the only tagline. It appears in the hero, in meta descriptions, in social preview cards, and nowhere else (don't repeat it on every page — it's a hero-only line).
 
@@ -52,8 +52,8 @@ This is the only tagline. It appears in the hero, in meta descriptions, in socia
 
 #### Sheb3o (the dev/athlete protagonist)
 
-- 22yo, 185cm, lean welterweight build (NOT bulky/bodybuilder)
-- Short black tousled fade haircut, pale fair skin
+- 22yo, 185cm, lean athletic build — visibly trained and defined, NOT bulky/bodybuilder
+- Short black tousled hair, **warm tan sun-exposed skin** (Cairo native)
 - **Uniform:** Black athletic tank top, gold dog-tag necklace, dark olive cargo pants, black sneakers with **RED LACES**, black watch on left wrist
 - Default expression: calm confident half-smirk
 - Personality: calm under pressure, dry humor, doesn't talk about how hard he works
@@ -61,12 +61,14 @@ This is the only tagline. It appears in the hero, in meta descriptions, in socia
 #### Shatta (شطة, the chili sidekick)
 
 - Small palm-sized red habanero chili pepper character
-- Big black sunglasses, single curved green stem, tiny stubby arms/legs
+- Big black sunglasses, single curved green stem, tiny stubby arms/legs ending in small black mitten-style hands & feet
 - Always has flame somewhere (head/hand/tail)
 - **MUST be knee-height or smaller relative to Sheb3o** (mascot scale, NOT co-protagonist)
 - Personality: maximum hype, externalizes Sheb3o's inner monologue
 - Comedy engine: contrast (calm Sheb3o + unhinged Shatta)
 - Speech style: short shouts in caps — "HUFTO!", "TPE!", "YO!", "AKL NAR!"
+
+> **Visual source of truth (added 2026-06-17):** the north-star art + generated model sheets in [`brand/character-boards/`](brand/character-boards/) define the canonical look; full character canon lives in [`CHARACTER-SHEB3O.md`](CHARACTER-SHEB3O.md) and [`CHARACTER-SHATTA.md`](CHARACTER-SHATTA.md). Generate new character art via the Higgsfield pipeline keyed to those refs (Nano Banana Pro, reference-locked).
 
 ---
 
@@ -440,7 +442,7 @@ Examples:
 
 Always under 160 characters. Always include the tagline or a tight variant.
 
-Default: `Senior full-stack developer. Built like I train. Spicy by default. Currently at m2a-fm GmbH.`
+Default: `Senior full-stack developer. Built like a train. Spicy by default. Currently at m2a-fm GmbH.`
 
 ### 11.3 OpenGraph
 
@@ -590,6 +592,168 @@ If you (or an AI agent) are unsure about a design decision, default to:
 - Bangers font: https://fonts.google.com/specimen/Bangers
 - Zen Kaku Gothic: https://fonts.google.com/specimen/Zen+Kaku+Gothic+New
 - JetBrains Mono: https://fonts.google.com/specimen/JetBrains+Mono
+
+---
+
+## 18. PAGE ARCHITECTURE — CROSS-PAGE COHERENCE RULES
+
+This section locks the architectural decisions made in Phase 2 (Quest 7). Every page in V2 must follow these rules. No exceptions without explicit approval.
+
+### 18.1 Layout Architecture (LOCKED — Variant A: Single BaseLayout)
+
+- Every page uses BaseLayout directly. There is NO PageLayout component.
+- BaseLayout provides: paper canvas, fonts, navigation, footer.
+- Below the nav, each page builds its own structure freely.
+- Cross-page consistency comes from this constitution, NOT from a layout component.
+
+### 18.2 Page Header Pattern (LOCKED — Variant C: Manga Chapter Cover)
+
+Every inner page (about, experience, skills, projects, contact, case studies) MUST start with a chapter cover header containing these elements in order:
+
+1. Optional "← back to [parent]" link in JetBrains Mono at the very top (only used on test pages and deeply nested pages — not on standard inner pages, which use breadcrumbs instead)
+2. Breadcrumb (per §18.5)
+3. Chapter meta row in JetBrains Mono uppercase, with three elements:
+   - Chapter number in red (--color-shatta), bold
+   - Visual separator: " ── "
+   - Arc/section label in muted ink (--color-ink-muted)
+4. Chapter body — two-column on desktop, single column on mobile:
+   - Left column: page title in Bangers (clamp 3rem to 6rem) + mono italic subtitle below
+   - Right column: a Sheb3o or Shatta asset (page-specific, see §18.3)
+5. Chapter divider line: 3px solid --color-ink with an 80px --color-shatta accent stripe at the left edge
+6. Body content begins below the divider
+
+Chapter assignments (locked):
+
+| Page | Chapter | Arc Label |
+|------|---------|-----------|
+| / (Homepage) | CH 01 | COVER |
+| /about | CH 02 | PROTAGONIST ARC |
+| /experience | CH 03 | THREE ARCS |
+| /skills | CH 04 | CURSED TECHNIQUES |
+| /projects | CH 05 | THE ISSUES |
+| /contact | CH 06 | TO BE CONTINUED |
+| /404 | CH ?? | LOST CHAPTER |
+
+For project case study pages: chapter is "CH 05.NN" where NN is the project order (01 for Pilot 100, 02 for Job Jarvis, etc., per §18.5 ordering).
+
+### 18.3 Page-To-Asset Assignments (LOCKED)
+
+| Page | Primary Asset | Companion |
+|------|---------------|-----------|
+| / (Home) | /she3bo/sheb3o-hero.png | (Shatta embedded in hero image) |
+| /about | /she3bo/sheb3o-coding.png | (Shatta TPE!! bubble embedded) |
+| /experience | /she3bo/sheb3o-sprinting.png | /shata/shatta-flag.png as arc-end markers |
+| /skills | /she3bo/sheb3o-flex.png | /shata/shatta-flex.png as margin doodle |
+| /projects (index) | (typographic — no character image) | (none) |
+| /projects/[slug] | (typographic chapter cover OR custom art per project) | (none on default) |
+| /contact | /she3bo/sheb3o-wave.png | (none) |
+| /404 | /she3bo/sheb3o-powerup2.png (the explosion) | /shata/shatta-powerup.png (optional) |
+| Konami easter egg | /she3bo/sheb3o-powerup.png (full reveal) | /shata/shatta-powerup.png |
+
+NOTE: Asset folder is /shata/ (one T) but file names are shatta-*.png (two Ts). The Sheb3o folder is /she3bo/ (with the number 3). Do NOT use /images/ prefix on asset paths.
+
+### 18.4 Navigation Transitions (LOCKED — Variant B: Smooth Fade)
+
+- All in-site navigation uses smooth fade transitions
+- Page exit: opacity 1 to 0 over 250ms ease-out
+- Page entry: opacity 0 to 1 over 300ms ease-out
+- Implementation: Astro View Transitions API (built-in)
+- The floating navigation bar persists across page changes (no flash)
+- The footer persists across page changes (no flash)
+- Fallback: prefers-reduced-motion users get instant navigation (no transition)
+
+### 18.5 Breadcrumbs and Wayfinding (LOCKED — Variant C: Top breadcrumb + Bottom prev/next on case studies)
+
+Every inner page MUST include a top breadcrumb. Format:
+[CHAPTER] / [PARENT] / [CURRENT]
+
+Breadcrumb styling:
+- Font: JetBrains Mono, uppercase, letter-spacing 0.1em, font-size 0.8125rem
+- Each segment except the current is a clickable link
+- Current segment styled in red (--color-shatta), bold
+- Separator: " / " in muted ink with 0.5 opacity
+- Hover state on links: red underline, 2px thick, 4px offset
+- Position: directly above the chapter cover header
+- Mobile: smaller font (0.75rem), wraps if needed
+
+Breadcrumb structure rules:
+- Homepage uses NO breadcrumb (it IS the home)
+- Inner pages use 2-segment breadcrumbs: e.g., "CH 02 / ABOUT" with "ABOUT" as current
+- Project case study pages use 3-segment breadcrumbs: e.g., "CH 05 / PROJECTS / PILOT 100"
+- The first segment always links back to the homepage
+- Middle segments link to their parent index page
+
+Project case study pages MUST also include prev/next chapter navigation at the bottom:
+
+- Two-column grid on desktop (prev left, next right)
+- Single column stacked on mobile (prev top, next below)
+- Each link card contains:
+  - Direction label in JetBrains Mono uppercase, red, "← Previous Chapter" or "Next Chapter →"
+  - Project name in Bangers
+  - Project tagline in mono italic
+- Hover effect: snap-shadow translate (-3px, -3px) with 6px 6px 0 0 --color-shatta
+- Border-top of 2px solid --color-ink separates this from the body content
+
+Project ordering for prev/next:
+
+1. Pilot 100 (featured, no "previous")
+2. Job Jarvis
+3. XIII Store
+4. Spotify Reimagined
+5. Curify
+6. OLS ERP (last, no "next" — wraps to "← Back to Projects index")
+
+### 18.6 Routing Map (LOCKED)
+
+Real pages live at these routes:
+- /
+- /about
+- /experience
+- /skills
+- /projects
+- /projects/pilot-100
+- /projects/job-jarvis
+- /projects/xiii-store
+- /projects/spotify
+- /projects/curify
+- /projects/ols-erp
+- /contact
+- /404
+
+Test routes (these MUST be removed before production deploy):
+- /test (test index)
+- /test/layout-a, /test/layout-b, /test/layout-c, /test/layout-c-casestudy
+- /test/header-a, /test/header-b, /test/header-c
+- /test/nav-playground and all sub-pages
+- /test/breadcrumb-a, /test/breadcrumb-b, /test/breadcrumb-c
+
+The /test routes exist for Phase 2 architecture validation only. Delete the entire /src/pages/test/ directory and the /src/layouts/PlaygroundLayout.astro file before deploying to production.
+
+### 18.7 Cross-Page CTA Rules
+
+Every inner page should end with a CTA pointing to another page (where to read next):
+
+- /about ends with: "→ See the techniques I've earned" (links to /skills)
+- /experience ends with: "→ See the projects I've shipped" (links to /projects)
+- /skills ends with: "→ See it all in production" (links to /projects)
+- /projects index ends with: featured project's case study CTA (Pilot 100)
+- /projects/[slug] case studies end with: prev/next chapter nav (per §18.5)
+- /contact has no outbound CTA — it IS the destination
+
+This creates a guided reading flow: Home → About → Experience → Skills → Projects → Contact, with deep dives possible at each stop.
+
+### 18.8 Architecture Validation Workflow (Phase 2 Pattern)
+
+For future architectural decisions in V3 or beyond, follow this workflow:
+
+1. Define the decision being made and the variants to test (typically 2-3 variants)
+2. Build all variants in parallel under /test/[decision-name]/ routes
+3. Compare side-by-side in browser
+4. Lock the winner by updating this document
+5. Delete the losing test routes once the decision is locked
+6. Never make architectural decisions without testing variants in browser first
+
+This workflow prevented six wrong defaults during Phase 2 and is now the default approach for any future architectural decision.
 
 ---
 

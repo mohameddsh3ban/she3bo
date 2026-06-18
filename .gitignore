@@ -27,3 +27,16 @@ pnpm-debug.log*
 
 # astro
 .astro/
+
+# agent tooling / local config
+.claude/
+
+# scratch & raw asset-generation output (kept local, not shipped)
+.tmp_fix/
+.tmp_logo/
+.tmp_vid/
+.logo-preview/
+.playwright-mcp/
+
+# raw character-board source & inspection art (heavy; site uses the optimized copies in public/)
+brand/

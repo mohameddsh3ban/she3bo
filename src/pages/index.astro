@@ -1,204 +1,1139 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import InkButton from '@components/ui/InkButton.astro';
-import NavFloatingButtons from '@components/nav/NavFloatingButtons.astro';
-import ExperienceMangaPage from '@components/experience/ExperienceMangaPage.astro';
-import About from '@components/sections/About.astro';
-import SkillsDomainCards from '@components/sections/SkillsDomainCards.astro';
-import ProjectsFinal from '@components/sections/ProjectsFinal.astro';
-import Contact from '@components/sections/ContactToBeContinued.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Mohamed Shaban — Senior Full-Stack Developer"
-  description="Senior full-stack developer. Built like I train. Spicy by default."
+  title="Mohamed Shaban (she3bo) — Senior Full-Stack Developer"
+  description="Senior full-stack developer from Egypt, currently shipping at m2a-fm GmbH in Germany. Built like a train. Spicy by default."
 >
-  <NavFloatingButtons activeLink="#experience" />
+  <main class="home-c2">
 
-  <main>
-  {/* ─── HERO PLACEHOLDER (Chunk 2 will flesh this out) ───────── */}
-  <section class="hero">
-    <div class="hero__container">
-      <div class="hero__text">
-        <p class="hero__nickname">they call me <span class="ink-underline">she3bo</span></p>
-        <h1 class="hero__name">
-          MOHAMED
-          <br />
-          SHABAN
-        </h1>
-        <p class="hero__tagline">
-          Senior full-stack developer.
-          <br />
-          Built like I train.
-          <br />
-          <span class="hero__tagline-spicy">Spicy by default.</span>
-        </p>
-        <div class="hero__ctas">
-          <InkButton href="#projects" variant="primary" size="lg">
-            See My Work
-          </InkButton>
-          <InkButton href="#contact" variant="secondary" size="lg">
-            Get In Touch
-          </InkButton>
+    <!-- STICKY SPINE TOC (desktop only) -->
+    <nav class="chapter-spine" aria-label="Chapter navigation">
+      <div class="spine-connector" aria-hidden="true"></div>
+      <a href="#ch-1" data-target="ch-1" data-chapter-title="HERO" class="spine-marker" aria-label="Chapter I — Hero">
+        <span class="marker-circle"><span class="marker-numeral">I</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">I — HERO</span>
+      </a>
+      <a href="#ch-2" data-target="ch-2" data-chapter-title="STATS" class="spine-marker" aria-label="Chapter II — Stats">
+        <span class="marker-circle"><span class="marker-numeral">II</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">II — STATS</span>
+      </a>
+      <a href="#ch-3" data-target="ch-3" data-chapter-title="VOLUME ONE" class="spine-marker" aria-label="Chapter III — Volume One">
+        <span class="marker-circle"><span class="marker-numeral">III</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">III — VOLUME ONE</span>
+      </a>
+      <a href="#ch-4" data-target="ch-4" data-chapter-title="ORIGIN STORY" class="spine-marker" aria-label="Chapter IV — Origin Story">
+        <span class="marker-circle"><span class="marker-numeral">IV</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">IV — ORIGIN STORY</span>
+      </a>
+      <a href="#ch-5" data-target="ch-5" data-chapter-title="POWER MOVES" class="spine-marker" aria-label="Chapter V — Power Moves">
+        <span class="marker-circle"><span class="marker-numeral">V</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">V — POWER MOVES</span>
+      </a>
+      <a href="#ch-6" data-target="ch-6" data-chapter-title="TO BE CONTINUED" class="spine-marker" aria-label="Chapter VI — To Be Continued">
+        <span class="marker-circle"><span class="marker-numeral">VI</span></span>
+        <span class="marker-tick" aria-hidden="true"></span>
+        <span class="marker-label">VI — TO BE CONTINUED</span>
+      </a>
+      <img class="spine-shatta" src="/shata/shatta-powerup.png" alt="Shatta climbing the chapters" />
+    </nav>
+
+    <!-- CONTENT COLUMN -->
+    <div class="content-col">
+
+      <!-- HERO (no mini-cover — hero IS the cover) -->
+      <section class="chapter-section hero-section" id="ch-1" data-chapter="I">
+        <div class="hero">
+          <div class="hero-content">
+            <p class="hero-nickname">they call me she3bo</p>
+            <h1 class="hero-name">
+              MOHAMED SHABAN
+              <svg class="name-underline" viewBox="0 0 120 6" preserveAspectRatio="none" aria-hidden="true"><path d="M0 3 Q15 0 30 3 Q45 6 60 3 Q75 0 90 3 Q105 6 120 3" fill="none" stroke="var(--color-shatta)" stroke-width="4" stroke-linecap="round"/></svg>
+            </h1>
+            <div class="hero-tagline">
+              <p>Senior full-stack developer.</p>
+              <p>Built like a train.</p>
+              <p class="tagline-spicy">Spicy by default. 🌶️</p>
+            </div>
+            <div class="hero-ctas">
+              <a href="/projects" class="btn btn-primary">SEE MY WORK</a>
+              <a href="/contact" class="btn btn-secondary">GET IN TOUCH</a>
+            </div>
+            <a href="/cv.pdf" target="_blank" rel="noopener" class="cv-link">or download CV <span class="cv-arrow">↗</span></a>
+          </div>
+          <div class="hero-asset">
+            <img src="/she3bo/sheb3o-hero.png" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" />
+          </div>
         </div>
+      </section>
+
+      <!-- CHAPTER I — STATS -->
+      <section class="chapter-section" id="ch-2" data-chapter="II">
+        <div class="mini-cover">
+          <span class="chapter-number">I</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">THE STATS</h2>
+            <p class="mini-cover-subtitle">// the protagonist's stats</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <div class="stats-strip">
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="stat-number">4+</span>
+              <span class="stat-label">years writing production code</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">6</span>
+              <span class="stat-label">case studies · 30+ projects delivered</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">10,000+</span>
+              <span class="stat-label">users served</span>
+            </div>
+          </div>
+          <div class="stats-asset">
+            <img src="/she3bo/sheb3o-flex.png" alt="Sheb3o flexing" />
+          </div>
+          <img class="stats-shatta" src="/shata/shatta-flex.png" alt="Shatta flexing in solidarity" />
+        </div>
+      </section>
+
+      <!-- CHAPTER II — FEATURED -->
+      <section class="chapter-section" id="ch-3" data-chapter="III">
+        <div class="mini-cover">
+          <span class="chapter-number">II</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">VOLUME ONE</h2>
+            <p class="mini-cover-subtitle">// volume one — the boss battle</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <article class="featured-card">
+          <img class="featured-shatta" src="/shata/shatta-point.png" alt="Shatta pointing at Pilot 100" />
+          <svg class="corner-bracket corner-tl" width="30" height="30" aria-hidden="true"><path d="M0 30 L0 0 L30 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
+          <svg class="corner-bracket corner-tr" width="30" height="30" aria-hidden="true"><path d="M30 30 L30 0 L0 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
+          <svg class="corner-bracket corner-bl" width="30" height="30" aria-hidden="true"><path d="M0 0 L0 30 L30 30" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
+          <svg class="corner-bracket corner-br" width="30" height="30" aria-hidden="true"><path d="M30 0 L30 30 L0 30" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
+          <div class="featured-header">
+            <h3 class="featured-name">PILOT 100</h3>
+            <span class="status-pill status-live">LIVE</span>
+          </div>
+          <p class="featured-tagline">Top-ranked in aviation training. Built it from zero. Real flight schools use it.</p>
+          <div class="tech-chips">
+            <span class="chip">Angular</span>
+            <span class="chip">NestJS</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Redis</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">TypeScript</span>
+          </div>
+          <a href="/projects/pilot-100" class="btn btn-primary">→ Read the case study</a>
+        </article>
+        <a href="/projects" class="see-all cta-link">→ See all 6 projects</a>
+      </section>
+
+      <!-- COMIC TRANSITION -->
+      <div class="comic-transition" aria-hidden="true">
+        <span class="transition-line"></span>
+        <span class="transition-text transition-next">NEXT CHAPTER</span>
+        <span class="transition-line"></span>
       </div>
 
-      <div class="hero__figure">
-        <img
-          src="/sheb3o-hero.png"
-          alt="Sheb3o — Mohamed Shaban illustration with shatta mascot"
-          class="hero__image"
-          width="800"
-          height="800"
-        />
+      <!-- CHAPTER III — ABOUT -->
+      <section class="chapter-section" id="ch-4" data-chapter="IV">
+        <div class="mini-cover">
+          <span class="chapter-number">III</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">ORIGIN STORY</h2>
+            <p class="mini-cover-subtitle">// origin story</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <div class="about-layout">
+          <div class="about-asset">
+            <img src="/she3bo/sheb3o-coding.png" alt="Sheb3o coding with Shatta cheering TPE!" />
+          </div>
+          <div class="about-content">
+            <p class="about-hook">Senior full-stack from Egypt, currently shipping at m2a-fm GmbH in Germany. Code is just my dialect — the real work is reading the problem before writing the solution.</p>
+            <a href="/about" class="cta-link">→ The full story</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER IV — TECHNIQUES -->
+      <section class="chapter-section" id="ch-5" data-chapter="V">
+        <div class="mini-cover">
+          <span class="chapter-number">IV</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">POWER MOVES</h2>
+            <p class="mini-cover-subtitle">// power moves manual</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <div class="techniques-grid">
+          <div class="technique-row">
+            <span class="tech-name">ANGULAR</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="technique-row">
+            <span class="tech-name">NESTJS</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="technique-row">
+            <span class="tech-name">TYPESCRIPT</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="technique-row">
+            <span class="tech-name">POSTGRESQL</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="technique-row">
+            <span class="tech-name">RXJS</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:80%"></div></div>
+          </div>
+          <div class="technique-row">
+            <span class="tech-name">CODE REVIEW</span>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+          </div>
+        </div>
+        <a href="/skills" class="cta-link">→ See all techniques</a>
+      </section>
+
+      <!-- COMIC TRANSITION -->
+      <div class="comic-transition" aria-hidden="true">
+        <span class="transition-line"></span>
+        <span class="transition-text transition-meanwhile">MEANWHILE....</span>
+        <span class="transition-line"></span>
       </div>
+
+      <!-- CHAPTER V — ARCS -->
+      <section class="chapter-section" id="chapter-arcs">
+        <div class="mini-cover">
+          <span class="chapter-number">V</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">THE JOURNEY</h2>
+            <p class="mini-cover-subtitle">// the journey so far</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <div class="arcs-grid">
+          <article class="arc">
+            <span class="arc-num">ARC 01</span>
+            <h3 class="arc-name">FOUNDATION ARC</h3>
+            <p class="arc-summary">Three years building production at scale in Kuwait.</p>
+            <span class="status-pill status-forged">FORGED</span>
+          </article>
+          <article class="arc">
+            <span class="arc-num">ARC 02</span>
+            <h3 class="arc-name">TRAINING ARC</h3>
+            <p class="arc-summary">One year off the keyboard. Discipline forged in a different dojo.</p>
+            <span class="status-pill status-forged">FORGED</span>
+          </article>
+          <article class="arc arc-current">
+            <span class="arc-num">ARC 03</span>
+            <h3 class="arc-name">ASCENSION ARC</h3>
+            <p class="arc-summary">Currently shipping at a German company that demands rigor.</p>
+            <span class="status-pill status-current">CURRENT</span>
+            <img class="arc-shatta-flag" src="/shata/shatta-flag.png" alt="Shatta planting flag on current arc" />
+          </article>
+        </div>
+        <a href="/experience" class="cta-link">→ Read the full arcs</a>
+      </section>
+
+      <!-- CHAPTER VI — SIGNOFF -->
+      <section class="chapter-section" id="ch-6" data-chapter="VI">
+        <div class="mini-cover">
+          <span class="chapter-number">VI</span>
+          <div class="mini-cover-text">
+            <h2 class="mini-cover-title">TO BE CONTINUED</h2>
+            <p class="mini-cover-subtitle">// to be continued...</p>
+          </div>
+          <div class="mini-cover-divider"><span class="divider-accent"></span></div>
+        </div>
+        <div class="final-cta">
+          <div class="cta-asset-group">
+            <img src="/she3bo/sheb3o-sprinting.png" alt="Sheb3o sprinting forward" class="cta-sheb3o" />
+            <img src="/shata/shatta-wave.png" alt="Shatta waving goodbye" class="cta-shatta" />
+          </div>
+          <div class="cta-content">
+            <h2 class="cta-headline">READY TO TALK?</h2>
+            <p class="cta-subtitle">// the protagonist's signoff</p>
+            <a href="/contact" class="btn btn-primary btn-large">→ GET IN TOUCH</a>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <div class="hero__scroll-cue">
-      <span>scroll</span>
-      <span class="hero__scroll-arrow">↓</span>
+    <!-- INK DOTS (margin doodles) -->
+    <div class="ink-dots" aria-hidden="true">
+      <span class="dot dot-1"></span>
+      <span class="dot dot-2"></span>
+      <span class="dot dot-3"></span>
     </div>
-  </section>
 
-  {/* ─── EXPERIENCE ────────────────────────────────────────────── */}
-  <ExperienceMangaPage />
+    <!-- MOBILE PROGRESS BAR -->
+    <div class="mobile-progress" aria-hidden="true">
+      <span class="progress-text">CHAPTER <span class="progress-current">I</span> OF VI</span>
+    </div>
 
-  {/* ─── ABOUT ─────────────────────────────────────────────────── */}
-  <About />
-
-  {/* ─── SKILLS ────────────────────────────────────────────────── */}
-  <SkillsDomainCards />
-
-  {/* ─── PROJECTS ──────────────────────────────────────────────── */}
-  <ProjectsFinal />
-
-  {/* ─── CONTACT ──────────────────────────────────────────────── */}
-  <Contact />
   </main>
 </BaseLayout>
 
 <style>
-  /* ─── HERO ───────────────────────────────────────────────────── */
-  .hero {
+  .home-c2 {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 2rem;
     position: relative;
-    min-height: 100vh;
+  }
+
+  /* ─── SPINE ─── */
+  .chapter-spine {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.25rem;
+    padding: 1rem 0;
+    z-index: 3;
+  }
+
+  .spine-connector {
+    position: absolute;
+    left: 16px;
+    top: calc(1rem + 16px);
+    bottom: calc(1rem + 16px);
+    width: 2.5px;
+    background: var(--color-ink);
+    opacity: 0.85;
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-ink) 0%,
+      var(--color-ink) 95%,
+      transparent 95%,
+      transparent 100%
+    );
+    background-size: 100% 40px;
+    z-index: 1;
+  }
+
+  .spine-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .marker-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-ink);
+    background: var(--color-paper);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-md);
-    overflow: hidden;
+    position: relative;
+    transition: all 250ms ease-out;
+    flex-shrink: 0;
   }
-
-  .hero__container {
-    width: 100%;
-    max-width: 1400px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-    align-items: end;
-  }
-
-  @media (min-width: 1024px) {
-    .hero__container {
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-  }
-
-  .hero__text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding-bottom: var(--spacing-xl);
-  }
-
-  .hero__nickname {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    text-transform: lowercase;
-    letter-spacing: 0.1em;
-    color: var(--color-ink-faded);
-    margin: 0;
-  }
-
-  .hero__name {
-    font-size: clamp(3.5rem, 12vw, 9rem);
-    line-height: 0.85;
-    margin: 0;
+  .marker-numeral {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--color-ink);
-    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    transition: color 250ms ease-out;
+  }
+  .marker-tick {
+    width: 16px;
+    height: 2px;
+    background: var(--color-ink);
+    opacity: 0.6;
+    margin-left: 4px;
+    transition: all 250ms ease-out;
+  }
+  .marker-label {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-8px);
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-ink);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease-out, transform 200ms ease-out;
+    z-index: 3;
   }
 
-  .hero__tagline {
-    font-family: var(--font-body);
-    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
-    line-height: 1.5;
-    color: var(--color-ink-muted);
-    max-width: 30ch;
-    margin: 0;
+  .spine-marker:hover .marker-circle {
+    border-width: 3px;
+    transform: scale(1.1);
+  }
+  .spine-marker:hover .marker-tick {
+    width: 24px;
+    opacity: 1;
+  }
+  .spine-marker:hover .marker-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
   }
 
-  .hero__tagline-spicy {
+  .spine-marker[data-active="true"] .marker-circle {
+    background: var(--color-shatta);
+    border-color: var(--color-ink);
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(214, 40, 40, 0.12);
+  }
+  .spine-marker[data-active="true"] .marker-numeral {
+    color: var(--color-paper);
+  }
+  .spine-marker[data-active="true"] .marker-tick {
+    width: 32px;
+    background: var(--color-shatta);
+    opacity: 1;
+    height: 2.5px;
+  }
+  .spine-marker[data-active="true"]:hover .marker-circle {
+    background: var(--color-shatta);
+    transform: scale(1.2);
+  }
+
+  .spine-marker[data-active="true"] .marker-circle::before,
+  .spine-marker[data-active="true"] .marker-circle::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-shatta);
+  }
+  .spine-marker[data-active="true"] .marker-circle::before {
+    top: -8px;
+    right: -10px;
+    box-shadow: -4px 6px 0 0 var(--color-shatta), 8px 14px 0 0 var(--color-shatta);
+  }
+  .spine-marker[data-active="true"] .marker-circle::after {
+    bottom: -10px;
+    left: -8px;
+    box-shadow: 12px -4px 0 0 var(--color-shatta);
+  }
+
+  .spine-shatta {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    width: 44px;
+    height: auto;
+    z-index: 4;
+    pointer-events: none;
+    will-change: top, transform;
+    animation: shatta-bob 2.4s ease-in-out infinite;
+  }
+  .spine-shatta[data-sliding="true"] {
+    animation: none;
+  }
+  @keyframes shatta-bob {
+    0%, 100% { transform: translateX(-50%) translateY(-50%) rotate(var(--shatta-rotation, 0deg)); }
+    50% { transform: translateX(-50%) translateY(calc(-50% - 4px)) rotate(var(--shatta-rotation, 0deg)); }
+  }
+
+  /* ─── CONTENT COLUMN ─── */
+  .content-col {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border: 2px solid var(--color-ink);
+    transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
+  }
+  .btn-primary { background: var(--color-ink); color: var(--color-paper); }
+  .btn-secondary { background: var(--color-paper); color: var(--color-ink); }
+  .btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+  }
+  .btn-large { padding: 1.25rem 2.5rem; font-size: 1.5rem; }
+
+  /* ─── CHAPTER SECTIONS ─── */
+  .chapter-section {
+    padding-block: clamp(4rem, 8vh, 7rem);
+  }
+
+  /* ─── MINI COVER ─── */
+  .mini-cover {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .chapter-number {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
     color: var(--color-shatta);
     font-weight: 700;
+    min-width: 2rem;
+  }
+  .mini-cover-text { display: flex; flex-direction: column; gap: 0.25rem; }
+  .mini-cover-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--color-ink);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .mini-cover-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-ink-muted);
     font-style: italic;
+    margin: 0;
+  }
+  .mini-cover-divider {
+    flex: 1;
+    height: 2px;
+    background: var(--color-ink);
     position: relative;
+    margin-left: 1rem;
   }
-
-  .hero__tagline-spicy::after {
-    content: '🌶️';
-    margin-left: 0.25rem;
-  }
-
-  .hero__ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-  }
-
-  /* ─── HERO FIGURE ─────────────────────────────────────────────── */
-  .hero__figure {
-    position: relative;
-    height: 85vh;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-  }
-
-  .hero__image {
-    height: 100%;
-    width: auto;
-    max-width: none;
-    object-fit: contain;
-    object-position: center bottom;
-  }
-
-  /* ─── SCROLL CUE ─────────────────────────────────────────────── */
-  .hero__scroll-cue {
+  .divider-accent {
     position: absolute;
-    bottom: var(--spacing-md);
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    top: -1px;
+    width: 60px;
+    height: 4px;
+    background: var(--color-shatta);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 75vh;
+  }
+  .hero-content {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+    max-width: 520px;
+  }
+  .hero-nickname {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-ink-muted);
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 9vw, 7rem);
+    color: var(--color-ink);
+    line-height: 0.9;
+    margin: 0;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+  .name-underline {
+    display: block;
+    width: 120px;
+    height: 6px;
+    margin-top: 8px;
+  }
+  .hero-tagline { display: flex; flex-direction: column; gap: 0.25rem; }
+  .hero-tagline p {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .tagline-spicy { color: var(--color-shatta) !important; font-style: italic; font-weight: 700; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .cv-link {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    width: fit-content;
+    transition: color 0.2s ease-out;
+  }
+  .cv-link:hover { color: var(--color-shatta); }
+  .cv-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease-out;
+  }
+  .cv-link:hover .cv-arrow { transform: rotate(45deg); }
+  .hero-asset { display: flex; justify-content: center; align-items: center; }
+  .hero-asset img { max-width: 100%; max-height: 580px; object-fit: contain; }
+
+  /* ─── STATS ─── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
     align-items: center;
-    gap: 0.5rem;
+    position: relative;
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .stat { display: flex; flex-direction: column; gap: 0.5rem; }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-shatta);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-ink-muted);
+    line-height: 1.4;
+  }
+  .stats-asset img { max-width: 100%; max-height: 400px; object-fit: contain; }
+  .stats-shatta {
+    position: absolute;
+    bottom: 0;
+    left: -10px;
+    height: 95px;
+    object-fit: contain;
+    transform: rotate(8deg);
+    z-index: 1;
+  }
+
+  /* ─── FEATURED ─── */
+  .featured-card {
+    width: 100%;
+    background: var(--color-paper);
+    border: 3px solid var(--color-ink);
+    padding: 3rem;
+    box-shadow: 8px 8px 0 0 var(--color-shatta);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+  }
+  .featured-shatta {
+    position: absolute;
+    top: -28px;
+    right: -10px;
+    height: 75px;
+    object-fit: contain;
+    z-index: 3;
+    transform: rotate(8deg);
+  }
+  .corner-bracket { position: absolute; opacity: 0.5; }
+  .corner-tl { top: -8px; left: -8px; }
+  .corner-tr { top: -8px; right: -8px; }
+  .corner-bl { bottom: -8px; left: -8px; }
+  .corner-br { bottom: -8px; right: -8px; }
+  .featured-header { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .featured-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--color-ink);
+    line-height: 0.9;
+    margin: 0;
+  }
+  .status-pill {
     font-family: var(--font-mono);
     font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .status-live { background: var(--color-shatta); color: var(--color-paper); }
+  .status-forged { border: 1px solid var(--color-ink); color: var(--color-ink); background: transparent; }
+  .status-current { background: var(--color-shatta); color: var(--color-paper); }
+  .featured-tagline {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    color: var(--color-ink-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .tech-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+    border-radius: 0;
+    transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
+  }
+  .chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0 0 var(--color-shatta);
+  }
+
+  /* ─── CTA LINKS (unified) ─── */
+  .cta-link {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    width: fit-content;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid var(--color-shatta);
+    display: inline-block;
+    transition: color 0.2s ease-out;
+  }
+  .cta-link:hover {
+    color: var(--color-shatta);
+    padding-left: 4px;
+  }
+  .see-all { margin-top: 1.5rem; }
+
+  /* ─── COMIC TRANSITIONS ─── */
+  .comic-transition {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .transition-line {
+    flex: 1;
+    height: 1px;
+    background: var(--color-ink-muted);
+    opacity: 0.4;
+  }
+  .transition-text {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-ink-muted);
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--color-ink-faded);
-    animation: bob 2s ease-in-out infinite;
+    white-space: nowrap;
+    position: relative;
+  }
+  .transition-next::before,
+  .transition-next::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 12px;
+    background: var(--color-ink);
+    opacity: 0.4;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .transition-next::before { left: -0.75rem; }
+  .transition-next::after { right: -0.75rem; }
+  .transition-meanwhile {
+    font-style: italic;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--color-ink-muted);
+    border-bottom: 1px solid var(--color-ink-muted);
+    background: var(--color-paper-shadow);
   }
 
-  .hero__scroll-arrow {
+  /* ─── ABOUT ─── */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-asset img { max-width: 100%; max-height: 500px; object-fit: contain; }
+  .about-content { display: flex; flex-direction: column; gap: 1.5rem; }
+  .about-hook {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--color-ink);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─── TECHNIQUES (POWER BARS) ─── */
+  .techniques-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .technique-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-ink);
+    background: var(--color-paper);
+  }
+  .tech-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--color-ink);
+    min-width: 90px;
+    letter-spacing: 0.02em;
+  }
+  .power-bar-track {
+    flex: 1;
+    height: 18px;
+    border: 1.5px solid var(--color-ink);
+    background: var(--color-paper);
+    overflow: hidden;
+  }
+  .power-bar-fill {
+    height: 100%;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-shatta),
+      var(--color-shatta) 6px,
+      rgba(214, 40, 40, 0.85) 6px,
+      rgba(214, 40, 40, 0.85) 7px
+    );
+  }
+
+  /* ─── ARCS ─── */
+  .arcs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .arc {
+    padding: 2rem;
+    border: 2px solid var(--color-ink);
+    background: var(--color-paper);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+  }
+  .arc-current { box-shadow: 4px 4px 0 0 var(--color-shatta); }
+  .arc-num {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-shatta);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .arc-name {
+    font-family: var(--font-display);
     font-size: 1.5rem;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .arc-summary {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-ink-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .arc-shatta-flag {
+    position: absolute;
+    top: -25px;
+    right: 10px;
+    height: 50px;
+    object-fit: contain;
+    transform: rotate(8deg);
   }
 
-  @keyframes bob {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
+  /* ─── FINAL CTA ─── */
+  .final-cta {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .cta-asset-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .cta-sheb3o {
+    max-height: 320px;
+    width: auto;
+    object-fit: contain;
+  }
+  .cta-shatta {
+    max-height: 110px;
+    width: auto;
+    object-fit: contain;
+    transform: rotate(-5deg);
+    align-self: flex-end;
+    margin-bottom: 8px;
+  }
+  .cta-content { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .cta-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--color-ink);
+    line-height: 0.9;
+    margin: 0;
+  }
+  .cta-subtitle {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--color-ink-muted);
+    font-style: italic;
+    margin: 0 0 1rem;
   }
 
+  /* ─── INK DOTS ─── */
+  .ink-dots {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dot {
+    position: absolute;
+    background: var(--color-ink);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  .dot-1 { width: 5px; height: 5px; top: 25%; right: 12px; }
+  .dot-2 { width: 4px; height: 4px; top: 60%; right: 20px; }
+  .dot-3 { width: 6px; height: 6px; top: 85%; right: 8px; }
+
+  /* ─── MOBILE PROGRESS BAR ─── */
+  .mobile-progress {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    text-align: center;
+    padding: 0.5rem;
+    z-index: 10;
+  }
+  .progress-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .progress-current {
+    color: var(--color-shatta);
+    font-weight: 700;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    .home-c2 {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .chapter-spine { display: none; }
+    .content-col { grid-column: 1; }
+    .mobile-progress { display: block; }
+    .ink-dots { display: none; }
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      min-height: auto;
+    }
+    .hero-content { max-width: none; }
+    .hero-asset img { max-height: 320px; }
+    .stats-strip {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .stats-asset img { max-height: 250px; }
+    .stats-shatta { height: 70px; left: 0; }
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .about-asset img { max-height: 280px; }
+    .techniques-grid { grid-template-columns: 1fr; }
+    .tech-name { min-width: 100px; }
+    .arcs-grid { grid-template-columns: 1fr; }
+    .final-cta {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .cta-sheb3o { max-height: 220px; }
+    .cta-shatta { max-height: 80px; }
+    .featured-card { padding: 1.5rem; }
+    .featured-shatta { height: 50px; top: -20px; right: 5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spine-shatta { animation: none !important; }
+    .spine-marker, .marker-circle, .marker-tick, .marker-label {
+      transition: none !important;
+    }
+  }
 </style>
+
+<script>
+  (function() {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobileQuery = window.matchMedia('(max-width: 768px)');
+
+    if (isMobileQuery.matches) return;
+
+    const shatta = document.querySelector('.spine-shatta') as HTMLElement | null;
+    const markers = document.querySelectorAll('.spine-marker');
+    const sections = document.querySelectorAll('[data-chapter]');
+    const spine = document.querySelector('.chapter-spine') as HTMLElement | null;
+    const progressCurrent = document.querySelector('.progress-current');
+    const chapterNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+
+    if (!shatta || !markers.length || !sections.length || !spine) return;
+
+    let lastTopPosition = 0;
+    let slideTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function getMarkerCenter(marker: Element): number {
+      const spineRect = spine!.getBoundingClientRect();
+      const markerRect = marker.getBoundingClientRect();
+      return (markerRect.top - spineRect.top) + (markerRect.height / 2);
+    }
+
+    function slideShattaTo(markerId: string, isLast = false) {
+      const marker = document.querySelector(`[data-target="${markerId}"]`);
+      if (!marker || !shatta) return;
+
+      let targetTop = getMarkerCenter(marker);
+
+      if (isLast) {
+        targetTop += 22;
+      }
+
+      const isMovingDown = targetTop > lastTopPosition;
+      const rotation = reducedMotion ? 0 : (isLast ? 5 : (isMovingDown ? -8 : 8));
+
+      shatta.setAttribute('data-sliding', 'true');
+
+      if (reducedMotion) {
+        shatta.style.transition = 'none';
+      } else {
+        shatta.style.transition = 'top 450ms cubic-bezier(0.34, 1.2, 0.64, 1), transform 450ms ease-out';
+      }
+
+      shatta.style.setProperty('--shatta-rotation', rotation + 'deg');
+      shatta.style.transform = `translateX(-50%) translateY(-50%) rotate(${rotation}deg)`;
+      shatta.style.top = targetTop + 'px';
+
+      lastTopPosition = targetTop;
+
+      markers.forEach(m => m.removeAttribute('data-active'));
+      marker.setAttribute('data-active', 'true');
+
+      if (slideTimeout) clearTimeout(slideTimeout);
+      slideTimeout = setTimeout(() => {
+        shatta.removeAttribute('data-sliding');
+        const restRotation = isLast ? 5 : 0;
+        shatta.style.setProperty('--shatta-rotation', restRotation + 'deg');
+      }, 460);
+    }
+
+    function updateMobileProgress(index: number) {
+      if (progressCurrent) {
+        progressCurrent.textContent = chapterNumerals[index] || 'I';
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const sectionId = el.id;
+            const allSections = Array.from(sections);
+            const idx = allSections.indexOf(el);
+            const isLast = el === allSections[allSections.length - 1];
+            slideShattaTo(sectionId, isLast);
+            updateMobileProgress(Math.max(0, idx));
+          }
+        });
+      }, {
+        rootMargin: '-25% 0px -55% 0px',
+        threshold: 0,
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+
+    markers.forEach(marker => {
+      marker.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = (marker as HTMLElement).getAttribute('data-target');
+        if (!targetId) return;
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    function initShatta() {
+      const firstMarker = markers[0];
+      if (firstMarker && shatta) {
+        const top = getMarkerCenter(firstMarker);
+        shatta.style.transition = 'none';
+        shatta.style.top = top + 'px';
+        lastTopPosition = top;
+        firstMarker.setAttribute('data-active', 'true');
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(initShatta, 100));
+    } else {
+      setTimeout(initShatta, 100);
+    }
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (window.matchMedia('(max-width: 768px)').matches) return;
+        const activeMarker = document.querySelector('.spine-marker[data-active="true"]');
+        if (activeMarker) {
+          const sectionId = activeMarker.getAttribute('data-target');
+          if (sectionId) {
+            const sec = document.getElementById(sectionId);
+            const allSections = Array.from(sections);
+            slideShattaTo(sectionId, sec === allSections[allSections.length - 1]);
+          }
+        }
+      }, 200);
+    });
+  })();
+</script>

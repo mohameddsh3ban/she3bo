@@ -1,6 +1,5 @@
 ---
 import { projects } from '@/data/projects';
-import SectionHeader from '@components/ui/SectionHeader.astro';
 import PaperPanel from '@components/ui/PaperPanel.astro';
 import InkButton from '@components/ui/InkButton.astro';
 import ProjectThumbnail from '@components/projects/ProjectThumbnail.astro';
@@ -10,19 +9,18 @@ const rest = projects.filter((p) => !p.featured);
 ---
 
 <PaperPanel tag="section" id="projects" class="projects-final">
-  <SectionHeader title="PROJECTS" subtitle="// six chapters, six different fights" />
-
   {/* ─── FEATURED: PILOT 100 (splash page treatment) ──────────── */}
   <article class="pf__hero">
     <span class="pf__hero-ribbon">FEATURED — VOLUME I</span>
     <div class="pf__hero-thumb">
-      <ProjectThumbnail project={featured} />
+      <ProjectThumbnail project={featured} eager />
     </div>
     <div class="pf__hero-content">
       <div class="pf__hero-head">
         <h3 class="pf__hero-name">{featured.name}</h3>
         <span class="pf__hero-status">{featured.status}</span>
       </div>
+      <span class="pf__hero-callout">USED IN REAL FLIGHT SCHOOLS</span>
       <p class="pf__hero-tagline">{featured.tagline}</p>
       <p class="pf__hero-desc">{featured.description}</p>
       <div class="pf__hero-tags">
@@ -41,7 +39,7 @@ const rest = projects.filter((p) => !p.featured);
           <InkButton href={featured.links.demo} variant="ghost" size="md">Demo</InkButton>
         )}
       </div>
-      <a href="#" class="pf__hero-casestudy">→ Read the full case study</a>
+      <a href={`/projects/${featured.slug}`} class="pf__hero-casestudy">→ Read the full case study</a>
     </div>
   </article>
 
@@ -89,8 +87,8 @@ const rest = projects.filter((p) => !p.featured);
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
-    padding: var(--spacing-md);
-    border: var(--ink-heavy) solid var(--color-ink);
+    padding: calc(var(--spacing-md) * 1.5);
+    border: var(--ink-thick) solid var(--color-ink);
     box-shadow: 8px 8px 0 0 var(--color-shatta);
     background-color: var(--color-paper);
     position: relative;
@@ -139,7 +137,7 @@ const rest = projects.filter((p) => !p.featured);
 
   .pf__hero-name {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1.1;
     text-transform: uppercase;
     color: var(--color-ink);
@@ -169,11 +167,24 @@ const rest = projects.filter((p) => !p.featured);
 
   .pf__hero-desc {
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.6;
     color: var(--color-ink-muted);
     margin: 0;
     max-width: 55ch;
+  }
+
+  .pf__hero-callout {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background-color: var(--color-shatta);
+    color: var(--color-paper);
+    padding: 4px 12px;
+    transform: rotate(-2deg);
   }
 
   .pf__hero-tags {
@@ -316,7 +327,7 @@ const rest = projects.filter((p) => !p.featured);
     font-family: var(--font-mono);
     font-size: 0.7rem;
     color: var(--color-ink-faded);
-    border: var(--ink-thin) solid var(--color-ink-faded);
+    border: var(--ink-thin) solid var(--color-ink);
     padding: 0.15rem 0.5rem;
     letter-spacing: 0.04em;
   }
