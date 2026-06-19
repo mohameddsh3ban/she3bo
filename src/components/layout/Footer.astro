@@ -38,20 +38,25 @@
 
   .footer__copy {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     color: var(--color-ink-muted);
     margin: 0;
   }
 
   .footer__source {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--text-label);
     color: var(--color-ink-muted);
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
     transition: color 150ms var(--ease-ink);
   }
 
-  .footer__source:hover {
+  .footer__source:hover,
+  .footer__source:active {
     color: var(--color-shatta);
   }
 

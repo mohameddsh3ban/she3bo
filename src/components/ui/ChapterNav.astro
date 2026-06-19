@@ -59,12 +59,14 @@ const { prev = null, next = null } = Astro.props;
   .chapter-link.prev { text-align: left; }
   .chapter-link.next { text-align: right; }
 
-  .chapter-link:hover {
+  .chapter-link:hover,
+  .chapter-link:active {
     transform: translate(-3px, -3px);
     box-shadow: 6px 6px 0 0 var(--color-shatta);
   }
 
-  .chapter-link.next:hover {
+  .chapter-link.next:hover,
+  .chapter-link.next:active {
     transform: translate(3px, -3px);
     box-shadow: -6px 6px 0 0 var(--color-shatta);
   }
@@ -83,11 +85,13 @@ const { prev = null, next = null } = Astro.props;
     font-size: 1.5rem;
     color: var(--color-ink);
     line-height: 1;
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
 
   .chapter-link .link-subtitle {
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--color-ink-muted);
     font-style: italic;
   }

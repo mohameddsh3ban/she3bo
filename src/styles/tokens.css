@@ -48,3 +48,16 @@
   --ease-ink: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-snap: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+
+/* ─── DERIVED TOKENS (mobile-aware, additive — not utility-generating) ──
+   Kept outside @theme so composite values (shadows) emit as plain CSS vars. */
+:root {
+  /* fluid page gutter — never starves a 320px screen, opens up on desktop */
+  --gutter: clamp(1rem, 5vw, 2rem);
+  /* small-label floor: 14px on mobile so body/labels never drop below DESIGN.md min */
+  --text-label: 0.875rem;
+  /* tokenized manga ink-shadow — sm offset stays inside the 320px gutter */
+  --ink-shadow: 4px 4px 0 0 var(--color-ink);
+  --ink-shadow-sm: 3px 3px 0 0 var(--color-ink);
+  --ink-shadow-red: 4px 4px 0 0 var(--color-shatta);
+}

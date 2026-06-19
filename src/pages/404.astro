@@ -76,26 +76,39 @@ import SpeechBubble from '@components/ui/SpeechBubble.astro';
   }
 
   .lost__home {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: var(--color-ink);
+    color: var(--color-paper);
+    background: var(--color-ink);
     text-decoration: none;
-    border-bottom: var(--ink-medium) solid var(--color-shatta);
-    padding-bottom: 0.4rem;
-    display: inline-block;
-    transition: color 0.2s var(--ease-ink);
+    border: var(--ink-thick) solid var(--color-ink);
+    box-shadow: var(--ink-shadow-red);
+    padding: 0.6rem 1.25rem;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
   }
 
   .lost__home:hover,
   .lost__home:focus-visible {
-    color: var(--color-shatta);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 var(--color-shatta);
+  }
+  .lost__home:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 0 var(--color-shatta);
   }
 
   .lost__shatta {
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
+    max-width: 100%;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-sm);
   }

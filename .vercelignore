@@ -1,0 +1,9 @@
+brand/
+.tmp_fix/
+.tmp_logo/
+.tmp_vid/
+.logo-preview/
+.playwright-mcp/
+.claude/
+dist/
+node_modules/

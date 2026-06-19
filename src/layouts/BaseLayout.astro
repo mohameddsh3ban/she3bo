@@ -29,6 +29,10 @@ const pathname = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
+    {/* Mark JS available BEFORE first paint so .reveal elements can hide without a
+        flash. No-JS users never get this class, so content stays fully visible. */}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
     {/* SEO Meta */}
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -102,6 +106,33 @@ const pathname = Astro.url.pathname;
     <NavFloatingButtons links={navLinks} activeLink={pathname} transition:persist />
     <slot />
     <Footer transition:persist />
+
+    {/* Shared scroll-reveal engine. Elements opt in with class="reveal"
+        (+ optional data-reveal-delay="120"). No-JS-safe (base CSS shows them)
+        and reduced-motion-safe (revealed instantly, no transition). */}
+    <script>
+      function initReveal() {
+        const els = document.querySelectorAll('.reveal:not(.is-in)');
+        if (!els.length) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach((el) => el.classList.add('is-in'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            // reveal when in view OR already scrolled past (fast momentum scroll
+            // can skip an element between ticks — never leave content hidden)
+            if (!e.isIntersecting && e.boundingClientRect.top > 0) return;
+            const d = e.target.getAttribute('data-reveal-delay');
+            if (d) (e.target as HTMLElement).style.transitionDelay = d + 'ms';
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+        els.forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
   </body>
 </html>
 

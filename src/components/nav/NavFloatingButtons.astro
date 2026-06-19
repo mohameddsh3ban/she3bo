@@ -42,7 +42,7 @@ function isActive(href: string): boolean {
 {/* Mobile: circular toggle + expandable list */}
 <div class="floatnav-mobile">
   <input type="checkbox" id="floatnav-toggle" class="floatnav-mobile__checkbox" aria-label="Toggle navigation menu" />
-  <label for="floatnav-toggle" class="floatnav-mobile__trigger" aria-hidden="true">
+  <label for="floatnav-toggle" class="floatnav-mobile__trigger">
     <img class="floatnav-mobile__icon" src="/she3bo-mark.svg" alt="" width="16" height="30" />
   </label>
 
@@ -60,6 +60,9 @@ function isActive(href: string): boolean {
       </a>
     ))}
   </nav>
+
+  {/* tap-anywhere-outside to close — pure CSS, the label toggles the checkbox off */}
+  <label for="floatnav-toggle" class="floatnav-mobile__scrim" aria-hidden="true"></label>
 </div>
 
 <style>
@@ -147,8 +150,18 @@ function isActive(href: string): boolean {
     }
   }
 
+  /* Transparent native checkbox overlaying the trigger: keyboard-focusable,
+     screen-reader-announced, and tappable — fixes the display:none a11y trap. */
   .floatnav-mobile__checkbox {
-    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 53;
   }
 
   .floatnav-mobile__trigger {
@@ -170,6 +183,27 @@ function isActive(href: string): boolean {
   .floatnav-mobile__trigger:hover {
     transform: translate(-2px, -2px);
     box-shadow: 5px 5px 0 0 var(--color-shatta);
+  }
+  .floatnav-mobile__trigger:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 0 var(--color-shatta);
+  }
+  /* keyboard focus ring on the transparent checkbox shows on the visible trigger */
+  .floatnav-mobile__checkbox:focus-visible ~ .floatnav-mobile__trigger {
+    outline: var(--ink-thick) solid var(--color-shatta);
+    outline-offset: 3px;
+  }
+
+  /* full-viewport tap-to-close scrim, only present when the menu is open */
+  .floatnav-mobile__scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+    cursor: default;
+  }
+  .floatnav-mobile__checkbox:checked ~ .floatnav-mobile__scrim {
+    display: block;
   }
 
   .floatnav-mobile__icon {
@@ -210,18 +244,23 @@ function isActive(href: string): boolean {
   }
 
   .floatnav-mobile__link {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-ink);
     text-decoration: none;
     padding: var(--spacing-xs) var(--spacing-sm);
     border: var(--ink-thin) solid transparent;
+    -webkit-tap-highlight-color: transparent;
     transition: background-color 150ms var(--ease-ink), color 150ms var(--ease-ink);
   }
 
-  .floatnav-mobile__link:hover {
+  .floatnav-mobile__link:hover,
+  .floatnav-mobile__link:active {
     background-color: var(--color-paper-shadow);
     color: var(--color-shatta);
   }

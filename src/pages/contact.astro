@@ -50,9 +50,9 @@ const details = [
             </span>
             <span class="contact__email-handle">{email.handle}</span>
           </a>
-          <p class="contact__copy-hint" data-email={email.handle}>
+          <button type="button" class="contact__copy-hint" data-email={email.handle} aria-label={`Copy email address ${email.handle}`}>
             <kbd>CTRL</kbd> + <kbd>K</kbd> to copy
-          </p>
+          </button>
         </div>
 
         <!-- Duo signoff: Sheb3o waving + Shatta YO! -->
@@ -220,13 +220,25 @@ const details = [
   }
 
   .contact__copy-hint {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    width: fit-content;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     color: var(--color-ink-faded);
     letter-spacing: 0.03em;
+    padding: 0 0.25rem;
     margin: 0;
+    -webkit-tap-highlight-color: transparent;
     transition: color 200ms ease;
   }
+  .contact__copy-hint:hover { color: var(--color-ink); }
   .contact__copy-hint kbd {
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -385,13 +397,16 @@ const details = [
     letter-spacing: 0.02em;
   }
 
-  /* ─── MOBILE ─── */
-  @media (max-width: 860px) {
+  /* ─── TABLET / MOBILE (spec breakpoint: <768) ─── */
+  @media (max-width: 767px) {
     .contact__hero-grid { grid-template-columns: 1fr; gap: var(--spacing-md); }
     .contact__figure { order: -1; min-height: auto; }
     .contact__sheb3o { max-height: 340px; }
     .contact__channel-grid { grid-template-columns: 1fr; }
     .contact__details { grid-template-columns: 1fr 1fr; }
+    /* full-width email CTA + wrap the handle so it can't overflow 320px */
+    .contact__email { width: 100%; }
+    .contact__email-handle { overflow-wrap: anywhere; }
   }
   @media (max-width: 420px) {
     .contact__details { grid-template-columns: 1fr; }
@@ -403,24 +418,35 @@ const details = [
 </style>
 
 <script>
-  const hint = document.querySelector<HTMLElement>('.contact__copy-hint');
-  if (hint) {
+  function initContactCopy() {
+    const hint = document.querySelector<HTMLElement>('.contact__copy-hint');
+    if (!hint || hint.dataset.wired) return;
+    hint.dataset.wired = '1';
     const email = hint.getAttribute('data-email');
-    const original = hint.innerHTML;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    // touch devices have no Ctrl+K — show a tappable label instead
+    const idle = coarse ? 'TAP TO COPY EMAIL ↗' : '<kbd>CTRL</kbd> + <kbd>K</kbd> to copy';
+    if (coarse) hint.textContent = 'TAP TO COPY EMAIL ↗';
+
+    function copy() {
+      if (!email || !navigator.clipboard) return;
+      navigator.clipboard.writeText(email).then(() => {
+        hint.textContent = 'COPIED!';
+        hint.classList.add('contact__copy-hint--copied');
+        setTimeout(() => {
+          hint.innerHTML = idle;
+          hint.classList.remove('contact__copy-hint--copied');
+        }, 1500);
+      });
+    }
+
+    hint.addEventListener('click', copy);
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        if (email) {
-          navigator.clipboard.writeText(email).then(() => {
-            hint.textContent = 'copied to clipboard!';
-            hint.classList.add('contact__copy-hint--copied');
-            setTimeout(() => {
-              hint.innerHTML = original;
-              hint.classList.remove('contact__copy-hint--copied');
-            }, 1500);
-          });
-        }
+        copy();
       }
     });
   }
+  document.addEventListener('astro:page-load', initContactCopy);
 </script>

@@ -40,3 +40,5 @@ pnpm-debug.log*
 
 # raw character-board source & inspection art (heavy; site uses the optimized copies in public/)
 brand/
+
+.vercel

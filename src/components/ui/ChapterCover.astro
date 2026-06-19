@@ -85,11 +85,13 @@ const { chapter, arc, title, subtitle, asset, assetAlt = '' } = Astro.props;
 
   .page-title {
     font-family: var(--font-display);
-    font-size: clamp(4rem, 12vw, 8rem);
+    font-size: clamp(3rem, 13vw, 8rem);
     color: var(--color-ink);
     line-height: 0.9;
     margin: 0;
     letter-spacing: 0.02em;
+    overflow-wrap: anywhere;
+    max-width: 100%;
   }
 
   .page-subtitle {

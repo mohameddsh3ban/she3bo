@@ -47,6 +47,15 @@ const {
     display: inline-block;
   }
 
+  /* short shouts (HUFTO!) stay on one line on desktop; longer text must wrap on
+     phones instead of pushing past the 320px viewport */
+  @media (max-width: 768px) {
+    .speech-bubble {
+      white-space: normal;
+      max-width: min(86vw, 28ch);
+    }
+  }
+
   /* Tail variants — small triangle ink indicator */
   .speech-bubble--tail-left::before,
   .speech-bubble--tail-right::before,
@@ -96,6 +105,10 @@ const {
   .speech-bubble--shout {
     background-color: var(--color-shatta);
     color: var(--color-paper);
+    /* cream-on-red is ~3:1 (fails AA) — manga ink outline restores legibility */
+    -webkit-text-stroke: 0.5px var(--color-ink);
+    paint-order: stroke fill;
+    text-shadow: 1px 1px 0 var(--color-ink);
     border-radius: 0;
     clip-path: polygon(
       0% 20%, 8% 0%, 25% 15%, 40% 0%, 55% 15%, 70% 0%,

@@ -36,16 +36,22 @@ import ExperienceMangaPage from '@components/experience/ExperienceMangaPage.astr
     padding-block: var(--spacing-lg);
   }
   .page-cta__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    max-width: 100%;
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--color-ink);
     text-decoration: none;
     border-bottom: 2px solid var(--color-shatta);
     padding-bottom: 0.4rem;
-    display: inline-block;
-    transition: color 0.2s var(--ease-ink);
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s var(--ease-ink), transform 0.2s var(--ease-ink);
   }
-  .page-cta__link:hover {
+  .page-cta__link:hover,
+  .page-cta__link:active {
     color: var(--color-shatta);
+    transform: translateX(4px);
   }
 </style>

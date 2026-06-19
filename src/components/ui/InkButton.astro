@@ -45,12 +45,16 @@ const rel = isExternal ? 'noopener noreferrer' : undefined;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    min-height: 44px;
+    max-width: 100%;
     font-family: var(--font-display);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
     cursor: pointer;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     transition:
       transform 150ms var(--ease-snap),
       box-shadow 150ms var(--ease-snap),
@@ -144,12 +148,18 @@ const rel = isExternal ? 'noopener noreferrer' : undefined;
     color: var(--color-shatta);
   }
 
-  .ink-btn--ghost:hover::after {
+  .ink-btn--ghost:hover::after,
+  .ink-btn--ghost:active::after {
     background-color: var(--color-shatta);
     transform: scaleX(1);
   }
 
+  .ink-btn--ghost:active {
+    color: var(--color-shatta);
+  }
+
   .ink-btn__label {
     display: inline-block;
+    overflow-wrap: anywhere;
   }
 </style>

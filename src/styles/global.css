@@ -64,7 +64,13 @@ body {
       transparent 2px
     );
   background-size: 100% 100%, 50px 50px, 70px 70px, 90px 90px, 60px 60px;
-  background-attachment: fixed;
+  /* `fixed` is ignored on iOS Safari and forces a full-viewport repaint every
+     scroll frame on Android — janky on phones. Only attach on desktop. */
+  background-attachment: scroll;
+}
+
+@media (min-width: 1024px) {
+  body { background-attachment: fixed; }
 }
 
 /* ─── PAPER GRAIN OVERLAY ──────────────────────────────────────── */
@@ -87,6 +93,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
   letter-spacing: 0.02em;
   margin: 0 0 var(--spacing-sm) 0;
+  /* Bangers display titles can't shrink past their clamp floor; without this a
+     long word overflows 320px and overflow-x:clip silently CLIPS it. */
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 h1 { font-size: clamp(2.5rem, 8vw, 6rem); }
@@ -129,7 +139,9 @@ a:hover {
   transition: transform 300ms var(--ease-snap);
 }
 
-.ink-underline:hover::after {
+.ink-underline:hover::after,
+.ink-underline:active::after,
+.ink-underline:focus-visible::after {
   transform: scaleX(1);
 }
 
@@ -198,16 +210,64 @@ a:hover {
   pointer-events: none;
 }
 
+/* ─── TOUCH: tactile press + tap-target floor ──────────────────── */
+/* Hover doesn't exist on touch, so all :hover feedback is dead on phones.
+   .ink-press gives the manga "stamp" press on :active. Pure transform/shadow. */
+.ink-press {
+  transition: transform 120ms var(--ease-snap), box-shadow 120ms var(--ease-snap);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.ink-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--ink-shadow-sm);
+}
+/* ≥44px hit area for standalone interactive elements (DESIGN.md touch floor) */
+.tap-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+button, [role="button"] { touch-action: manipulation; }
+
+/* ─── SCROLL REVEAL (no-JS-safe, reduced-motion-safe) ──────────── */
+/* The VISIBLE state is the base, so content is fully readable with JS off.
+   The hidden start state is applied ONLY once JS is confirmed (html.js) and
+   lifted as each element enters the viewport (.is-in, set by IntersectionObserver). */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms var(--ease-ink), transform 600ms var(--ease-ink);
+}
+html.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── HALFTONE FADE (manga panel-gutter atmosphere) ────────────── */
+.halftone-fade {
+  background-image: radial-gradient(circle at center, var(--color-ink) 1.2px, transparent 2px);
+  background-size: 7px 7px;
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-ink), transparent);
+  mask-image: linear-gradient(to bottom, var(--color-ink), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 /* ─── ACCESSIBILITY ────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+  /* never strand content behind a reveal that won't animate */
+  html.js .reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* ─── FOCUS VISIBLE ────────────────────────────────────────────── */
 :focus-visible {
   outline: var(--ink-thick) solid var(--color-shatta);
-  outline-offset: 4px;
+  outline-offset: 2px;
 }

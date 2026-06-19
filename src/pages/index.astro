@@ -115,7 +115,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
-        <article class="featured-card">
+        <article class="featured-card reveal">
           <img class="featured-shatta" src="/shata/shatta-point.png" alt="Shatta pointing at Pilot 100" />
           <svg class="corner-bracket corner-tl" width="30" height="30" aria-hidden="true"><path d="M0 30 L0 0 L30 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
           <svg class="corner-bracket corner-tr" width="30" height="30" aria-hidden="true"><path d="M30 30 L30 0 L0 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
@@ -156,7 +156,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
-        <div class="about-layout">
+        <div class="about-layout reveal">
           <div class="about-asset">
             <img src="/she3bo/sheb3o-coding.png" alt="Sheb3o coding with Shatta cheering TPE!" />
           </div>
@@ -178,27 +178,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
         <div class="techniques-grid">
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">ANGULAR</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
           </div>
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">NESTJS</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
           </div>
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">TYPESCRIPT</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
           </div>
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">POSTGRESQL</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
           </div>
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">RXJS</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:80%"></div></div>
           </div>
-          <div class="technique-row">
+          <div class="technique-row reveal">
             <span class="tech-name">CODE REVIEW</span>
             <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
           </div>
@@ -223,7 +223,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
-        <div class="arcs-grid">
+        <div class="arcs-grid reveal">
           <article class="arc">
             <span class="arc-num">ARC 01</span>
             <h3 class="arc-name">FOUNDATION ARC</h3>
@@ -257,7 +257,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
-        <div class="final-cta">
+        <div class="final-cta reveal">
           <div class="cta-asset-group">
             <img src="/she3bo/sheb3o-sprinting.png" alt="Sheb3o sprinting forward" class="cta-sheb3o" />
             <img src="/shata/shatta-wave.png" alt="Shatta waving goodbye" class="cta-shatta" />
@@ -468,13 +468,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* ─── BUTTONS ─── */
   .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    max-width: 100%;
     padding: 1rem 2rem;
     font-family: var(--font-display);
     font-size: 1.125rem;
     letter-spacing: 0.08em;
     text-decoration: none;
     border: 2px solid var(--color-ink);
+    overflow-wrap: anywhere;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
   }
   .btn-primary { background: var(--color-ink); color: var(--color-paper); }
@@ -482,6 +489,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .btn:hover {
     transform: translate(-3px, -3px);
     box-shadow: 6px 6px 0 0 var(--color-shatta);
+  }
+  /* touch press (no hover on phones) */
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 var(--color-shatta);
   }
   .btn-large { padding: 1.25rem 2.5rem; font-size: 1.5rem; }
 
@@ -532,6 +544,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     left: 0;
     top: -1px;
     width: 60px;
+    max-width: 100%; /* clip to the (narrow) divider on mobile so it can't overflow 320px */
     height: 4px;
     background: var(--color-shatta);
   }
@@ -582,15 +595,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .tagline-spicy { color: var(--color-shatta) !important; font-style: italic; font-weight: 700; }
   .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
   .cv-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
     font-size: 0.9375rem;
     color: var(--color-ink-muted);
     text-decoration: none;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     width: fit-content;
+    -webkit-tap-highlight-color: transparent;
     transition: color 0.2s ease-out;
   }
-  .cv-link:hover { color: var(--color-shatta); }
+  .cv-link:hover,
+  .cv-link:active { color: var(--color-shatta); }
   .cv-arrow {
     display: inline-block;
     transition: transform 0.2s ease-out;
@@ -701,19 +719,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* ─── CTA LINKS (unified) ─── */
   .cta-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--color-ink);
     text-decoration: none;
     width: fit-content;
+    max-width: 100%;
     padding: 0.5rem 0;
     border-bottom: 2px solid var(--color-shatta);
-    display: inline-block;
-    transition: color 0.2s ease-out;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s ease-out, transform 0.2s ease-out;
   }
-  .cta-link:hover {
+  .cta-link:hover,
+  .cta-link:active {
     color: var(--color-shatta);
-    padding-left: 4px;
+    transform: translateX(4px);
   }
   .see-all { margin-top: 1.5rem; }
 
@@ -809,13 +832,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
   .power-bar-fill {
     height: 100%;
+    transform-origin: left center;
     background-image: repeating-linear-gradient(
       -45deg,
       var(--color-shatta),
       var(--color-shatta) 6px,
-      rgba(214, 40, 40, 0.85) 6px,
-      rgba(214, 40, 40, 0.85) 7px
+      color-mix(in srgb, var(--color-shatta) 85%, transparent) 6px,
+      color-mix(in srgb, var(--color-shatta) 85%, transparent) 7px
     );
+  }
+  /* power bars "charge up" on scroll-in (scaleX — never width) */
+  html.js .technique-row.reveal .power-bar-fill {
+    transform: scaleX(0);
+    transition: transform 700ms var(--ease-ink);
+  }
+  html.js .technique-row.reveal.is-in .power-bar-fill {
+    transform: scaleX(1);
   }
 
   /* ─── ARCS ─── */
@@ -936,7 +968,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     background: var(--color-ink);
     color: var(--color-paper);
     text-align: center;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
     z-index: 10;
   }
   .progress-text {
@@ -973,7 +1005,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     .stats-asset img { max-height: 250px; }
-    .stats-shatta { height: 70px; left: 0; }
+    .stats-shatta { position: static; height: 60px; left: auto; margin-top: 0.5rem; transform: rotate(8deg); }
     .about-layout {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -986,8 +1018,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       grid-template-columns: 1fr;
       gap: 2rem;
     }
-    .cta-sheb3o { max-height: 220px; }
-    .cta-shatta { max-height: 80px; }
+    .cta-asset-group { max-width: 100%; gap: 0.5rem; }
+    .cta-sheb3o { max-height: 220px; max-width: 60%; height: auto; }
+    .cta-shatta { max-height: 80px; max-width: 30%; height: auto; }
+    .cta-content { width: 100%; }
+    .cta-content .btn-large { width: 100%; font-size: 1.25rem; padding: 1rem 1.25rem; }
+    /* keep content clear of the fixed chapter bar */
+    .content-col { padding-bottom: calc(2.75rem + env(safe-area-inset-bottom)); }
     .featured-card { padding: 1.5rem; }
     .featured-shatta { height: 50px; top: -20px; right: 5px; }
   }
