@@ -68,7 +68,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <a href="/cv.pdf" target="_blank" rel="noopener" class="cv-link">or download CV <span class="cv-arrow">↗</span></a>
           </div>
           <div class="hero-asset">
-            <img src="/she3bo/sheb3o-hero.png" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" />
+            <picture>
+              {/* mobile gets a tight character crop so he reads BIG in the narrow column */}
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-hero-mobile.webp" />
+              <img src="/she3bo/sheb3o-hero.png" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" />
+            </picture>
           </div>
         </div>
       </section>
@@ -617,6 +621,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .hero-asset { display: flex; justify-content: center; align-items: center; }
   .hero-asset img { max-width: 100%; max-height: 580px; object-fit: contain; }
 
+  /* ── HERO ENTRANCE — load choreography (above-fold, so not scroll-driven).
+        Each element gets its full animation incl. delay so cascade order can't
+        reset the stagger. `backwards` holds the start state during the delay. ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-nickname { animation: hero-rise 600ms var(--ease-ink)  80ms backwards; }
+    .hero-name     { animation: hero-rise 600ms var(--ease-ink) 160ms backwards; }
+    .hero-tagline  { animation: hero-rise 600ms var(--ease-ink) 260ms backwards; }
+    .hero-ctas     { animation: hero-rise 600ms var(--ease-ink) 360ms backwards; }
+    .cv-link       { animation: hero-rise 600ms var(--ease-ink) 440ms backwards; }
+    .hero-asset    { animation: hero-rise 720ms var(--ease-ink) 220ms backwards; }
+  }
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   /* ─── STATS ─── */
   .stats-strip {
     display: grid;
@@ -997,8 +1017,38 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       gap: 2rem;
       min-height: auto;
     }
-    .hero-content { max-width: none; }
-    .hero-asset img { max-height: 320px; }
+    .hero { position: static; }
+    .hero-section { position: relative; }   /* figure spans the WHOLE hero section */
+    /* text stays on the left + always above the figure */
+    .hero-content { max-width: none; position: relative; z-index: 1; }
+    .hero-tagline { max-width: 44%; }
+    .hero-ctas { max-width: 44%; flex-direction: column; align-items: stretch; }
+    .cv-link { max-width: 44%; }
+    /* Sheb3o — BIG tight-cropped cutout filling the right column, NO box */
+    .hero-asset {
+      position: absolute;
+      top: clamp(4rem, 12vh, 5.5rem);
+      right: -0.5rem;
+      bottom: clamp(0.5rem, 2vh, 1.25rem);
+      width: 60%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      box-shadow: none;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-asset::before,
+    .hero-asset::after { content: none; }
+    .hero-asset img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: contain;
+      object-position: bottom center;
+    }
     .stats-strip {
       grid-template-columns: 1fr;
       gap: 2rem;
