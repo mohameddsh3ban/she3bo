@@ -20,7 +20,7 @@ const { crumbs } = Astro.props;
   {crumbs.map((c, i) => (
     <Fragment>
       {c.href
-        ? <a href={c.href} class="crumb">{c.label}</a>
+        ? <a href={c.href} class:list={["crumb", { "crumb--home": c.href === "/" }]}>{c.href === "/" ? "⌂ HOME" : c.label}</a>
         : <span class="crumb current" aria-current="page">{c.label}</span>}
       {i < crumbs.length - 1 && <span class="crumb-sep">/</span>}
     </Fragment>
@@ -60,6 +60,11 @@ const { crumbs } = Astro.props;
 
   .crumb.current {
     color: var(--color-shatta);
+    font-weight: 700;
+  }
+
+  .crumb--home {
+    color: var(--color-ink);
     font-weight: 700;
   }
 

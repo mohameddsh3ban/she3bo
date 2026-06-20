@@ -47,6 +47,17 @@ function isActive(href: string): boolean {
   </label>
 
   <nav class="floatnav-mobile__panel" aria-label="Main navigation">
+    <a
+      href="/"
+      class:list={[
+        'floatnav-mobile__link',
+        'floatnav-mobile__link--home',
+        { 'floatnav-mobile__link--active': isActive('/') }
+      ]}
+      aria-current={isActive('/') ? 'page' : undefined}
+    >
+      ⌂ Home
+    </a>
     {links.map(link => (
       <a
         href={link.href}
@@ -268,6 +279,12 @@ function isActive(href: string): boolean {
   .floatnav-mobile__link--active {
     background-color: var(--color-shatta);
     color: var(--color-paper);
+  }
+
+  /* Home sits at the top as the base, separated from the chapter links */
+  .floatnav-mobile__link--home {
+    margin-bottom: var(--spacing-xs);
+    border-bottom: var(--ink-thin) solid var(--color-paper-shadow);
   }
 
   @media (prefers-reduced-motion: reduce) {

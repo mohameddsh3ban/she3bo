@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/projects';
 ---
 
 <BaseLayout
@@ -89,58 +90,68 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="stats-strip">
           <div class="stats-grid">
-            <div class="stat">
+            <div class="stat reveal">
               <span class="stat-number">4+</span>
               <span class="stat-label">years writing production code</span>
             </div>
-            <div class="stat">
+            <div class="stat reveal" data-reveal-delay="90">
               <span class="stat-number">6</span>
               <span class="stat-label">case studies · 30+ projects delivered</span>
             </div>
-            <div class="stat">
+            <div class="stat reveal" data-reveal-delay="180">
               <span class="stat-number">10,000+</span>
               <span class="stat-label">users served</span>
             </div>
           </div>
-          <div class="stats-asset">
-            <img src="/she3bo/sheb3o-flex.png" alt="Sheb3o flexing" />
+          <div class="stats-asset reveal" data-reveal-delay="120">
+            <picture>
+              {/* mobile gets the tight flex crop so he reads BIG, mirroring the hero */}
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-flex-mobile.webp" />
+              <img src="/she3bo/sheb3o-flex.png" alt="Sheb3o flexing" />
+            </picture>
           </div>
           <img class="stats-shatta" src="/shata/shatta-flex.png" alt="Shatta flexing in solidarity" />
         </div>
       </section>
 
-      <!-- CHAPTER II — FEATURED -->
+      <!-- CHAPTER II — FEATURED (auto-rotating project carousel) -->
       <section class="chapter-section" id="ch-3" data-chapter="III">
         <div class="mini-cover">
           <span class="chapter-number">II</span>
           <div class="mini-cover-text">
             <h2 class="mini-cover-title">VOLUME ONE</h2>
-            <p class="mini-cover-subtitle">// volume one — the boss battle</p>
+            <p class="mini-cover-subtitle">// the case files — flipping through</p>
           </div>
           <div class="mini-cover-divider"><span class="divider-accent"></span></div>
         </div>
-        <article class="featured-card reveal">
-          <img class="featured-shatta" src="/shata/shatta-point.png" alt="Shatta pointing at Pilot 100" />
-          <svg class="corner-bracket corner-tl" width="30" height="30" aria-hidden="true"><path d="M0 30 L0 0 L30 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
-          <svg class="corner-bracket corner-tr" width="30" height="30" aria-hidden="true"><path d="M30 30 L30 0 L0 0" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
-          <svg class="corner-bracket corner-bl" width="30" height="30" aria-hidden="true"><path d="M0 0 L0 30 L30 30" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
-          <svg class="corner-bracket corner-br" width="30" height="30" aria-hidden="true"><path d="M30 0 L30 30 L0 30" fill="none" stroke="var(--color-ink)" stroke-width="3"/></svg>
-          <div class="featured-header">
-            <h3 class="featured-name">PILOT 100</h3>
-            <span class="status-pill status-live">LIVE</span>
+
+        <div class="pcarousel reveal" data-carousel aria-roledescription="carousel" aria-label="Featured projects, auto-rotating">
+          <img class="pcarousel__shatta" src="/shata/shatta-point.png" alt="" aria-hidden="true" />
+          <div class="pcarousel__viewport" data-carousel-track>
+            {projects.map((p, i) => (
+              <article class="pcard" data-carousel-slide aria-roledescription="slide" aria-label={`Project ${i + 1} of ${projects.length}: ${p.name}`}>
+                <div class="pcard__top">
+                  <span class="pcard__num">CASE {p.number}</span>
+                  <span class:list={['status-pill', p.status === 'LIVE' ? 'status-live' : 'status-forged']}>{p.status}</span>
+                </div>
+                <h3 class="pcard__name">{p.name}</h3>
+                <p class="pcard__tagline">{p.tagline}</p>
+                <div class="tech-chips">
+                  {p.tech.slice(0, 6).map((t) => <span class="chip">{t}</span>)}
+                </div>
+                <a href={`/projects/${p.slug}`} class="btn btn-primary pcard__cta">&rarr; Read the case study</a>
+              </article>
+            ))}
           </div>
-          <p class="featured-tagline">Top-ranked in aviation training. Built it from zero. Real flight schools use it.</p>
-          <div class="tech-chips">
-            <span class="chip">Angular</span>
-            <span class="chip">NestJS</span>
-            <span class="chip">PostgreSQL</span>
-            <span class="chip">Redis</span>
-            <span class="chip">Firebase</span>
-            <span class="chip">TypeScript</span>
-          </div>
-          <a href="/projects/pilot-100" class="btn btn-primary">→ Read the case study</a>
-        </article>
-        <a href="/projects" class="see-all cta-link">→ See all 6 projects</a>
+        </div>
+
+        <div class="pcarousel__dots" data-carousel-dots role="tablist" aria-label="Choose a project">
+          {projects.map((p, i) => (
+            <button type="button" class="pdot" data-carousel-dot data-index={i} aria-label={`Show ${p.name}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+          ))}
+        </div>
+
+        <a href="/projects" class="see-all cta-link">&rarr; See all {projects.length} projects</a>
       </section>
 
       <!-- COMIC TRANSITION -->
@@ -263,8 +274,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="final-cta reveal">
           <div class="cta-asset-group">
-            <img src="/she3bo/sheb3o-sprinting.png" alt="Sheb3o sprinting forward" class="cta-sheb3o" />
-            <img src="/shata/shatta-wave.png" alt="Shatta waving goodbye" class="cta-shatta" />
+            <picture>
+              {/* mobile gets the tight sprint+flame crop so he reads BIG, no blueprint margins */}
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-sprint-mobile.webp" />
+              <img src="/she3bo/sheb3o-sprinting.png" alt="Sheb3o sprinting forward in a trail of flame" class="cta-sheb3o" />
+            </picture>
+            <img src="/shata/shatta-wave.png" alt="" aria-hidden="true" class="cta-shatta" />
           </div>
           <div class="cta-content">
             <h2 class="cta-headline">READY TO TALK?</h2>
@@ -737,6 +752,82 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     box-shadow: 3px 3px 0 0 var(--color-shatta);
   }
 
+  /* ─── PROJECT CAROUSEL (auto-rotating, swipeable, no-JS-safe) ─── */
+  .pcarousel {
+    position: relative;
+    border: var(--ink-thick) solid var(--color-ink);
+    border-radius: 2px;
+    box-shadow: 8px 8px 0 0 var(--color-shatta);
+    background: var(--color-paper);
+    margin-top: 0.5rem;
+  }
+  .pcarousel::before,
+  .pcarousel::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+  }
+  .pcarousel::before { top: -7px; left: -7px; border-top: var(--ink-thick) solid var(--color-ink); border-left: var(--ink-thick) solid var(--color-ink); }
+  .pcarousel::after { bottom: -7px; right: -7px; border-bottom: var(--ink-thick) solid var(--color-ink); border-right: var(--ink-thick) solid var(--color-ink); }
+  .pcarousel__shatta {
+    position: absolute;
+    top: -28px;
+    right: -6px;
+    height: 62px;
+    width: auto;
+    object-fit: contain;
+    transform: rotate(8deg);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .pcarousel__viewport {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pcarousel__viewport::-webkit-scrollbar { display: none; }
+
+  .pcard {
+    flex: 0 0 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
+  }
+  .pcard__top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .pcard__num { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.14em; color: var(--color-shatta); }
+  .pcard__name { font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 5rem); color: var(--color-ink); line-height: 0.9; margin: 0; overflow-wrap: anywhere; }
+  .pcard__tagline { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-ink-muted); line-height: 1.6; margin: 0; max-width: 52ch; }
+  .pcard__cta { align-self: flex-start; margin-top: auto; }
+
+  .pcarousel__dots { display: flex; justify-content: center; gap: 0.3rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .pdot {
+    width: 34px; height: 34px;
+    display: grid; place-items: center;
+    background: none; border: none; cursor: pointer; padding: 0; min-height: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pdot::before {
+    content: '';
+    width: 11px; height: 11px;
+    border: var(--ink-medium) solid var(--color-ink);
+    background: transparent;
+    transition: background-color 0.2s var(--ease-ink), transform 0.2s var(--ease-snap);
+  }
+  .pdot.is-active::before { background: var(--color-shatta); border-color: var(--color-shatta); transform: scale(1.25); }
+  .pdot:hover::before { border-color: var(--color-shatta); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pcarousel__viewport { scroll-behavior: auto; }
+  }
+
   /* ─── CTA LINKS (unified) ─── */
   .cta-link {
     display: inline-flex;
@@ -929,6 +1020,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: 0.5rem;
     position: relative;
   }
+  /* let the <picture> wrapper collapse so the img is the flex child */
+  .cta-asset-group picture { display: contents; }
   .cta-sheb3o {
     max-height: 320px;
     width: auto;
@@ -1021,16 +1114,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .hero-section { position: relative; }   /* figure spans the WHOLE hero section */
     /* text stays on the left + always above the figure */
     .hero-content { max-width: none; position: relative; z-index: 1; }
-    .hero-tagline { max-width: 44%; }
-    .hero-ctas { max-width: 44%; flex-direction: column; align-items: stretch; }
-    .cv-link { max-width: 44%; }
+    .hero-tagline { max-width: 50%; }
+    .hero-ctas { max-width: 50%; flex-direction: column; align-items: stretch; gap: 0.6rem; }
+    .cv-link { max-width: 50%; }
+    /* compact hero buttons so labels stay on ONE line in the narrow column
+       (overrides the global .btn padding/letter-spacing/overflow-wrap) */
+    .hero-ctas .btn {
+      padding: 0.7rem 0.75rem;
+      font-size: clamp(0.8rem, 3.2vw, 1.05rem);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      min-height: 46px;
+    }
     /* Sheb3o — BIG tight-cropped cutout filling the right column, NO box */
     .hero-asset {
       position: absolute;
       top: clamp(4rem, 12vh, 5.5rem);
       right: -0.5rem;
       bottom: clamp(0.5rem, 2vh, 1.25rem);
-      width: 60%;
+      width: 54%;
       margin: 0;
       padding: 0;
       border: none;
@@ -1049,13 +1152,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       object-fit: contain;
       object-position: bottom center;
     }
-    .stats-strip {
-      grid-template-columns: 1fr;
-      gap: 2rem;
+    /* THE STATS — mirror the hero: numbers left, BIG flex-Sheb3o right, no box */
+    #ch-2 { position: relative; }
+    .stats-strip { position: static; grid-template-columns: 1fr; gap: 0; }
+    .stats-grid { position: relative; z-index: 1; grid-template-columns: 1fr; gap: 1.25rem; max-width: 52%; }
+    .stat-number { font-size: clamp(2rem, 9.5vw, 3rem); }
+    .stats-asset {
+      position: absolute;
+      top: clamp(4rem, 10vh, 5.5rem);
+      right: -0.5rem;
+      bottom: clamp(1rem, 3vh, 2rem);
+      width: 54%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin: 0;
+      pointer-events: none;
+      z-index: 0;
     }
-    .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .stats-asset img { max-height: 250px; }
-    .stats-shatta { position: static; height: 60px; left: auto; margin-top: 0.5rem; transform: rotate(8deg); }
+    .stats-asset img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: contain;
+      object-position: bottom center;
+    }
+    /* Shatta flexing in solidarity — knee-height, lower-left (DESIGN.md §13) */
+    .stats-shatta {
+      position: absolute;
+      bottom: clamp(0.5rem, 3vh, 1.5rem);
+      left: 0;
+      height: 72px;
+      width: auto;
+      margin: 0;
+      transform: rotate(8deg);
+      z-index: 1;
+    }
     .about-layout {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -1064,15 +1196,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .techniques-grid { grid-template-columns: 1fr; }
     .tech-name { min-width: 100px; }
     .arcs-grid { grid-template-columns: 1fr; }
+    /* FINALE — big dynamic sprint across the top, centered signoff below */
     .final-cta {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.25rem;
+      text-align: center;
     }
-    .cta-asset-group { max-width: 100%; gap: 0.5rem; }
-    .cta-sheb3o { max-height: 220px; max-width: 60%; height: auto; }
-    .cta-shatta { max-height: 80px; max-width: 30%; height: auto; }
-    .cta-content { width: 100%; }
-    .cta-content .btn-large { width: 100%; font-size: 1.25rem; padding: 1rem 1.25rem; }
+    .cta-asset-group {
+      position: relative;
+      max-width: 100%;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0;
+    }
+    .cta-sheb3o { width: 100%; max-width: 440px; max-height: none; height: auto; }
+    /* Shatta cheering at the end of the flame trail */
+    .cta-shatta {
+      position: absolute;
+      right: 2%;
+      bottom: 8%;
+      max-height: 64px;
+      max-width: 22%;
+      height: auto;
+      margin: 0;
+    }
+    .cta-content { width: 100%; align-items: center; }
+    .cta-subtitle { margin-bottom: 0.5rem; }
+    .cta-content .btn-large { width: 100%; font-size: 1.25rem; padding: 1.05rem 1.25rem; }
     /* keep content clear of the fixed chapter bar */
     .content-col { padding-bottom: calc(2.75rem + env(safe-area-inset-bottom)); }
     .featured-card { padding: 1.5rem; }
@@ -1223,4 +1373,61 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       }, 200);
     });
   })();
+</script>
+
+<script>
+  // Auto-rotating project carousel. No-JS: it's a swipeable scroll-snap row.
+  // JS adds auto-advance (paused on interaction, off under reduced-motion) + dots.
+  function initProjectCarousel() {
+    const root = document.querySelector('[data-carousel]') as HTMLElement | null;
+    if (!root || root.dataset.cwired) return;
+    const track = root.querySelector('[data-carousel-track]') as HTMLElement | null;
+    const slides = Array.from(root.querySelectorAll('[data-carousel-slide]'));
+    const dots = Array.from(document.querySelectorAll('[data-carousel-dot]')) as HTMLElement[];
+    if (!track || slides.length < 2) return;
+    root.dataset.cwired = '1';
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let index = 0;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    function setActive(i: number) {
+      dots.forEach((d, di) => {
+        const on = di === i;
+        d.classList.toggle('is-active', on);
+        d.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    }
+    function go(i: number, smooth: boolean) {
+      index = (i + slides.length) % slides.length;
+      track!.scrollTo({ left: index * track!.clientWidth, behavior: smooth && !reduce.matches ? 'smooth' : 'auto' });
+      setActive(index);
+    }
+    function start() {
+      if (reduce.matches || timer) return;
+      timer = setInterval(() => go(index + 1, true), 4500);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    dots.forEach((d, di) => d.addEventListener('click', () => { go(di, true); stop(); start(); }));
+
+    let st: ReturnType<typeof setTimeout>;
+    track.addEventListener('scroll', () => {
+      clearTimeout(st);
+      st = setTimeout(() => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== index) { index = i; setActive(i); }
+      }, 120);
+    }, { passive: true });
+
+    ['pointerenter', 'focusin', 'touchstart'].forEach((e) => root.addEventListener(e, stop, { passive: true }));
+    ['pointerleave', 'focusout', 'touchend'].forEach((e) => root.addEventListener(e, () => setTimeout(start, 800), { passive: true }));
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+    reduce.addEventListener('change', () => { stop(); if (!reduce.matches) start(); });
+    window.addEventListener('resize', () => go(index, false));
+
+    setActive(0);
+    start();
+  }
+  document.addEventListener('astro:page-load', initProjectCarousel);
 </script>
