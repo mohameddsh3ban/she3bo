@@ -339,7 +339,7 @@ export const projects: Project[] = [
       "Production-grade e-commerce platform with custom admin dashboard. Built to demonstrate end-to-end e-commerce domain mastery — products, orders, payments, inventory, customer management, all from scratch.",
     tech: ["Angular", "Firebase Cloud Functions", "Firebase", "Firestore", "TypeScript"],
     icon: "🛒",
-    links: { live: "https://xiii-store.vercel.app" },
+    links: { live: "https://xii-store-v2.vercel.app" },
     featured: false,
     year: "2023 — 2025",
     role: "Solo build",
