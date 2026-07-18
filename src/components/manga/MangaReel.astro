@@ -60,6 +60,10 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
     </div>
   </div>
   <div class="reel__bar" aria-hidden="true"><span data-reel-bar></span></div>
+  <div class="reel__cue" data-reel-cue aria-hidden="true">
+    <span class="reel__cue-text">scroll to continue</span>
+    <span class="reel__cue-arrow">↓</span>
+  </div>
 </div>
 
 <style>
@@ -79,7 +83,7 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
   .reel-skip { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; padding: 0; border: 0; }
   .reel-skip:focus { width: auto; height: auto; overflow: visible; clip: auto; clip-path: none; left: 1rem; top: 0.4rem; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--color-ink, #1a1a1a); background: var(--color-paper, #ede4cc); border: 1px solid var(--color-ink, #1a1a1a); padding: 0.4rem 0.7rem; z-index: 60; }
 
-  .reel__hud, .reel__bar { display: none; }
+  .reel__hud, .reel__bar, .reel__cue { display: none; }
 
   /* ════════════ DESKTOP: pinned comic page that fills in (.is-reel) ════════════ */
   /* full width of the (now full-width) .about — i.e. the client width, which
@@ -123,7 +127,48 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
   /* ════════════ MOBILE: stacked fade-up (no pin / crop) ════════════ */
   .reel.is-snap .cell { will-change: transform, opacity; }
 
-  @media (prefers-reduced-motion: reduce) { .reel__dot { transition: none; } }
+  /* FIRST scene auto-reveals on load (no scroll) — pure CSS so a JS re-init
+     can't cancel it; `backwards` fill means it stays visible if it never runs */
+  .reel.is-snap [data-arc="1"] .cell { animation: reel-first-in 0.6s var(--ease-ink, ease) backwards; }
+  .reel.is-snap [data-arc="1"] .cell:nth-child(2) { animation-delay: 0.12s; }
+  .reel.is-snap [data-arc="1"] .cell:nth-child(3) { animation-delay: 0.24s; }
+  .reel.is-snap [data-arc="1"] .cell:nth-child(4) { animation-delay: 0.36s; }
+  .reel.is-snap [data-arc="1"] .cell:nth-child(5) { animation-delay: 0.48s; }
+  /* transform-only: opacity stays 1 so the first scene can NEVER be stuck hidden */
+  @keyframes reel-first-in { from { transform: translateY(26px); } to { transform: translateY(0); } }
+
+  /* ════════════ "scroll to continue" cue (JS + motion only) ════════════ */
+  .reel.is-reel .reel__cue,
+  .reel.is-snap .reel__cue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    position: fixed;
+    left: 50%;
+    bottom: clamp(1rem, 4vh, 2rem);
+    transform: translateX(-50%);
+    z-index: 45;
+    pointer-events: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink, #1a1a1a);
+    background: var(--color-paper, #ede4cc);
+    border: 1px solid var(--color-ink, #1a1a1a);
+    box-shadow: 2px 2px 0 0 var(--color-shatta, #d62828);
+    padding: 0.4rem 0.75rem;
+    transition: opacity 0.4s var(--ease-ink), transform 0.4s var(--ease-ink);
+  }
+  .reel__cue-arrow { font-size: 1rem; line-height: 1; color: var(--color-shatta, #d62828); animation: reel-cue-bounce 1.4s ease-in-out infinite; }
+  @keyframes reel-cue-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  .reel__cue.is-hidden { opacity: 0; transform: translateX(-50%) translateY(10px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel__dot { transition: none; }
+    .reel__cue-arrow { animation: none; }
+  }
 </style>
 
 <script>
@@ -145,10 +190,13 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
       const bar = reel.querySelector<HTMLElement>("[data-reel-bar]");
       const dots = Array.from(reel.querySelectorAll<HTMLElement>(".reel__dot"));
 
-      chapters.forEach((ch) => {
+      chapters.forEach((ch, ci) => {
         const cells = gsap.utils.toArray<HTMLElement>(ch.querySelectorAll("[data-panel]"));
         const arc = ch.getAttribute("data-arc");
         gsap.set(cells, { opacity: 0, scale: 0.96, yPercent: 4 });
+        // opening chapter: first panel is already inked in on load so the pinned
+        // opening page is never blank — the story "starts" the moment you arrive
+        if (ci === 0 && cells[0]) gsap.set(cells[0], { opacity: 1, scale: 1, yPercent: 0 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -181,12 +229,19 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
     /* ── MOBILE: stacked fade-up, no pin ── */
     mm.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
       reel.classList.add("is-snap");
-      const cells = gsap.utils.toArray<HTMLElement>("[data-panel]");
-      cells.forEach((c) => gsap.from(c, {
-        opacity: 0, y: 36, duration: 0.6, ease: "power2.out",
-        scrollTrigger: { trigger: c, start: "top 85%", once: true },
-      }));
-      return () => { reel.classList.remove("is-snap"); gsap.set(cells, { clearProps: "all" }); };
+      const chapters = gsap.utils.toArray<HTMLElement>("[data-chapter]");
+      chapters.forEach((ch, ci) => {
+        // FIRST scene reveals immediately on load via CSS (see .is-snap [data-arc="0"]),
+        // so it can't be cancelled by a re-init and needs no scroll. Later chapters
+        // ink in on scroll.
+        if (ci === 0) return;
+        const cells = gsap.utils.toArray<HTMLElement>(ch.querySelectorAll("[data-panel]"));
+        cells.forEach((c) => gsap.from(c, {
+          opacity: 0, y: 34, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: c, start: "top 88%", once: true },
+        }));
+      });
+      return () => { reel.classList.remove("is-snap"); gsap.set(gsap.utils.toArray<HTMLElement>("[data-panel]"), { clearProps: "all" }); };
     });
   }
 
@@ -226,6 +281,19 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
     setTimeout(() => ScrollTrigger.refresh(), 300);
   }
 
+  function wireScrollCue() {
+    const cue = document.querySelector<HTMLElement>("[data-reel-cue]");
+    if (!cue) return;
+    cue.classList.remove("is-hidden");
+    const onScroll = () => {
+      if (window.scrollY > 60) {
+        cue.classList.add("is-hidden");
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   function initReel() {
     if (!document.querySelector("[data-reel]")) return;
     killReel();
@@ -238,6 +306,7 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
     html.style.scrollBehavior = sb;
     buildReel();
     wireImageRefresh();
+    wireScrollCue();
     refreshSoon();
   }
 

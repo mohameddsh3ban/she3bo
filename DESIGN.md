@@ -694,14 +694,21 @@ Project case study pages MUST also include prev/next chapter navigation at the b
 - Hover effect: snap-shadow translate (-3px, -3px) with 6px 6px 0 0 --color-shatta
 - Border-top of 2px solid --color-ink separates this from the body content
 
-Project ordering for prev/next:
+Project ordering for prev/next (updated 2026-07-09 — GitHub/org/machine sweep, approved by Mohamed):
 
 1. Pilot 100 (featured, no "previous")
-2. Job Jarvis
-3. XIII Store
-4. Spotify Reimagined
-5. Curify
-6. OLS ERP (last, no "next" — wraps to "← Back to Projects index")
+2. Egypt Post POS
+3. XBRAIN OS
+4. Spytfy
+5. Job Jarvis
+6. Seagull Reservations
+7. Course Platform
+8. M2A Web Platforms
+9. XIII Store
+10. Spotify Reimagined
+11. Curify
+12. LO Organizer
+13. OLS ERP (last, no "next" — wraps to "← Back to Projects index")
 
 ### 18.6 Routing Map (LOCKED)
 
@@ -712,10 +719,17 @@ Real pages live at these routes:
 - /skills
 - /projects
 - /projects/pilot-100
+- /projects/egypt-post-pos
+- /projects/xbrain-os
+- /projects/spytfy
 - /projects/job-jarvis
+- /projects/seagull-reservations
+- /projects/course-platform
+- /projects/m2a-platforms
 - /projects/xiii-store
 - /projects/spotify
 - /projects/curify
+- /projects/lo-organizer
 - /projects/ols-erp
 - /contact
 - /404
