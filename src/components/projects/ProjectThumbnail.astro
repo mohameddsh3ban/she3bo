@@ -10,7 +10,10 @@ interface Props {
 
 const { project, class: className = '', eager = false } = Astro.props;
 
-const chapterWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const chapterWords = [
+  'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+  'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen',
+];
 const chapterLabel = `// chapter ${chapterWords[project.id - 1] || project.number}`;
 
 const statusClass = {
@@ -19,18 +22,28 @@ const statusClass = {
   'SHIPPED': 'status--shipped',
   'DEMO': 'status--demo',
   'ARCHIVED': 'status--archived',
+  'PILOT': 'status--pilot',
+  'OPEN SOURCE': 'status--open-source',
 }[project.status];
 ---
 
 <a href={`/projects/${project.slug}`} class={`thumb ${className}`} aria-label={`Read the ${project.name} case study`}>
-  <img
-    class="thumb__art"
-    src={`/projects/${project.slug}.png`}
-    alt={`${project.name} key art`}
-    loading={eager ? 'eager' : 'lazy'}
-    width="2752"
-    height="1536"
-  />
+  {project.art ? (
+    <img
+      class="thumb__art"
+      src={project.art}
+      alt={`${project.name} key art`}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      width="1600"
+      height="894"
+    />
+  ) : (
+    <div class="thumb__sketch" aria-hidden="true">
+      <span class="thumb__sketch-icon">{project.icon}</span>
+      <span class="thumb__sketch-number">{project.number}</span>
+    </div>
+  )}
   <div class="thumb__overlay">
     <div class="thumb__top">
       <span class="thumb__number">{project.number}</span>
@@ -81,6 +94,45 @@ const statusClass = {
 
   .thumb:hover .thumb__art {
     transform: scale(1.03);
+  }
+
+  /* No key art yet → sketch panel: halftone paper, oversized icon,
+     ghost chapter number. Reads as an unfinished manga page on purpose. */
+  .thumb__sketch {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-paper-grain);
+    background-image: radial-gradient(var(--color-paper-deep) 1px, transparent 1px);
+    background-size: 8px 8px;
+    transition: transform 300ms var(--ease-snap);
+  }
+
+  .thumb:hover .thumb__sketch {
+    transform: scale(1.03);
+  }
+
+  /* Emoji glyphs are full-color; near-total grayscale keeps the panel
+     inside the three-color constitution and reads as pencil sketch. */
+  .thumb__sketch-icon {
+    font-size: clamp(4rem, 10vw, 7rem);
+    line-height: 1;
+    filter: grayscale(0.9) contrast(1.05);
+    opacity: 0.85;
+  }
+
+  .thumb__sketch-number {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 2.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 14vw, 9rem);
+    line-height: 1;
+    color: var(--color-paper-deep);
+    opacity: 0.55;
+    user-select: none;
   }
 
   /* Readable manga overlay: number/status on top, name/chapter on a link tab below. */
@@ -157,6 +209,18 @@ const statusClass = {
     border: var(--ink-thin) solid var(--color-ink-faded);
   }
 
+  .status--pilot {
+    background-color: var(--color-paper);
+    color: var(--color-shatta);
+    border: var(--ink-thin) solid var(--color-shatta);
+  }
+
+  .status--open-source {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    border: var(--ink-thin) solid var(--color-ink);
+  }
+
   .thumb__name {
     font-family: var(--font-display);
     font-size: clamp(1.4rem, 3.5vw, 2.4rem);
@@ -182,6 +246,14 @@ const statusClass = {
       transition: none;
     }
     .thumb:hover {
+      transform: none;
+    }
+    .thumb__art,
+    .thumb__sketch {
+      transition: none;
+    }
+    .thumb:hover .thumb__art,
+    .thumb:hover .thumb__sketch {
       transform: none;
     }
   }

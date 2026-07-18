@@ -11,11 +11,14 @@ interface Props {
   arc: string;       // e.g. "THREE ARCS"
   title: string;     // e.g. "EXPERIENCE"
   subtitle?: string; // e.g. "// the career, told as a manga arc"
-  asset?: string;    // e.g. "/she3bo/sheb3o-sprinting.png" (omit for typographic covers)
+  asset?: string;    // e.g. "/she3bo/sheb3o-sprinting.webp" (omit for typographic covers)
   assetAlt?: string;
+  /** intrinsic px of the asset file — defaults match the 900×1200 character portraits */
+  assetWidth?: number;
+  assetHeight?: number;
 }
 
-const { chapter, arc, title, subtitle, asset, assetAlt = '' } = Astro.props;
+const { chapter, arc, title, subtitle, asset, assetAlt = '', assetWidth = 900, assetHeight = 1200 } = Astro.props;
 ---
 
 <header class="chapter-cover">
@@ -32,7 +35,7 @@ const { chapter, arc, title, subtitle, asset, assetAlt = '' } = Astro.props;
     </div>
     {asset && (
       <div class="chapter-asset">
-        <img src={asset} alt={assetAlt} loading="eager" />
+        <img src={asset} alt={assetAlt} loading="eager" fetchpriority="high" decoding="async" width={assetWidth} height={assetHeight} />
       </div>
     )}
   </div>

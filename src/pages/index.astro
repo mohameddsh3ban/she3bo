@@ -7,6 +7,10 @@ import { projects } from '../data/projects';
   title="Mohamed Shaban (she3bo) — Senior Full-Stack Developer"
   description="Senior full-stack developer from Egypt, currently shipping at m2a-fm GmbH in Germany. Built like a train. Spicy by default."
 >
+  {/* LCP image — start fetching before layout. Media queries mirror the <picture>. */}
+  <link slot="head" rel="preload" as="image" imagesrcset="/she3bo/sheb3o-hero-mobile-400.webp 400w, /she3bo/sheb3o-hero-mobile.webp 540w" imagesizes="48vw" media="(max-width: 768px)" fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" imagesrcset="/she3bo/sheb3o-hero-768.webp 768w, /she3bo/sheb3o-hero.webp 1024w" imagesizes="580px" media="(min-width: 769px)" fetchpriority="high" />
+
   <main class="home-c2">
 
     <!-- STICKY SPINE TOC (desktop only) -->
@@ -42,7 +46,7 @@ import { projects } from '../data/projects';
         <span class="marker-tick" aria-hidden="true"></span>
         <span class="marker-label">VI — TO BE CONTINUED</span>
       </a>
-      <img class="spine-shatta" src="/shata/shatta-powerup.png" alt="Shatta climbing the chapters" />
+      <img class="spine-shatta" src="/shata/shatta-powerup.webp" alt="Shatta climbing the chapters" width="96" height="160" decoding="async" />
     </nav>
 
     <!-- CONTENT COLUMN -->
@@ -71,8 +75,8 @@ import { projects } from '../data/projects';
           <div class="hero-asset">
             <picture>
               {/* mobile gets a tight character crop so he reads BIG in the narrow column */}
-              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-hero-mobile.webp" />
-              <img src="/she3bo/sheb3o-hero.png" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" />
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-hero-mobile-400.webp 400w, /she3bo/sheb3o-hero-mobile.webp 540w" sizes="48vw" width="540" height="930" />
+              <img src="/she3bo/sheb3o-hero.webp" srcset="/she3bo/sheb3o-hero-768.webp 768w, /she3bo/sheb3o-hero.webp 1024w" sizes="580px" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" width="1024" height="1024" fetchpriority="high" decoding="async" />
             </picture>
           </div>
         </div>
@@ -106,11 +110,11 @@ import { projects } from '../data/projects';
           <div class="stats-asset reveal" data-reveal-delay="120">
             <picture>
               {/* mobile gets the tight flex crop so he reads BIG, mirroring the hero */}
-              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-flex-mobile.webp" />
-              <img src="/she3bo/sheb3o-flex.png" alt="Sheb3o flexing" />
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-flex-mobile-400.webp 400w, /she3bo/sheb3o-flex-mobile.webp 460w" sizes="48vw" width="460" height="901" />
+              <img src="/she3bo/sheb3o-flex.webp" srcset="/she3bo/sheb3o-flex-600.webp 452w, /she3bo/sheb3o-flex.webp 603w" sizes="302px" alt="Sheb3o flexing" width="603" height="800" loading="lazy" decoding="async" />
             </picture>
           </div>
-          <img class="stats-shatta" src="/shata/shatta-flex.png" alt="Shatta flexing in solidarity" />
+          <img class="stats-shatta" src="/shata/shatta-flex.webp" alt="Shatta flexing in solidarity" width="121" height="200" loading="lazy" decoding="async" />
         </div>
       </section>
 
@@ -126,7 +130,7 @@ import { projects } from '../data/projects';
         </div>
 
         <div class="pcarousel reveal" data-carousel aria-roledescription="carousel" aria-label="Featured projects, auto-rotating">
-          <img class="pcarousel__shatta" src="/shata/shatta-point.png" alt="" aria-hidden="true" />
+          <img class="pcarousel__shatta" src="/shata/shatta-point.webp" alt="" aria-hidden="true" width="140" height="140" loading="lazy" decoding="async" />
           <div class="pcarousel__viewport" data-carousel-track>
             {projects.map((p, i) => (
               <article class="pcard" data-carousel-slide aria-roledescription="slide" aria-label={`Project ${i + 1} of ${projects.length}: ${p.name}`}>
@@ -147,7 +151,7 @@ import { projects } from '../data/projects';
 
         <div class="pcarousel__dots" data-carousel-dots role="tablist" aria-label="Choose a project">
           {projects.map((p, i) => (
-            <button type="button" class="pdot" data-carousel-dot data-index={i} aria-label={`Show ${p.name}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+            <button type="button" role="tab" class="pdot" data-carousel-dot data-index={i} aria-label={`Show ${p.name}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
           ))}
         </div>
 
@@ -173,7 +177,7 @@ import { projects } from '../data/projects';
         </div>
         <div class="about-layout reveal">
           <div class="about-asset">
-            <img src="/she3bo/sheb3o-coding.png" alt="Sheb3o coding with Shatta cheering TPE!" />
+            <img src="/she3bo/sheb3o-coding.webp" srcset="/she3bo/sheb3o-coding-640.webp 640w, /she3bo/sheb3o-coding.webp 1000w" sizes="(max-width: 768px) 372px, 480px" alt="Sheb3o coding with Shatta cheering TPE!" width="1000" height="754" loading="lazy" decoding="async" />
           </div>
           <div class="about-content">
             <p class="about-hook">Senior full-stack from Egypt, currently shipping at m2a-fm GmbH in Germany. Code is just my dialect — the real work is reading the problem before writing the solution.</p>
@@ -256,7 +260,7 @@ import { projects } from '../data/projects';
             <h3 class="arc-name">ASCENSION ARC</h3>
             <p class="arc-summary">Currently shipping at a German company that demands rigor.</p>
             <span class="status-pill status-current">CURRENT</span>
-            <img class="arc-shatta-flag" src="/shata/shatta-flag.png" alt="Shatta planting flag on current arc" />
+            <img class="arc-shatta-flag" src="/shata/shatta-flag.webp" alt="Shatta planting flag on current arc" width="82" height="120" loading="lazy" decoding="async" />
           </article>
         </div>
         <a href="/experience" class="cta-link">→ Read the full arcs</a>
@@ -276,10 +280,10 @@ import { projects } from '../data/projects';
           <div class="cta-asset-group">
             <picture>
               {/* mobile gets the tight sprint+flame crop so he reads BIG, no blueprint margins */}
-              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-sprint-mobile.webp" />
-              <img src="/she3bo/sheb3o-sprinting.png" alt="Sheb3o sprinting forward in a trail of flame" class="cta-sheb3o" />
+              <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-sprint-mobile.webp" width="720" height="430" />
+              <img src="/she3bo/sheb3o-sprinting.webp" alt="Sheb3o sprinting forward in a trail of flame" class="cta-sheb3o" width="1024" height="574" loading="lazy" decoding="async" />
             </picture>
-            <img src="/shata/shatta-wave.png" alt="" aria-hidden="true" class="cta-shatta" />
+            <img src="/shata/shatta-wave.webp" alt="" aria-hidden="true" class="cta-shatta" width="116" height="230" loading="lazy" decoding="async" />
           </div>
           <div class="cta-content">
             <h2 class="cta-headline">READY TO TALK?</h2>
@@ -645,11 +649,17 @@ import { projects } from '../data/projects';
     .hero-tagline  { animation: hero-rise 600ms var(--ease-ink) 260ms backwards; }
     .hero-ctas     { animation: hero-rise 600ms var(--ease-ink) 360ms backwards; }
     .cv-link       { animation: hero-rise 600ms var(--ease-ink) 440ms backwards; }
-    .hero-asset    { animation: hero-rise 720ms var(--ease-ink) 220ms backwards; }
+    /* transform-only for the hero art: an opacity ramp on the LCP image delays
+       the LCP paint until the fade ends (~1s, 4-5s under mobile CPU throttle) */
+    .hero-asset    { animation: hero-rise-img 720ms var(--ease-ink) 220ms backwards; }
   }
   @keyframes hero-rise {
     from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes hero-rise-img {
+    from { transform: translateY(22px); }
+    to   { transform: translateY(0); }
   }
 
   /* ─── STATS ─── */

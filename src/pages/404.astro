@@ -14,8 +14,10 @@ import SpeechBubble from '@components/ui/SpeechBubble.astro';
       arc="LOST CHAPTER"
       title="404"
       subtitle="// this page wandered off the map"
-      asset="/she3bo/sheb3o-powerup2.png"
+      asset="/she3bo/sheb3o-powerup2.webp"
       assetAlt="Sheb3o powering up"
+      assetWidth={1456}
+      assetHeight={816}
     />
 
     <section class="lost" aria-labelledby="lost-heading">
@@ -32,10 +34,13 @@ import SpeechBubble from '@components/ui/SpeechBubble.astro';
         <SpeechBubble text="AKL NAR!" variant="shout" />
         <img
           class="lost__shatta-img"
-          src="/shata/shatta-lost.png"
+          src="/shata/shatta-lost.webp"
           alt=""
           aria-hidden="true"
           loading="lazy"
+          decoding="async"
+          width="320"
+          height="320"
         />
       </div>
     </section>

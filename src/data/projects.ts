@@ -65,7 +65,7 @@ export const projects: Project[] = [
         body: "Ranked #1 in its category. Real flight schools run it daily. That is the whole pitch.",
       },
     ],
-    art: "/projects/pilot-100.png",
+    art: "/projects/pilot-100.webp",
   },
   {
     id: 2,
@@ -216,7 +216,7 @@ export const projects: Project[] = [
         body: "No launch theater. Friends use it, feedback comes in, the model improves. It goes public when it earns it.",
       },
     ],
-    art: "/projects/job-jarvis.png",
+    art: "/projects/job-jarvis.webp",
   },
   {
     id: 6,
@@ -358,7 +358,7 @@ export const projects: Project[] = [
         body: "The storefront is the visible half. The admin dashboard is where the real complexity lives — inventory movements, order state machines, customer management. Both custom, both production-grade.",
       },
     ],
-    art: "/projects/xiii-store.png",
+    art: "/projects/xiii-store.webp",
   },
   {
     id: 10,
@@ -391,7 +391,7 @@ export const projects: Project[] = [
         body: "The music obsession didn't stop at the browser. It moved to the desktop and grew a Rust core — see Spytfy, chapter 04.",
       },
     ],
-    art: "/projects/spotify.png",
+    art: "/projects/spotify.webp",
   },
   {
     id: 11,
@@ -420,7 +420,7 @@ export const projects: Project[] = [
         body: "Chronic disease is managed in the gaps between appointments, and the gaps have no data. Curify turns daily reality — symptoms, doses, flare-ups, what it cost you that day — into a record a doctor can actually read.",
       },
     ],
-    art: "/projects/curify.png",
+    art: "/projects/curify.webp",
   },
   {
     id: 12,
@@ -486,7 +486,7 @@ export const projects: Project[] = [
         body: "'Works on my machine' died here. Migrations, backwards compatibility, tenant isolation, reports that must balance to the pound. Everything since is built on this arc.",
       },
     ],
-    art: "/projects/ols-erp.png",
+    art: "/projects/ols-erp.webp",
   },
 ];
 
