@@ -47,6 +47,8 @@
   /* ─── ANIMATION ─────────────────────────────────────────────── */
   --ease-ink: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-snap: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* hover lifts: smooth glide-out, no overshoot (cards/buttons, 280ms) */
+  --ease-hover: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 /* ─── DERIVED TOKENS (mobile-aware, additive — not utility-generating) ──

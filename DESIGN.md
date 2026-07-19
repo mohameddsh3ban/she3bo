@@ -334,7 +334,7 @@ Motion is **punctuation, not paragraph.** Every animation must earn its place by
 
 | Animation | Use | Duration | Easing |
 |-----------|-----|----------|--------|
-| Hover lift | Buttons, cards | 150ms | `cubic-bezier(0.68, -0.55, 0.265, 1.55)` (snap) |
+| Hover lift | Buttons, cards | 280ms | `cubic-bezier(0.33, 1, 0.68, 1)` (smooth-out, `--ease-hover`) |
 | Ink underline draw | Links | 300ms | `cubic-bezier(0.68, -0.55, 0.265, 1.55)` (snap) |
 | Page enter fade | First load | 600ms | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` (smooth) |
 | Scroll-triggered fade-up | Section entries | 800ms | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` (smooth) |
@@ -694,21 +694,22 @@ Project case study pages MUST also include prev/next chapter navigation at the b
 - Hover effect: snap-shadow translate (-3px, -3px) with 6px 6px 0 0 --color-shatta
 - Border-top of 2px solid --color-ink separates this from the body content
 
-Project ordering for prev/next (updated 2026-07-09 — GitHub/org/machine sweep, approved by Mohamed):
+Project ordering for prev/next (updated 2026-07-19 — Egypt Post POS removed from the site; CRWN + Ecommerce Factory follow XIII Store; Course Platform renamed DESIGN WAY (live at designwaycourses.com), approved by Mohamed):
 
 1. Pilot 100 (featured, no "previous")
-2. Egypt Post POS
-3. XBRAIN OS
-4. Spytfy
-5. Job Jarvis
-6. Seagull Reservations
-7. Course Platform
-8. M2A Web Platforms
-9. XIII Store
-10. Spotify Reimagined
-11. Curify
-12. LO Organizer
-13. OLS ERP (last, no "next" — wraps to "← Back to Projects index")
+2. XBRAIN OS
+3. Spytfy
+4. Job Jarvis
+5. Seagull Reservations
+6. Design Way (slug stays course-platform)
+7. M2A Web Platforms
+8. XIII Store
+9. CRWN
+10. Ecommerce Factory
+11. Spotify Reimagined
+12. Curify
+13. LO Organizer
+14. OLS ERP (last, no "next" — wraps to "← Back to Projects index")
 
 ### 18.6 Routing Map (LOCKED)
 
@@ -719,7 +720,6 @@ Real pages live at these routes:
 - /skills
 - /projects
 - /projects/pilot-100
-- /projects/egypt-post-pos
 - /projects/xbrain-os
 - /projects/spytfy
 - /projects/job-jarvis
@@ -727,6 +727,8 @@ Real pages live at these routes:
 - /projects/course-platform
 - /projects/m2a-platforms
 - /projects/xiii-store
+- /projects/crwn
+- /projects/ecommerce-factory
 - /projects/spotify
 - /projects/curify
 - /projects/lo-organizer

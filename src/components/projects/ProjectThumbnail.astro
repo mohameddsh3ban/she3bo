@@ -13,6 +13,7 @@ const { project, class: className = '', eager = false } = Astro.props;
 const chapterWords = [
   'one', 'two', 'three', 'four', 'five', 'six', 'seven',
   'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen',
+  'fourteen', 'fifteen', 'sixteen',
 ];
 const chapterLabel = `// chapter ${chapterWords[project.id - 1] || project.number}`;
 
@@ -67,8 +68,8 @@ const statusClass = {
     text-decoration: none;
     color: inherit;
     transition:
-      transform 150ms var(--ease-snap),
-      box-shadow 150ms var(--ease-snap);
+      transform 280ms var(--ease-hover),
+      box-shadow 280ms var(--ease-hover);
   }
 
   .thumb:focus-visible {
@@ -89,7 +90,7 @@ const statusClass = {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 300ms var(--ease-snap);
+    transition: transform 300ms var(--ease-hover);
   }
 
   .thumb:hover .thumb__art {
@@ -107,7 +108,7 @@ const statusClass = {
     background-color: var(--color-paper-grain);
     background-image: radial-gradient(var(--color-paper-deep) 1px, transparent 1px);
     background-size: 8px 8px;
-    transition: transform 300ms var(--ease-snap);
+    transition: transform 300ms var(--ease-hover);
   }
 
   .thumb:hover .thumb__sketch {
@@ -192,9 +193,10 @@ const statusClass = {
     border: 1px dashed var(--color-ink);
   }
 
+  /* ink-muted text: DESIGN.md 2.3 bans ink-faded text below 14px. */
   .status--demo {
     background-color: var(--color-paper);
-    color: var(--color-ink-faded);
+    color: var(--color-ink-muted);
     border: var(--ink-thin) solid var(--color-ink-faded);
   }
 
@@ -205,7 +207,7 @@ const statusClass = {
 
   .status--archived {
     background-color: var(--color-paper);
-    color: var(--color-ink-faded);
+    color: var(--color-ink-muted);
     border: var(--ink-thin) solid var(--color-ink-faded);
   }
 

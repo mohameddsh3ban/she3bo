@@ -42,7 +42,7 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
                 width={p.w}
                 height={p.h}
                 alt={p.alt}
-                loading={["P1", "P2", "P3", "P4", "P5"].includes(p.stamp) ? "eager" : "lazy"}
+                loading={p.stamp === "P1" ? "eager" : "lazy"}
                 fetchpriority={p.stamp === "P1" ? "high" : undefined}
                 decoding="async"
               />
@@ -109,8 +109,10 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
   .ga-a { grid-area: a; } .ga-b { grid-area: b; } .ga-c { grid-area: c; }
   .ga-d { grid-area: d; } .ga-e { grid-area: e; } .ga-f { grid-area: f; }
 
-  /* panels fill their comic frame (cover crop, like a real comic page) */
-  .reel.is-reel .chapter__page .cell { min-width: 0; min-height: 0; opacity: 0; will-change: transform, opacity; }
+  /* panels fill their comic frame (cover crop, like a real comic page).
+     No permanent will-change: 22 promoted layers of 1600×900 art is real GPU
+     memory pressure — GSAP composites what it animates on its own. */
+  .reel.is-reel .chapter__page .cell { min-width: 0; min-height: 0; opacity: 0; }
   .reel.is-reel .chapter__page .cell :global(.mp) { height: 100% !important; width: 100% !important; min-height: 0 !important; }
   .reel.is-reel .chapter__page .cell :global(.mp__art) { height: 100% !important; }
   .reel.is-reel .chapter__page .cell :global(.mp--art img) { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: center 28% !important; max-width: none !important; }
@@ -125,7 +127,6 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
   .reel__bar span { display: block; height: 100%; width: 100%; background: var(--color-shatta, #d62828); transform: scaleX(0); transform-origin: left; }
 
   /* ════════════ MOBILE: stacked fade-up (no pin / crop) ════════════ */
-  .reel.is-snap .cell { will-change: transform, opacity; }
 
   /* FIRST scene auto-reveals on load (no scroll) — pure CSS so a JS re-init
      can't cancel it; `backwards` fill means it stays visible if it never runs */
@@ -218,7 +219,8 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
         onUpdate: (self) => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
       });
 
-      ScrollTrigger.refresh();
+      // no sync refresh here — refreshSoon() re-measures once after the
+      // view transition and layout settle, so pins are built exactly once
       return () => {
         reel.classList.remove("is-reel");
         gsap.set(gsap.utils.toArray<HTMLElement>("[data-panel]"), { clearProps: "all" });
@@ -310,9 +312,10 @@ const AREA = ["ga-a", "ga-b", "ga-c", "ga-d", "ga-e", "ga-f"];
     refreshSoon();
   }
 
-  if (document.readyState !== "loading") initReel();
-  else document.addEventListener("DOMContentLoaded", initReel);
   // astro:page-load fires on first load AND after every client-side navigation
+  // (ClientRouter is site-wide). ONE init path — the old extra immediate call
+  // made the first client-side visit build the whole reel twice back-to-back,
+  // which is exactly the lag/glitch during the page fade.
   document.addEventListener("astro:page-load", initReel);
   document.addEventListener("astro:before-swap", killReel);
   window.addEventListener("load", () => ScrollTrigger.refresh());

@@ -56,8 +56,8 @@ const rel = isExternal ? 'noopener noreferrer' : undefined;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     transition:
-      transform 150ms var(--ease-snap),
-      box-shadow 150ms var(--ease-snap),
+      transform 280ms var(--ease-hover),
+      box-shadow 280ms var(--ease-hover),
       background-color 200ms var(--ease-ink),
       color 200ms var(--ease-ink);
     will-change: transform;
@@ -137,7 +137,7 @@ const rel = isExternal ? 'noopener noreferrer' : undefined;
     background-color: var(--color-ink);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 200ms var(--ease-snap);
+    transition: transform 280ms var(--ease-hover);
   }
 
   .ink-btn--ghost {

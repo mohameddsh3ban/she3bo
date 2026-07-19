@@ -55,16 +55,21 @@ import { projects } from '../data/projects';
       <!-- HERO (no mini-cover — hero IS the cover) -->
       <section class="chapter-section hero-section" id="ch-1" data-chapter="I">
         <div class="hero">
+          <span class="hero-stamp" aria-hidden="true">VOL. 01 &middot; COVER</span>
           <div class="hero-content">
+            <p class="hero-status">
+              <span class="hero-status__dot" aria-hidden="true"></span>
+              CURRENT ARC: TECH LEAD &middot; PILOT 100 @ M2A-FM, GERMANY
+            </p>
             <p class="hero-nickname">they call me she3bo</p>
             <h1 class="hero-name">
               MOHAMED SHABAN
-              <svg class="name-underline" viewBox="0 0 120 6" preserveAspectRatio="none" aria-hidden="true"><path d="M0 3 Q15 0 30 3 Q45 6 60 3 Q75 0 90 3 Q105 6 120 3" fill="none" stroke="var(--color-shatta)" stroke-width="4" stroke-linecap="round"/></svg>
+              <svg class="name-underline" viewBox="0 0 120 6" preserveAspectRatio="none" aria-hidden="true"><path class="name-underline__path" d="M0 3 Q15 0 30 3 Q45 6 60 3 Q75 0 90 3 Q105 6 120 3" fill="none" stroke="var(--color-shatta)" stroke-width="4" stroke-linecap="round" pathLength="100"/></svg>
             </h1>
             <div class="hero-tagline">
               <p>Senior full-stack developer.</p>
               <p>Built like a train.</p>
-              <p class="tagline-spicy">Spicy by default. 🌶️</p>
+              <p class="tagline-spicy">Spicy by default. <span class="chili" title="AKL NAR!">🌶️</span></p>
             </div>
             <div class="hero-ctas">
               <a href="/projects" class="btn btn-primary">SEE MY WORK</a>
@@ -73,12 +78,14 @@ import { projects } from '../data/projects';
             <a href="/cv.pdf" target="_blank" rel="noopener" class="cv-link">or download CV <span class="cv-arrow">↗</span></a>
           </div>
           <div class="hero-asset">
+            <span class="hero-burst" aria-hidden="true"></span>
             <picture>
               {/* mobile gets a tight character crop so he reads BIG in the narrow column */}
               <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-hero-mobile-400.webp 400w, /she3bo/sheb3o-hero-mobile.webp 540w" sizes="48vw" width="540" height="930" />
               <img src="/she3bo/sheb3o-hero.webp" srcset="/she3bo/sheb3o-hero-768.webp 768w, /she3bo/sheb3o-hero.webp 1024w" sizes="580px" alt="Sheb3o standing with Shatta the chili pepper sidekick, HUFTO! moment" width="1024" height="1024" fetchpriority="high" decoding="async" />
             </picture>
           </div>
+          <span class="hero-scrollcue" aria-hidden="true">scroll &darr;</span>
         </div>
       </section>
 
@@ -98,13 +105,25 @@ import { projects } from '../data/projects';
               <span class="stat-number">4+</span>
               <span class="stat-label">years writing production code</span>
             </div>
-            <div class="stat reveal" data-reveal-delay="90">
-              <span class="stat-number">6</span>
+            <div class="stat reveal" data-reveal-delay="80">
+              <span class="stat-number">{projects.length}</span>
               <span class="stat-label">case studies · 30+ projects delivered</span>
             </div>
-            <div class="stat reveal" data-reveal-delay="180">
+            <div class="stat reveal" data-reveal-delay="160">
               <span class="stat-number">10,000+</span>
-              <span class="stat-label">users served</span>
+              <span class="stat-label">users served in production</span>
+            </div>
+            <div class="stat reveal" data-reveal-delay="240">
+              <span class="stat-number">300+</span>
+              <span class="stat-label">REST endpoints designed &amp; owned</span>
+            </div>
+            <div class="stat reveal" data-reveal-delay="320">
+              <span class="stat-number">3</span>
+              <span class="stat-label">production codebases owned solo</span>
+            </div>
+            <div class="stat reveal" data-reveal-delay="400">
+              <span class="stat-number">92%</span>
+              <span class="stat-label">load time cut on a legacy ERP</span>
             </div>
           </div>
           <div class="stats-asset reveal" data-reveal-delay="120">
@@ -113,8 +132,8 @@ import { projects } from '../data/projects';
               <source media="(max-width: 768px)" srcset="/she3bo/sheb3o-flex-mobile-400.webp 400w, /she3bo/sheb3o-flex-mobile.webp 460w" sizes="48vw" width="460" height="901" />
               <img src="/she3bo/sheb3o-flex.webp" srcset="/she3bo/sheb3o-flex-600.webp 452w, /she3bo/sheb3o-flex.webp 603w" sizes="302px" alt="Sheb3o flexing" width="603" height="800" loading="lazy" decoding="async" />
             </picture>
+            <img class="stats-shatta" src="/shata/shatta-flex.webp" alt="Shatta flexing in solidarity" width="121" height="200" loading="lazy" decoding="async" />
           </div>
-          <img class="stats-shatta" src="/shata/shatta-flex.webp" alt="Shatta flexing in solidarity" width="121" height="200" loading="lazy" decoding="async" />
         </div>
       </section>
 
@@ -180,7 +199,7 @@ import { projects } from '../data/projects';
             <img src="/she3bo/sheb3o-coding.webp" srcset="/she3bo/sheb3o-coding-640.webp 640w, /she3bo/sheb3o-coding.webp 1000w" sizes="(max-width: 768px) 372px, 480px" alt="Sheb3o coding with Shatta cheering TPE!" width="1000" height="754" loading="lazy" decoding="async" />
           </div>
           <div class="about-content">
-            <p class="about-hook">Senior full-stack from Egypt, currently shipping at m2a-fm GmbH in Germany. Code is just my dialect — the real work is reading the problem before writing the solution.</p>
+            <p class="about-hook">Senior full-stack from Egypt, leading frontend across three production codebases at M2A-FM GmbH in Germany. Code is just my dialect — the real work is reading the problem before writing the solution.</p>
             <a href="/about" class="cta-link">→ The full story</a>
           </div>
         </div>
@@ -215,7 +234,7 @@ import { projects } from '../data/projects';
           </div>
           <div class="technique-row reveal">
             <span class="tech-name">RXJS</span>
-            <div class="power-bar-track"><div class="power-bar-fill" style="width:80%"></div></div>
+            <div class="power-bar-track"><div class="power-bar-fill" style="width:90%"></div></div>
           </div>
           <div class="technique-row reveal">
             <span class="tech-name">CODE REVIEW</span>
@@ -246,7 +265,7 @@ import { projects } from '../data/projects';
           <article class="arc">
             <span class="arc-num">ARC 01</span>
             <h3 class="arc-name">FOUNDATION ARC</h3>
-            <p class="arc-summary">Three years building production at scale in Kuwait.</p>
+            <p class="arc-summary">Nearly three years modernizing a 10,000-user ERP in Kuwait.</p>
             <span class="status-pill status-forged">FORGED</span>
           </article>
           <article class="arc">
@@ -258,7 +277,7 @@ import { projects } from '../data/projects';
           <article class="arc arc-current">
             <span class="arc-num">ARC 03</span>
             <h3 class="arc-name">ASCENSION ARC</h3>
-            <p class="arc-summary">Currently shipping at a German company that demands rigor.</p>
+            <p class="arc-summary">Technical lead on Pilot 100 — an enterprise aviation exam platform, built from Germany.</p>
             <span class="status-pill status-current">CURRENT</span>
             <img class="arc-shatta-flag" src="/shata/shatta-flag.webp" alt="Shatta planting flag on current arc" width="82" height="120" loading="lazy" decoding="async" />
           </article>
@@ -505,7 +524,7 @@ import { projects } from '../data/projects';
     overflow-wrap: anywhere;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
+    transition: transform 280ms var(--ease-hover), box-shadow 280ms var(--ease-hover);
   }
   .btn-primary { background: var(--color-ink); color: var(--color-paper); }
   .btn-secondary { background: var(--color-paper); color: var(--color-ink); }
@@ -579,12 +598,52 @@ import { projects } from '../data/projects';
     gap: 4rem;
     align-items: center;
     min-height: 75vh;
+    position: relative;
   }
+
+  /* manga cover corner stamp */
+  .hero-stamp {
+    position: absolute;
+    top: clamp(0.5rem, 2vh, 1.5rem);
+    right: 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    color: var(--color-ink-faded);
+    writing-mode: vertical-rl;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* current-arc status chip — the recruiter headline */
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    background: var(--color-paper-grain);
+    border: var(--ink-thin) solid var(--color-ink);
+    padding: 0.35rem 0.65rem;
+    box-shadow: 2px 2px 0 0 var(--color-ink);
+  }
+  .hero-status__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-shatta);
+    flex-shrink: 0;
+  }
+
   .hero-content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    max-width: 520px;
+    max-width: 560px;
   }
   .hero-nickname {
     font-family: var(--font-mono);
@@ -604,9 +663,31 @@ import { projects } from '../data/projects';
   }
   .name-underline {
     display: block;
-    width: 120px;
-    height: 6px;
-    margin-top: 8px;
+    width: min(340px, 60%);
+    height: 8px;
+    margin-top: 10px;
+  }
+
+  /* underline draws itself in after the name lands (ink underline draw) */
+  @media (prefers-reduced-motion: no-preference) {
+    .name-underline__path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: name-draw 500ms var(--ease-ink) 700ms forwards;
+    }
+  }
+  @keyframes name-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* chili easter egg — flame-burst pop on hover (§14.1) */
+  .chili {
+    display: inline-block;
+    cursor: default;
+    transition: transform 280ms var(--ease-snap);
+  }
+  .chili:hover {
+    transform: scale(1.35) rotate(-12deg);
   }
   .hero-tagline { display: flex; flex-direction: column; gap: 0.25rem; }
   .hero-tagline p {
@@ -637,21 +718,72 @@ import { projects } from '../data/projects';
     transition: transform 0.2s ease-out;
   }
   .cv-link:hover .cv-arrow { transform: rotate(45deg); }
-  .hero-asset { display: flex; justify-content: center; align-items: center; }
-  .hero-asset img { max-width: 100%; max-height: 580px; object-fit: contain; }
+  .hero-asset { display: flex; justify-content: center; align-items: center; position: relative; }
+  .hero-asset img { max-width: 100%; max-height: 580px; object-fit: contain; position: relative; }
+
+  /* manga speed-line burst radiating from behind the figure — fills the
+     cover's dead middle and gives the hero its action-panel energy */
+  .hero-burst {
+    position: absolute;
+    inset: -12% -18%;
+    background: repeating-conic-gradient(
+      from 0deg at 50% 42%,
+      var(--color-ink) 0deg 0.55deg,
+      transparent 0.55deg 6.5deg
+    );
+    opacity: 0.055;
+    -webkit-mask-image: radial-gradient(ellipse 50% 46% at 50% 42%, transparent 34%, var(--color-ink) 52%, transparent 78%);
+    mask-image: radial-gradient(ellipse 50% 46% at 50% 42%, transparent 34%, var(--color-ink) 52%, transparent 78%);
+    pointer-events: none;
+  }
+
+  /* Sheb3o breath — approved hero idle (§8.2, 4s ease-in-out loop).
+     The container handles the entrance rise; the img only breathes. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-asset img {
+      animation: hero-breath 4s ease-in-out 1.2s infinite;
+    }
+  }
+  @keyframes hero-breath {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* scroll cue — quiet pointer to the story below the fold */
+  .hero-scrollcue {
+    position: absolute;
+    left: 50%;
+    bottom: 0.25rem;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-faded);
+    pointer-events: none;
+    user-select: none;
+  }
 
   /* ── HERO ENTRANCE — load choreography (above-fold, so not scroll-driven).
         Each element gets its full animation incl. delay so cascade order can't
         reset the stagger. `backwards` holds the start state during the delay. ── */
   @media (prefers-reduced-motion: no-preference) {
-    .hero-nickname { animation: hero-rise 600ms var(--ease-ink)  80ms backwards; }
-    .hero-name     { animation: hero-rise 600ms var(--ease-ink) 160ms backwards; }
-    .hero-tagline  { animation: hero-rise 600ms var(--ease-ink) 260ms backwards; }
-    .hero-ctas     { animation: hero-rise 600ms var(--ease-ink) 360ms backwards; }
-    .cv-link       { animation: hero-rise 600ms var(--ease-ink) 440ms backwards; }
+    .hero-status   { animation: hero-rise 600ms var(--ease-ink)  40ms backwards; }
+    .hero-nickname { animation: hero-rise 600ms var(--ease-ink) 100ms backwards; }
+    .hero-name     { animation: hero-rise 600ms var(--ease-ink) 180ms backwards; }
+    .hero-tagline  { animation: hero-rise 600ms var(--ease-ink) 280ms backwards; }
+    .hero-ctas     { animation: hero-rise 600ms var(--ease-ink) 380ms backwards; }
+    .cv-link       { animation: hero-rise 600ms var(--ease-ink) 460ms backwards; }
     /* transform-only for the hero art: an opacity ramp on the LCP image delays
        the LCP paint until the fade ends (~1s, 4-5s under mobile CPU throttle) */
     .hero-asset    { animation: hero-rise-img 720ms var(--ease-ink) 220ms backwards; }
+    /* quiet furniture fades in after the headline settles */
+    .hero-stamp,
+    .hero-scrollcue { animation: hero-fade 600ms var(--ease-ink) 900ms backwards; }
+  }
+  @keyframes hero-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
   @keyframes hero-rise {
     from { opacity: 0; transform: translateY(22px); }
@@ -666,15 +798,38 @@ import { projects } from '../data/projects';
   .stats-strip {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 4rem;
+    gap: 3rem;
     align-items: center;
     position: relative;
   }
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-  .stat { display: flex; flex-direction: column; gap: 0.5rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  /* inked stat blocks — the manga "character sheet" read */
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.25rem 1rem;
+    border: var(--ink-medium) solid var(--color-ink);
+    background: var(--color-paper);
+    box-shadow: var(--ink-shadow-sm);
+    transition: transform 280ms var(--ease-hover), box-shadow 280ms var(--ease-hover);
+  }
+  .stat:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--ink-shadow);
+  }
+  /* .reveal's global transition/transform rules outrank the card's own —
+     restate hover + fast transition at higher specificity once revealed */
+  html.js .stat.reveal.is-in {
+    transition: transform 280ms var(--ease-hover), box-shadow 280ms var(--ease-hover), opacity 600ms var(--ease-ink);
+  }
+  html.js .stat.reveal.is-in:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--ink-shadow);
+  }
   .stat-number {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.25rem, 4vw, 3.25rem);
     color: var(--color-shatta);
     line-height: 1;
   }
@@ -684,12 +839,25 @@ import { projects } from '../data/projects';
     color: var(--color-ink-muted);
     line-height: 1.4;
   }
-  .stats-asset img { max-width: 100%; max-height: 400px; object-fit: contain; }
+  /* paper backdrop so the flex art's ink-on-white sketch multiplies into
+     the page instead of showing its white box */
+  .stats-asset {
+    position: relative;
+    background: var(--color-paper);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .stats-asset picture { display: contents; }
+  .stats-asset img { max-width: 100%; max-height: 420px; object-fit: contain; mix-blend-mode: multiply; }
+  /* Shatta flexing in solidarity — knee-height, at Sheb3o's feet */
   .stats-shatta {
     position: absolute;
     bottom: 0;
-    left: -10px;
+    left: 4%;
     height: 95px;
+    width: auto;
+    max-height: 95px;
     object-fit: contain;
     transform: rotate(8deg);
     z-index: 1;
@@ -755,7 +923,7 @@ import { projects } from '../data/projects';
     border: 1px solid var(--color-ink);
     color: var(--color-ink);
     border-radius: 0;
-    transition: transform 0.15s var(--ease-snap), box-shadow 0.15s var(--ease-snap);
+    transition: transform 280ms var(--ease-hover), box-shadow 280ms var(--ease-hover);
   }
   .chip:hover {
     transform: translateY(-2px);
@@ -829,7 +997,7 @@ import { projects } from '../data/projects';
     width: 11px; height: 11px;
     border: var(--ink-medium) solid var(--color-ink);
     background: transparent;
-    transition: background-color 0.2s var(--ease-ink), transform 0.2s var(--ease-snap);
+    transition: background-color 280ms var(--ease-hover), transform 280ms var(--ease-hover);
   }
   .pdot.is-active::before { background: var(--color-shatta); border-color: var(--color-shatta); transform: scale(1.25); }
   .pdot:hover::before { border-color: var(--color-shatta); }
@@ -1027,23 +1195,32 @@ import { projects } from '../data/projects';
   .cta-asset-group {
     display: flex;
     align-items: flex-end;
-    gap: 0.5rem;
     position: relative;
+    min-width: 0;
+    /* paper backdrop inside this stacking context so the sprint art's
+       ink-on-white sketch can multiply into the page instead of boxing */
+    background: var(--color-paper);
   }
   /* let the <picture> wrapper collapse so the img is the flex child */
   .cta-asset-group picture { display: contents; }
   .cta-sheb3o {
+    max-width: 100%;
     max-height: 320px;
     width: auto;
+    height: auto;
     object-fit: contain;
+    mix-blend-mode: multiply;
   }
+  /* Shatta cheering at the end of the flame trail — anchored to the art,
+     never spilling into the content column */
   .cta-shatta {
-    max-height: 110px;
+    position: absolute;
+    right: -4px;
+    bottom: 4px;
+    max-height: 96px;
     width: auto;
     object-fit: contain;
     transform: rotate(-5deg);
-    align-self: flex-end;
-    margin-bottom: 8px;
   }
   .cta-content { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
   .cta-headline {
@@ -1122,8 +1299,17 @@ import { projects } from '../data/projects';
     }
     .hero { position: static; }
     .hero-section { position: relative; }   /* figure spans the WHOLE hero section */
+    /* cover furniture is desktop-only — the mobile hero is the tight cutout */
+    .hero-stamp, .hero-scrollcue, .hero-burst { display: none; }
     /* text stays on the left + always above the figure */
     .hero-content { max-width: none; position: relative; z-index: 1; }
+    .hero-status {
+      max-width: 100%;
+      font-size: 0.6875rem;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+    .hero-status__dot { margin-top: 0.3rem; }
     .hero-tagline { max-width: 50%; }
     .hero-ctas { max-width: 50%; flex-direction: column; align-items: stretch; gap: 0.6rem; }
     .cv-link { max-width: 50%; }
@@ -1180,7 +1366,8 @@ import { projects } from '../data/projects';
       pointer-events: none;
       z-index: 0;
     }
-    .stats-asset img {
+    /* only the flex art fills the overlay — never the Shatta doodle */
+    .stats-asset picture img {
       width: 100%;
       height: 100%;
       max-height: none;
@@ -1194,6 +1381,7 @@ import { projects } from '../data/projects';
       left: 0;
       height: 72px;
       width: auto;
+      max-height: 72px;
       margin: 0;
       transform: rotate(8deg);
       z-index: 1;

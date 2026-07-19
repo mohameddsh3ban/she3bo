@@ -124,8 +124,8 @@ function isActive(href: string): boolean {
     transition:
       background-color 150ms var(--ease-ink),
       color 150ms var(--ease-ink),
-      transform 150ms var(--ease-snap),
-      box-shadow 150ms var(--ease-snap);
+      transform 280ms var(--ease-hover),
+      box-shadow 280ms var(--ease-hover);
     position: relative;
   }
 
@@ -188,7 +188,7 @@ function isActive(href: string): boolean {
     cursor: pointer;
     position: relative;
     z-index: 52;
-    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap);
+    transition: transform 280ms var(--ease-hover), box-shadow 280ms var(--ease-hover);
   }
 
   .floatnav-mobile__trigger:hover {
