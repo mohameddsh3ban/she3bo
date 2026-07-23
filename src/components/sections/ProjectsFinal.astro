@@ -57,6 +57,7 @@ const rest = projects.filter((p) => !p.featured);
               {project.status}
             </span>
           </div>
+          <p class="pf__panel-tagline">{project.tagline}</p>
           <p class="pf__panel-desc">{project.description}</p>
           <div class="pf__panel-tags">
             {project.tech.map((t) => (
@@ -74,6 +75,7 @@ const rest = projects.filter((p) => !p.featured);
               <InkButton href={project.links.demo} variant="ghost" size="sm">Demo</InkButton>
             )}
           </div>
+          <a href={`/projects/${project.slug}`} class="pf__panel-casestudy">→ Read the case study</a>
         </div>
       </article>
     ))}
@@ -303,6 +305,18 @@ const rest = projects.filter((p) => !p.featured);
     max-width: 60ch;
   }
 
+  /* Mobile shows the punchy tagline; desktop keeps the full description. */
+  .pf__panel-tagline {
+    display: none;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--color-ink);
+    margin: 0;
+    max-width: 45ch;
+  }
+
   .pf__panel-tags {
     display: flex;
     flex-wrap: wrap;
@@ -317,7 +331,8 @@ const rest = projects.filter((p) => !p.featured);
   }
 
   /* ─── CASE STUDY LINK ────────────────────────────────────────── */
-  .pf__hero-casestudy {
+  .pf__hero-casestudy,
+  .pf__panel-casestudy {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--color-shatta);
@@ -327,7 +342,13 @@ const rest = projects.filter((p) => !p.featured);
     transition: color 150ms var(--ease-ink);
   }
 
-  .pf__hero-casestudy:hover {
+  .pf__panel-casestudy {
+    font-size: 0.8rem;
+    align-self: flex-start;
+  }
+
+  .pf__hero-casestudy:hover,
+  .pf__panel-casestudy:hover {
     color: var(--color-shatta-deep);
     text-decoration: underline;
   }
@@ -340,5 +361,56 @@ const rest = projects.filter((p) => !p.featured);
     border: var(--ink-thin) solid var(--color-ink);
     padding: 0.15rem 0.5rem;
     letter-spacing: 0.04em;
+  }
+
+  /* ─── MOBILE (<768px) ───────────────────────────────────────────
+     Three nested paddings (page + PaperPanel + card) were squeezing
+     thumbnails to ~166px on a 375px screen. De-nest, let the art
+     bleed to the card border, and drop overlay text that repeats
+     the name/status printed directly below it. */
+  @media (max-width: 767px) {
+    /* :global + double class outranks PaperPanel's scoped .paper-panel rule. */
+    :global(.paper-panel.projects-final) {
+      padding: 0; /* default PaperPanel variant draws nothing — its padding is dead space here */
+    }
+
+    .pf__hero {
+      padding: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+      box-shadow: 5px 5px 0 0 var(--color-shatta);
+    }
+
+    .pf__panel {
+      padding: var(--spacing-sm);
+    }
+
+    .pf__strip {
+      gap: var(--spacing-sm);
+    }
+
+    /* Key art becomes the full-width card header. */
+    .pf__hero-thumb,
+    .pf__panel-thumb {
+      margin: calc(var(--spacing-sm) * -1);
+      margin-bottom: 0;
+    }
+
+    /* Name + status already sit right under the art — kill the
+       duplicated overlay caption and status pill on small screens. */
+    .pf__hero-thumb :global(.thumb__caption),
+    .pf__panel-thumb :global(.thumb__caption),
+    .pf__hero-thumb :global(.thumb__status),
+    .pf__panel-thumb :global(.thumb__status) {
+      display: none;
+    }
+
+    /* Tagline in, long description out — the case study holds the rest. */
+    .pf__panel-tagline {
+      display: block;
+    }
+
+    .pf__panel-desc {
+      display: none;
+    }
   }
 </style>
